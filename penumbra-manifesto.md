@@ -16,6 +16,16 @@ This is a pre-registration, written before the data are built and before any mod
 
 The prior programme falsified one of its own five hypotheses and had to override three of its four diagnostics. That is the expected rate. This document should be written so that the same thing can happen visibly.
 
+### Amendment record
+
+Amended once, on 2026-08-02, before any datum was fetched and before any model existed. The text as first written is commit `410121f` and every change below is recoverable against it. Nothing was amended after a measurement and nothing will be; the document is fixed from this point, and the reconciliation moves to `PENUMBRA-OUTCOMES.md`.
+
+Two things forced it.
+
+**The instrument §5.1 named is blind in the range that matters.** CLIQUEBAIT calibrated the clique contrast against a known leakage coefficient and found it perfectly specific and badly insensitive: zero false flags at any $\alpha$, but it *flags* $r^\star$ only from $\alpha \geq 0.7$ while still *ranking* it first from $\alpha \geq 0.2$. A stopping rule built on it alone does not return the smallest $\Delta$ at which leakage is absent — it returns the smallest $\Delta$ at which leakage has fallen below roughly $\alpha = 0.7$. $\Delta^\star$ would be biased low, which makes P1 easier to falsify and P2 easier to confirm: the programme's two headline predictions would be pushed in opposite directions by a documented defect of the measuring device rather than by the world. §5.1 now brackets $\Delta^\star$ between two statistics with opposite error profiles, and P1 and P2 are each tested against whichever bound makes them harder to confirm. The same clause also declares the comparison group, which at a horizon is not the same object it is at zero lag.
+
+**§11's first decision was made, and it went against the default.** The default — restrict to exactly-dated sources, keep IGO as context — was measured against ATOP 5.1 before being adopted, and it fails on its own terms: 52 multilateral alliances entering after 1946 and **26 multilateral terminations**, against the several hundred entities and low thousands of events §6 declares a precondition. T2 is a core task and would not be estimable at any resolution. The objection to IGO was also measured rather than inherited, and it does not survive contact with the materialised file: COW IGO v3 is annual across 1816–2014, its imputation flag is set on 1,388 organisation-years of which **none fall after 1964**, and it carries a per-organisation date-accuracy field. The five-year problem is real, confined to pre-1965 membership dating, and declared by the source itself — which is what makes the third option, interval censoring, available in practice rather than merely correct in principle. §6, §7, §9 and §11 follow.
+
 ---
 
 ## 1. Thesis
@@ -81,7 +91,14 @@ CLIQUEBAIT's diagnostics measure leakage at zero lag. Their extension to horizon
 ### 5.1 U1 — Leakage-horizon curve
 Compute $\omega_{r}(\Delta) = \mathbb{E}[\phi_r(S) \mid \text{event at } t+\Delta]$ over the observation graph $G_t$, for $\Delta = 0, 1, \ldots, 10$, for every relation. Plot against $\Delta$. Report alongside it the clique-contrast statistic $P(\phi_r = 1 \mid \text{event}) - P(\phi_r = 1 \mid \text{no event})$, which CLIQUEBAIT established as the only ranking statistic that survived all three settings tested — $\omega$ alone mis-ranks.
 
-**Define $\Delta^\star$ as the smallest $\Delta$ at which the clique contrast for $r^\star$ falls within the band established by known non-leaking relations.** The threshold is set on the synthetic testbed, not by eye.
+**The comparison group is declared, not assumed.** At a horizon, "no event" is ambiguous in a way it is not at zero lag: a state that accedes at $t+1$ is a non-event for $\Delta = 3$ and already carries in $G_t$ the back-dated traces the statistic is looking for. Every curve is therefore reported against two strata — *never-event*, units experiencing no event anywhere in the window, and *not-at-this-horizon*, the full complement. The first is the estimand; the second is what a naive implementation computes. The gap between them is contamination the horizon formulation introduces and the zero-lag formulation cannot have. CLIQUEBAIT's rule that a contrast is uninterpretable without its negative stratum holds here with the stratum choice also changing what is being estimated.
+
+**$\Delta^\star$ is an interval, bracketed by two statistics with opposite error profiles.** No single statistic can carry it, and the reason is measured rather than supposed: against known $\alpha$, the clique contrast is perfectly specific and insensitive below $\alpha \approx 0.7$, while rank position and $\phi$-alone AUC are sensitive and fire even at $\alpha = 0$, where by construction there is no leak.
+
+- $\Delta^\star_{\text{lo}}$ — the smallest $\Delta$ at which the **clique contrast** for $r^\star$ falls within the band established by known non-leaking relations. It declares the penumbra closed too early, so it is a lower bound.
+- $\Delta^\star_{\text{hi}}$ — the smallest $\Delta$ at which $r^\star$ additionally loses top rank under the CLIQUEBAIT triage ranking **and** its $\phi$-alone AUC falls within the band. Both statistics keep firing on relations that merely predict, so this declares the penumbra closed too late, and is an upper bound.
+
+Both bands are set on the synthetic testbed with a tunable back-dating parameter $\beta$, not by eye. Report the pair and its width: $\Delta^\star_{\text{hi}} - \Delta^\star_{\text{lo}}$ is the resolution of the instrument on this corpus and belongs in the results rather than a footnote. Where one figure is needed to *choose* a forecasting horizon, use $\Delta^\star_{\text{hi}}$ — forecasting further out than necessary costs discrimination, forecasting inside the penumbra costs the whole claim.
 
 ### 5.2 U2 — Horizon-resolved shortcut probe
 Run the non-linear D1 probe (gradient-boosted, per CLIQUEBAIT's override of the linear specification) separately at each horizon. The curve $\mathrm{AUC}_{\text{shortcut}}(\Delta)$ is the fraction of the forecasting task recoverable with no representation at all, as a function of how far ahead one looks. This is the single most informative plot the paper can produce, and it should appear early.
@@ -100,7 +117,7 @@ The prior canon holds 38 entities. Counted as events rather than entity-years th
 |---|---|---|---|
 | ATOP v5.1 (primary release) | Alliance formation, membership change, termination **with coded circumstances** | Exact dates | The termination coding is what makes T2's competing risks possible |
 | DESTA | Preferential and economic agreements, accession protocols | Signature and entry-into-force dates | Signature-vs-force gap is a direct measure of the penumbra |
-| COW IGO v3 | Intergovernmental organisation membership, dead/dormant status | **Five-year intervals for much of the series** | See §11 |
+| COW IGO v3 | Organisation founding and death, membership, dead/dormant status | **Annual 1816–2014, with dating precision declared per organisation** | The imputation flag covers 1,388 organisation-years, none after 1964. This is the entity backbone, not context. See §11 |
 | COW / V-Dem / Polity | Node covariates | Annual | Unchanged from prior work |
 | UNGA ideal points, trade, MID | Relations | Annual | Unchanged; coverage audited per year before use |
 
@@ -112,7 +129,11 @@ Target scale: several hundred entities and low thousands of events, against 38 a
 
 Stated deliberately last and deliberately thin. The prior programme's error was to let architecture lead.
 
-The estimand is a discrete-time hazard $h(t \mid \cdot)$, fitted as pooled binary regression over entity-periods with cause-specific outcomes for T2. The comparison ladder, in order, each capacity-matched:
+The estimand is a discrete-time hazard $h(t \mid \cdot)$ over entity-periods, cause-specific for T2, and **interval-censored**. An event known only to fall in $(t_L, t_R]$ contributes $S(t_L) - S(t_R)$ to the likelihood; an exactly-dated event is the special case $t_R = t_L + 1$, which recovers pooled binary regression, so the two live in one estimator rather than two. Three kinds of interval enter the same machinery, and that they do is the reason for choosing it: COW IGO's pre-1965 membership dating, DESTA's signature-to-entry-into-force gap, and any event a source codes as a range. Cause-specific hazards for T2 are a multinomial logit over causes and survival on the same likelihood.
+
+**Dating precision is a stratum, not a nuisance.** Date uncertainty and penumbra width are the same kind of object — each is a gap between when a thing happened and when the record says it did — so a $\Delta^\star$ estimated over a corpus that mixes them is not interpretable. Every U1–U3 curve and every headline metric is reported separately for the exactly-dated and the interval-dated stratum. The exactly-dated stratum carries the $\Delta^\star$ claim. The interval-dated one measures how far dating uncertainty alone inflates it, which is a second estimate of the same quantity from an independent direction and a check the single-stratum design could not perform.
+
+The comparison ladder, in order, each capacity-matched:
 
 1. Base rates and duration dependence alone
 2. Node covariates only
@@ -126,8 +147,8 @@ The estimand is a discrete-time hazard $h(t \mid \cdot)$, fitted as pooled binar
 
 ## 8. Falsifiable predictions
 
-- **P1 — The penumbra exists and is wider than one year.** $\Delta^\star \geq 2$ for alliance-sourced events. *Falsified if the clique contrast for $r^\star$ is already at the non-leaking band at $\Delta = 1$*, which would mean precursor leakage is not a real hazard and §1's central caution is empty.
-- **P2 — The penumbra is not unbounded.** $\Delta^\star \leq 6$; the shortcut curve $\mathrm{AUC}_{\text{shortcut}}(\Delta)$ decays monotonically and reaches the non-leaking band within the observable range. *Falsified by a flat curve*, which would mean forecasting does not escape the leak and the reformulation fails on its own terms. **This is the prediction whose failure would end the programme, and it is stated first among the ones that could.**
+- **P1 — The penumbra exists and is wider than one year.** $\Delta^\star_{\text{lo}} \geq 2$ for alliance-sourced events. *Falsified if $\Delta^\star_{\text{lo}} \leq 1$*, which would mean precursor leakage is not a real hazard and §1's central caution is empty. The test is against the **lower** bound deliberately: the sensitive statistics would hand P1 a confirmation it has not earned, since they fire on relations that merely predict.
+- **P2 — The penumbra is not unbounded.** $\Delta^\star_{\text{hi}} \leq 6$; the shortcut curve $\mathrm{AUC}_{\text{shortcut}}(\Delta)$ decays monotonically and reaches the non-leaking band within the observable range. *Falsified by a flat curve, or by $\Delta^\star_{\text{hi}} > 6$*, either of which would mean forecasting does not escape the leak and the reformulation fails on its own terms. The test is against the **upper** bound, for the mirror-image reason: the insensitive statistic would declare the penumbra bounded while moderate leakage was still present. **This is the prediction whose failure would end the programme, and it is stated first among the ones that could.**
 - **P3 — Forecasting is much harder than detection.** At $\Delta = \Delta^\star$, T1 discrimination lands in $0.70$–$0.85$ against CLIQUEBAIT's corrected detection figure of $0.993$. *Falsified above $0.95$*, which would indicate residual leakage rather than success and must be investigated as such, not celebrated.
 - **P4 — Termination is harder than accession.** Cause-specific concordance for T2 falls below T1 discrimination at matched horizon. *Falsified if termination is predicted as well as or better than accession*, which would contradict the prior work's failure and be a substantive finding about coalition dynamics.
 - **P5 — Competing risks are not decomposable into a pooled model.** At least one major covariate reverses sign between cause-specific hazards for dissolution and for absorption. *Falsified if pooled and cause-specific models agree on all covariate signs.*
@@ -142,7 +163,8 @@ Beyond inheriting CLIQUEBAIT's protocol in full:
 2. **Rolling-origin evaluation.** Not a single temporal split. Fit at successive origins and forecast forward, so that performance is a function of both calendar time and horizon, and so that the coverage-break lesson cannot recur silently.
 3. **Discrimination and calibration reported jointly.** The prior work reported a Brier score of 0.109 with acknowledged overconfidence and left it there. Hazard models are used for expected timing, not only for ranking, so calibration is a primary metric here: report time-dependent discrimination alongside calibration slope and integrated Brier score.
 4. **Cluster bootstrap over coalitions.** Repeated observations of the same entity across years and horizons are not independent.
-5. **Report the horizon triple** $(\mathrm{AUC}(\Delta),\ \mathrm{AUC}_{\text{shortcut}}(\Delta),\ \Delta^\star)$ rather than a headline number at one horizon.
+5. **Report the horizon triple** $(\mathrm{AUC}(\Delta),\ \mathrm{AUC}_{\text{shortcut}}(\Delta),\ [\Delta^\star_{\text{lo}}, \Delta^\star_{\text{hi}}])$ rather than a headline number at one horizon.
+6. **Declare the dating interval per event, with its source.** State for each event whether its date is exact, bracketed by two coded dates, or known only to a resolution the source itself declares, and tabulate the stratum composition of every risk set. A corpus that does not separate these is measuring the curator's filing speed alongside the phenomenon, and cannot tell the two apart afterwards.
 
 ## 10. Deliverables
 
@@ -155,7 +177,11 @@ Beyond inheriting CLIQUEBAIT's protocol in full:
 
 ## 11. Risks and contingencies
 
-**COW IGO's five-year resolution.** Much of the IGO series is observed at five-year intervals, which is incompatible with annual event history. Three options: restrict LEDGER to exactly-dated sources (ATOP, DESTA) and accept a narrower entity population; use IGO only for covariates and context rather than events; or model IGO events as interval-censored, which is correct but adds machinery. **This is the first decision to make and it shapes the whole corpus.** The manifesto's default is the first option, with IGO as context.
+**COW IGO's resolution — decided, 2026-08-02, and the default was rejected.** Three options were open: restrict LEDGER to exactly-dated sources and accept a narrower entity population; use IGO for covariates and context only; or model IGO events as interval-censored, which is correct but adds machinery. **The third is taken.** Both alternatives were measured before being ruled out rather than argued away. ATOP 5.1 after 1946 supplies 52 multilateral alliances and 26 multilateral terminations, so the first two options leave T2 — a core task — with too few events to estimate at any cause resolution, and fail the scale precondition §6 sets. The materialised COW IGO file is annual over 1816–2014 with an imputation flag that is never set after 1964 and a per-organisation date-accuracy field, so the interval structure is declared by the source and does not have to be guessed. §7's likelihood absorbs it, and DESTA's signature-to-force gap enters the same estimator instead of sitting beside it as a validation check.
+
+What this buys and what it costs are both stated now, not after the fact. It buys the entity population and the termination events the programme needs. It costs three things, and each is a live risk rather than a settled one: the machinery itself, which must be validated against the exactly-dated stratum before it is trusted anywhere; **left truncation**, since entities founded before the window's start enter under observation rather than at origin, and §9's first item binds hardest here; and the composition of the accession risk set, which in the decolonisation decades is dominated by new states joining many organisations at once — clustered events that are not the coalition-formation decision the programme means to model and must be handled explicitly rather than counted.
+
+**Heterogeneous leakage across entity types.** A consequence of the same decision. For an alliance entity the leaking relation is the alliance edge, which is what §5.3 is written for; for an intergovernmental organisation it is co-membership, a different channel with a different curation source. $r^\star$ is therefore not one relation across LEDGER, and U1's curves must be computed within entity type rather than pooled. This is the provenance-*set* finding of CLIQUEBAIT recurring one level up: the set is now indexed by entity type as well as by relation.
 
 **Event scarcity even after scale-up.** Competing risks need adequate events per cause. If absorption events number in the low tens, P5 cannot be tested at the intended resolution. Contingency: collapse to two causes (ended vs. superseded) and say so.
 
@@ -180,7 +206,11 @@ Beyond inheriting CLIQUEBAIT's protocol in full:
 | Symbol | Meaning |
 |---|---|
 | $\Delta$ | forecast horizon in years |
-| $\Delta^\star$ | leakage horizon — width of the penumbra |
+| $\Delta^\star$ | leakage horizon — width of the penumbra, reported as the interval below |
+| $\Delta^\star_{\text{lo}}$ | lower bound, from the clique contrast (specific, insensitive) |
+| $\Delta^\star_{\text{hi}}$ | upper bound, from rank position and $\phi$-alone AUC (sensitive, non-specific) |
+| $\beta$ | synthetic back-dating parameter — how far ahead of an event its traces appear |
+| $(t_L, t_R]$ | interval a censored event date is known to fall in |
 | $\omega_r(\Delta)$ | provenance overlap of relation $r$ at horizon $\Delta$ |
 | $\phi_r(S)$ | intra-group density of $S$ in relation $r$ |
 | $\Pi(S_c)$ | dyads induced by the focal group $c$ |

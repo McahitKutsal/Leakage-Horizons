@@ -1,0 +1,46 @@
+{
+  "pinned_at": "2026-08-02",
+  "source": "C:\\Users\\Admin\\Desktop\\Projects\\CLIQUEBAIT",
+  "files": [
+    {
+      "path": "cliquebait/__init__.py",
+      "sha256": "6b75885626faca7fe23c27c040834fdc61ce0ae7e9699203e1972991f62aabf0",
+      "bytes": 235
+    },
+    {
+      "path": "cliquebait/core.py",
+      "sha256": "45d245ac5fd60c14401181a2b91e9bbf62cc19a3ec427949a5111219259f1e2b",
+      "bytes": 17110
+    },
+    {
+      "path": "cliquebait/diagnostics.py",
+      "sha256": "4dbe069534c33ea3c72409071be96905e4304032f26a0bef9129aca6f97f6c25",
+      "bytes": 22836
+    },
+    {
+      "path": "cliquebait/synthetic.py",
+      "sha256": "9b2f7f0f62abe5e3eca0309d54ea6e38422c3c1b5dc1f4f35c91f6c5a1509b69",
+      "bytes": 10985
+    },
+    {
+      "path": "PROTOCOL.md",
+      "sha256": "d46bd8b7b2b2e72e1e0a60e6fdf74d6e2dce38ed77e09637a63998a53d2f3a89",
+      "bytes": 7305
+    },
+    {
+      "path": "MANIFESTO-OUTCOMES.md",
+      "sha256": "3110c68621a4c3bb2404a74c803bf781c4be10aa0f4751cdc23aac9705d8b0f3",
+      "bytes": 11153
+    },
+    {
+      "path": "FINDINGS.md",
+      "sha256": "3fe58d8d22782368948c1a709dd1c532a86664a534097e93c1f354deb0b502a1",
+      "bytes": 34163
+    },
+    {
+      "path": "target-relation-leakage-manifesto.md",
+      "sha256": "844b4f191b3b95bb05abb674e65f3ef71c8cd615a5971d4ee38e2a31a8bbdf2f",
+      "bytes": 12086
+    }
+  ]
+}
