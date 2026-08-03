@@ -38,8 +38,8 @@ to the third has to cite the measurement that did it.
 
 | | prediction | test statistic | verdict |
 |---|---|---|---|
-| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — instrumental non-identification (V2) |
-| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2). Flat-curve clause not met — curve decays 0.133 — but decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ unreachable |
+| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — non-identified on both $r^\star$: flat and above band on co-membership (V2), noise-limited on alliance edges (V8) |
+| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2, V8). Flat-curve clause not met — curve decays 0.133 — but the decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ is unreachable on co-membership and noise-limited on alliance edges |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | **HOLDS** (V6): two covariates reverse -- cohesion and duration |
