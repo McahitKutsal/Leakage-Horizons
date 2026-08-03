@@ -17,10 +17,11 @@ synthetics against a known back-dating horizon, U1 and U2 run on real data, and 
 interval-censored competing-risks hazard implemented, verified against closed forms, and fitted for
 both T1 and T2.
 
-**Six of seven predictions have been touched.** P4 and P5 hold, P6 is falsified. P1 and P2 are non-identified —
-by the instrument, not by the world. P3 cannot be read cleanly because the horizon it names does not
-exist and it does not say which discrimination it means. P6 is falsified and its
-association runs backwards (V7). Only P7 is untouched; it needs ladder rungs 4-7, which are not built.
+**Six of seven predictions have been touched.** P4 and P5 **hold**. P6 is **falsified**, and its
+association runs backwards for a reason that can be named (V7). P1 and P2 are **non-identified** — by
+the instrument, not by the world. P3 cannot be read cleanly, because the horizon it names does not
+exist and it does not say which discrimination it means. Only **P7** is untouched; it needs ladder
+rungs 4–7, which are not built.
 
 One verdict was **withdrawn** (V0) and its replacement reversed its conclusion. That is recorded at
 the top of the verdicts rather than buried, because the retraction is the most informative thing in
