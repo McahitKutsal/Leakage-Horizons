@@ -274,6 +274,63 @@ heterogeneous size distribution is not interpretable. For corpora like this one 
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
 
+### V8 — the manifesto's original $r^\star$, tested at last. Noise-limited, and that completes the argument
+
+`scripts/run_u1_alliance.py` → `results/u1_alliance_primary.json`. Everything before this tested
+$r^\star$ = co-membership, leaving the manifesto's **original** claim untested: §3's table names
+alliance edges as the suspected $r^\star$, and CLIQUEBAIT *measured* them leaking — $\omega = 0.718$,
+clique lift **590×**, $\phi$-alone AUC 0.806. That gap was mine and it is now closed.
+
+Two structural reasons to expect this test to speak where the co-membership one could not: alliance
+entities have a **median membership of 4** against the organisation majority's 51, so V3's
+size-blindness does not apply; and `allies` has density **0.15** against co-membership's 0.995, so
+cliqueness is discriminative rather than universal. 66 entities, 1,572 alliance-years, 336 accessions.
+
+**The pre-specified rule returned $\Delta^\star_{\text{lo}} = 3$ and $\Delta^\star_{\text{hi}} = 10$,
+so P1 would read as holding and P2 as falsified. Both readings are rejected.** The rule is not wrong;
+it has no power at this sample size, and the check that shows it was run before the verdict was
+accepted.
+
+| $\Delta$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| clique contrast | .0319 | .0205 | .0290 | .0226 | .0303 | .0308 | .0229 | .0169 | .0194 | .0135 |
+| its standard error | .0135 | .0117 | .0163 | .0153 | .0170 | .0173 | .0170 | .0151 | .0152 | .0130 |
+| band | .0248 | .0203 | .0342 | .0373 | .0395 | .0324 | .0288 | .0251 | .0341 | .0446 |
+| **z vs band** | +0.5 | +0.0 | −0.3 | −1.0 | −0.5 | −0.1 | −0.3 | −0.5 | −1.0 | **−2.4** |
+
+**At no horizon is the contrast significantly above the band.** The only $|z| > 2$ is at $\Delta = 10$
+and it is *negative* — the in-band direction, so not evidence of leakage. The standard error is the
+same magnitude as the effect throughout, and the contrast is **not monotone**: it falls, rises, falls,
+rises. $\Delta^\star_{\text{lo}} = 3$ is where two series at the noise floor happen to cross.
+
+**The power requirement, concretely.** To separate a contrast of 0.03 from a band of 0.01 at
+conventional power the standard error must be about 0.007, which needs roughly **600 positives per
+horizon**. The corpus supplies **111–180**. Resolving $\Delta^\star$ on the small-group subpopulation
+would take about 4.5 times the alliance accessions that exist.
+
+**This completes the negative argument rather than adding to it, and the completion is what makes it
+general.** There are two subpopulations and the instrument fails in each for the opposite reason:
+
+| | group size | sample | why the clique contrast cannot resolve $\Delta^\star$ |
+|---|---|---|---|
+| organisations (493) | median 51 | 6,606 events | the statistic is **structurally zero** above 80 members; 36 % of positives contribute nothing (V3) |
+| alliances (66) | median 4 | 336 events | the statistic has power in principle, but the **sample is too small** — SE ≈ effect |
+
+**So there is no subpopulation of this corpus in which the exact-clique contrast can identify
+$\Delta^\star$.** Large groups kill it by arithmetic; small groups come with small samples. That is not
+a property of these data being unlucky — it is a property of the statistic, since group size and
+sample size trade off against each other in any curated corpus of coalitions, and the statistic needs
+both to be favourable at once.
+
+**And the caveat stated before the run still binds.** ATOP's codebook is unreachable (PROVENANCE §4),
+so `allies`'s dating convention is unverified. A null here cannot rule out that ATOP dates from entry
+into force, in which case there is nothing to back-date and the absence is the source's property
+rather than the world's. §5.4 says the verdict requires reading the coding rules; here they cannot be
+read, and the honest consequence is that the automated part ran and the verdict stays suspended.
+
+**P1 and P2 remain non-identified.** On the original $r^\star$ as on co-membership, and now for
+reasons that are understood in both cases rather than merely observed.
+
 ### V7 — P6 is falsified, and the association runs backwards for a reason that can be named
 
 `scripts/run_p6.py` → `results/p6.json`. P6 is CLIQUEBAIT's H4 restated, and H4 was **orphaned**

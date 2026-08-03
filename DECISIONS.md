@@ -517,3 +517,25 @@ model.** It depends on how saturated the leaking relation is in the regime the m
 and saturation drifts with the size of the institutional population. H4 in the prior programme and P6
 here both treat a model-times-regime interaction as a model attribute, which is why neither could be
 made to work.
+
+## D-22 — the alliance r* verdict was rejected after the rule returned it
+**2026-08-03.** `scripts/run_u1_alliance.py`; verdict in `PENUMBRA-OUTCOMES.md` V8.
+
+The pre-specified rule returned Delta*_lo = 3 and Delta*_hi = 10 on the manifesto's original r*,
+which reads as P1 holding and P2 falsified. Both were rejected, and the check that rejected them was
+run before either was written down anywhere.
+
+The clique contrast's standard error -- a difference of two proportions at 111-180 positives and a
+clique rate near 3% -- is 0.012 to 0.017, the same magnitude as the contrast itself (0.014-0.032). No
+horizon puts the contrast significantly above the band; the only |z| > 2 is at horizon 10 and is
+negative, which is the in-band direction. And the contrast is not monotone: it falls, rises, falls,
+rises. Delta*_lo = 3 is where two noise-floor series cross.
+
+Power, concretely: separating a contrast of 0.03 from a band of 0.01 needs a standard error near
+0.007, which is roughly 600 positives per horizon against the 111-180 available.
+
+Recording this as a decision rather than only as a verdict, because the failure mode it avoids is the
+one this project is about. The rule was pre-specified in D-13 and applied correctly; a pre-specified
+rule applied to an underpowered sample still returns a number, and that number looked like the
+programme's headline prediction finally holding. Accepting it would have been defensible on process
+grounds and wrong on the evidence.
