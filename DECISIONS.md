@@ -539,3 +539,27 @@ one this project is about. The rule was pre-specified in D-13 and applied correc
 rule applied to an underpowered sample still returns a number, and that number looked like the
 programme's headline prediction finally holding. Accepting it would have been defensible on process
 grounds and wrong on the evidence.
+
+## D-23 — a consistency checker, because staleness bit three times
+**2026-08-03.** `scripts/check_consistency.py`.
+
+Three times in this programme a document has quoted a number the pipeline no longer produced: the
+status header of `PENUMBRA-OUTCOMES.md` drifted twice, and 6,290 stood in two documents after the
+audit was corrected to 6,115 (D-08). None was caught by reading. The last was caught only because a
+second code path disagreed with the first.
+
+The checker pairs each load-bearing claim with the artefact that produces it and fails when they
+disagree, plus two cross-document agreement checks and a guard against the retracted 6,290
+reappearing outside its correction note.
+
+It earned its keep on the first run, and what it found is instructive: `results/ledger_summary.json`
+still carried 10,528 events while `LEDGER.md` said 10,556. The **document** was right. After V4's
+observer fix I ran `build_ledger.py --dry-run`, which validated and wrote nothing, and updated the
+table by hand from the console output. So the source of truth was stale and the prose was current --
+the reverse of the failure I was guarding against, and invisible to any check that trusts the results
+files. Corrected by writing the corpus for real.
+
+The other two failures were mine in the registry rather than in the documents: DESTA counts are
+asserted in OUTCOMES and LEDGER, not in PROVENANCE, which states dating conventions rather than
+counts. Fixed by correcting the pairing rather than padding the document, since a claim registered
+against a document that never made it produces a failure that teaches nothing.
