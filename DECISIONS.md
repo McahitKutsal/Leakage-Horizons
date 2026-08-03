@@ -563,3 +563,32 @@ The other two failures were mine in the registry rather than in the documents: D
 asserted in OUTCOMES and LEDGER, not in PROVENANCE, which states dating conventions rather than
 counts. Fixed by correcting the pairing rather than padding the document, since a claim registered
 against a document that never made it produces a failure that teaches nothing.
+
+## D-24 — three performance guesses in a row, none of them measured first
+**2026-08-03.** `scripts/run_p7.py`.
+
+Recorded because it is the same failure this programme documents in other people's work, applied to
+my own code rather than to a scientific claim.
+
+The neural ladder was too slow, and I changed it three times without profiling.
+
+1. **Negative subsampling in training.** Correct, and the right first move: the risk set is 0.3%
+   positive so nearly every row re-teaches the same absence. Evaluation was pinned to the full risk
+   set in the code so a later "optimisation" could not quietly reach it.
+2. **Chunking for memory, with `retain_graph=True`.** The encoder is re-run after each optimiser
+   step, so every chunk builds a fresh graph and retaining them held alive exactly the peak that
+   chunking exists to bound. The fix reintroduced the problem it fixed.
+3. **Chunking with the batch builder left inside the chunk loop.** Member arrays were rebuilt in
+   Python per chunk and the 2.2M-row frame was rescanned per year: about 2.2M row-iterations per
+   pass plus 110M comparisons. This turned a ten-minute budget into a timeout. Everything is now
+   computed once per year and cached across epochs, and a chunk is a tensor slice.
+
+One diagnosis did go the right way and is worth separating out: the CUDA out-of-memory was **not**
+my code's footprint. Other processes on this machine held 6.6 of 8.2 GB, leaving 1.5. Checking the
+device before redesigning avoided a pointless rewrite -- the 2009 snapshot's 59,361 rows and 1.23M
+member-index elements are a reasonable load that simply did not fit in what was free.
+
+The lesson is not about tensors. This project applies a strict rule to scientific claims -- V8
+rejected a verdict the pre-specified rule had returned, because the standard error was the size of
+the effect -- and I did not apply the same rule to statements about my own code. Three guesses cost
+more than one profile would have.

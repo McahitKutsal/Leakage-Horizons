@@ -63,16 +63,43 @@ def prepare(regime, meta):
     return rs, members
 
 
-def year_batch(rs_year, members, key_year):
-    flat, batch, ks = [], [], []
-    for b, (e, _y) in enumerate(zip(rs_year.entity_id, rs_year.year)):
-        m = members[(e, key_year)]
-        flat.append(m)
-        batch.append(np.full(len(m), b))
-        ks.append(len(m))
-    return (torch.tensor(np.concatenate(flat), dtype=torch.long, device=DEVICE),
-            torch.tensor(np.concatenate(batch), dtype=torch.long, device=DEVICE),
-            torch.tensor(np.array(ks), dtype=torch.long, device=DEVICE))
+_YEAR_CACHE: dict = {}
+
+
+def year_tensors(rs, members, year):
+    """Precompute everything a year needs once, then slice it per chunk.
+
+    The first chunked version rebuilt the member arrays inside the chunk loop and rescanned the
+    2.2M-row frame for every year. That is 2.2M Python row-iterations per pass plus 110M row
+    comparisons, and it turned a ten-minute budget into a timeout. Everything here is computed
+    once per year and cached across epochs; a chunk is then a tensor slice, which is what chunking
+    was supposed to be.
+    """
+    key = int(year)
+    if key in _YEAR_CACHE:
+        return _YEAR_CACHE[key]
+    sub = rs[rs.year == year]
+    if not len(sub):
+        _YEAR_CACHE[key] = None
+        return None
+    ks = np.array([len(members[(e, key)]) for e in sub.entity_id], dtype=np.int64)
+    flat = np.concatenate([members[(e, key)] for e in sub.entity_id])
+    offs = np.concatenate([[0], np.cumsum(ks)])
+    out = {
+        "sub": sub,
+        "flat": torch.tensor(flat, dtype=torch.long, device=DEVICE),
+        "offs": offs,
+        "ks": torch.tensor(ks, dtype=torch.long, device=DEVICE),
+        "cand": torch.tensor(sub.cand.to_numpy(), dtype=torch.long, device=DEVICE),
+        "y": torch.tensor(sub.y.to_numpy(), dtype=torch.float32, device=DEVICE),
+        "extra": torch.tensor(np.stack([sub.dur.to_numpy(),
+                                        np.log1p(sub.dur.to_numpy())], 1),
+                              dtype=torch.float32, device=DEVICE),
+        "index": sub.index.to_numpy(),
+        "y_np": sub.y.to_numpy(),
+    }
+    _YEAR_CACHE[key] = out
+    return out
 
 
 def forward_year(model, snaps, year, lag, rung):
@@ -83,32 +110,60 @@ def forward_year(model, snaps, year, lag, rung):
     return model["enc"](s)
 
 
-def run_epoch(model, snaps, rs, members, years, opt=None, lag=3, rung=4, pos_weight=20.0):
+def run_epoch(model, snaps, rs, members, years, opt=None, lag=3, rung=4, pos_weight=20.0,
+              neg_rate=1.0, rng=None, chunk=6000):
+    """One pass over the given years. `neg_rate` subsamples negatives IN TRAINING ONLY.
+
+    The risk set is 2.2M dyad-years carrying 6,606 accessions, a rate of 0.3%, so almost every row
+    the head sees during training is a negative and almost all of the compute goes into re-learning
+    the same absence. Case-control sampling for a rare event is standard and the pos_weight in the
+    loss is already compensating for the imbalance; sampling the negatives changes what the
+    intercept means, which the reported metrics are invariant to, since AUC is rank-based.
+
+    **Evaluation always uses the full risk set** -- `neg_rate` is 1.0 whenever `opt` is None -- so no
+    reported number is computed on a subsample. Cutting the training cost is not allowed to touch
+    what gets measured.
+    """
     train = opt is not None
     model.train(train)
     logits_all, y_all, idx_all = [], [], []
     for year in years:
-        sub = rs[rs.year == year]
-        if not len(sub):
+        yt = year_tensors(rs, members, year)
+        if yt is None:
             continue
-        flat, batch, ks = year_batch(sub, members, year)
-        extra = torch.tensor(np.stack([sub.dur.to_numpy(), np.log1p(sub.dur.to_numpy())], 1),
-                             dtype=torch.float32, device=DEVICE)
-        cand = torch.tensor(sub.cand.to_numpy(), dtype=torch.long, device=DEVICE)
-        y = torch.tensor(sub.y.to_numpy(), dtype=torch.float32, device=DEVICE)
-        with torch.set_grad_enabled(train):
-            z = forward_year(model, snaps, year, lag, rung)
-            logit = model["head"](z, flat, batch, ks, cand, extra)
-            loss = F.binary_cross_entropy_with_logits(
-                logit, y, pos_weight=torch.tensor(pos_weight, device=DEVICE))
-        if train:
-            opt.zero_grad()
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-            opt.step()
-        logits_all.append(logit.detach().cpu().numpy())
-        y_all.append(sub.y.to_numpy())
-        idx_all.append(sub.index.to_numpy())
+        n = len(yt["sub"])
+        if train and neg_rate < 1.0:
+            pos = np.nonzero(yt["y_np"] > 0)[0]
+            neg = np.nonzero(yt["y_np"] == 0)[0]
+            take = max(int(len(neg) * neg_rate), min(len(neg), 8 * max(len(pos), 1)))
+            rows = np.sort(np.concatenate([pos, rng.choice(neg, size=take, replace=False)]))
+        else:
+            rows = np.arange(n)
+        for lo in range(0, len(rows), chunk):
+            sel = rows[lo:lo + chunk]
+            ks = yt["ks"][sel]
+            # Gather each selected row's member block out of the year's flat array.
+            spans = [np.arange(yt["offs"][i], yt["offs"][i + 1]) for i in sel]
+            gather = torch.tensor(np.concatenate(spans), dtype=torch.long, device=DEVICE)
+            flat = yt["flat"][gather]
+            batch = torch.repeat_interleave(
+                torch.arange(len(sel), device=DEVICE), ks)
+            selt = torch.tensor(sel, dtype=torch.long, device=DEVICE)
+            with torch.set_grad_enabled(train):
+                z = forward_year(model, snaps, year, lag, rung)
+                logit = model["head"](z, flat, batch, ks, yt["cand"][selt],
+                                      yt["extra"][selt])
+                loss = F.binary_cross_entropy_with_logits(
+                    logit, yt["y"][selt],
+                    pos_weight=torch.tensor(pos_weight, device=DEVICE))
+            if train:
+                opt.zero_grad()
+                loss.backward()
+                torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+                opt.step()
+            logits_all.append(logit.detach().cpu().numpy())
+            y_all.append(yt["y_np"][sel])
+            idx_all.append(yt["index"][sel])
     return (np.concatenate(logits_all), np.concatenate(y_all), np.concatenate(idx_all))
 
 
@@ -150,6 +205,12 @@ def main() -> int:
     ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--lag", type=int, default=3)
     ap.add_argument("--seeds", type=int, nargs="+", default=[0, 1])
+    ap.add_argument("--chunk", type=int, default=20000,
+                    help="rows per head batch; bounds the GPU peak without changing what is "
+                         "evaluated")
+    ap.add_argument("--neg-rate", type=float, default=0.15,
+                    help="negative subsampling rate during TRAINING only; evaluation is always "
+                         "on the full risk set")
     ap.add_argument("--json", type=Path, default=ROOT / "results" / "p7.json")
     args = ap.parse_args()
     regime = REGIMES["primary"]
@@ -167,6 +228,7 @@ def main() -> int:
         for seed in args.seeds:
             torch.manual_seed(seed)
             np.random.seed(seed)
+            torch.cuda.empty_cache() if DEVICE == "cuda" else None
             model = make_model(rung, meta, lag=args.lag)
             params[rung] = n_parameters(model)
             opt = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
@@ -174,11 +236,14 @@ def main() -> int:
             # Fit on years strictly before the earliest evaluation origin, so every reported
             # origin is out of sample in calendar time (§9.2).
             fit_years = [y for y in years if y < min(ORIGINS)]
+            rng = np.random.default_rng(seed)
             for _ in range(args.epochs):
                 run_epoch(model, meta["snaps"], rs, members, fit_years, opt,
-                          args.lag, rung)
-            logit, _y, order = run_epoch(model, meta["snaps"], rs, members, years, None,
-                                         args.lag, rung)
+                          args.lag, rung, neg_rate=args.neg_rate, rng=rng,
+                          chunk=args.chunk)
+            with torch.no_grad():
+                logit, _y, order = run_epoch(model, meta["snaps"], rs, members, years, None,
+                                             args.lag, rung, chunk=args.chunk)
             res = evaluate(rs, logit, order)
             for r in res:
                 r.update({"rung": rung, "seed": seed})
@@ -229,6 +294,8 @@ def main() -> int:
     args.json.parent.mkdir(parents=True, exist_ok=True)
     args.json.write_text(json.dumps({"regime": list(regime), "origins": ORIGINS,
                                      "horizons": HORIZONS, "epochs": args.epochs,
+                                     "train_neg_rate": args.neg_rate,
+                                     "eval_on_full_risk_set": True,
                                      "n_parameters": params, "p7": verdict,
                                      "rows": rows}, indent=2, default=str))
     d.to_parquet(ROOT / "results" / "p7.parquet", index=False)
