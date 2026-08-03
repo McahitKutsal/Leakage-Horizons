@@ -269,3 +269,24 @@ outside 1964 are eligible — a reporting-year flow, a dispute onset and a roll-
 anticipate an accession. `allies` is **undecided**, blocked on the unreachable ATOP codebook, so it
 cannot serve as a declared anchor yet. `igo_comembership` is $r^\star$, not an anchor. The band is
 fixed here, before the curve is computed, which is the only order in which either means anything.
+
+## D-11 — U2 on real LEDGER, and the two performance fixes it needed first
+**2026-08-03.** `scripts/run_u2.py` → `results/u2_real.json`; verdict in
+`PENUMBRA-OUTCOMES.md` V1.
+
+The first attempt ran for over two minutes on two horizons and was stopped rather than waited out,
+because the cost was in two avoidable places: the negative sampler rebuilt a Python set of the
+member list on every draw, and every candidate rebuilt the graph-index array behind its star of
+dyads, once per relation per level. Both are now precomputed per entity-year. The UN carries 193
+members, so those two lines were the difference between minutes and hours.
+
+The optimisation is exact rather than approximate and was checked as such: a candidate group's
+dyads decompose into the member-only dyads, shared by every candidate for the same entity-year and
+therefore cacheable, plus the star from the acceding state, which is not. `phi_candidate` was
+verified against the naive `phi` over 300 rows × 5 relations × 2 levels with **zero**
+disagreements, before and after the change. A cache that is nearly right would have moved every
+number in V1 by an unknown amount.
+
+One reporting mistake worth recording so it is not repeated: the long runs were piped through
+`tail`, which buffers, so no interim progress was visible and liveness could only be confirmed by
+looking at the process. Long runs should not be piped.

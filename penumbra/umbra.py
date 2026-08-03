@@ -87,8 +87,20 @@ class HorizonAudit:
         for (e, y) in self._members:
             self._member_years.setdefault(e, set()).add(y)
 
+        # Precomputed once per entity-year, because both are otherwise rebuilt inside loops that
+        # run hundreds of thousands of times: a frozenset membership test in the negative sampler,
+        # and the graph-index array behind every star of dyads from a candidate to the members.
+        # The UN carries 193 members, so rebuilding either per candidate per relation per level is
+        # what makes a horizon curve take hours instead of minutes.
+        self._member_sets: dict[tuple, frozenset] = {
+            k: frozenset(int(c) for c in v) for k, v in self._members.items()}
+        self._member_idx: dict[tuple, np.ndarray] = {
+            k: np.array([self._ix[int(m)] for m in v if int(m) in self._ix], np.int64)
+            for k, v in self._members.items()}
+
         self.events = events
         self._years = sorted({int(y) for (_r, y) in self._keys})
+        self._phi_cache: dict[tuple, tuple[int, int]] = {}
 
     # ------------------------------------------------------------------ densities
     def _pack(self, members: np.ndarray) -> np.ndarray:
@@ -118,6 +130,136 @@ class HorizonAudit:
             return float(hit.sum() / keys.size)
         wts = self._wts[(relation, year)][pos]
         return float((hit & (wts >= level)).sum() / keys.size)
+
+    def phi_candidate(self, entity_id: str, year: int, ccode: int, relation: str,
+                      level: int = 1) -> float:
+        """phi for the group `members(entity, year) + {ccode}`, split exactly for reuse.
+
+        The candidate group's dyads decompose into the member-only dyads, which every candidate
+        for the same (entity, year) shares, and the star from the acceding state to each member,
+        which it does not. Caching the first is exact rather than approximate and takes the cost
+        of a horizon curve from quadratic in membership per candidate to linear.
+        """
+        ms = self._members.get((entity_id, year))
+        if ms is None or ms.size == 0:
+            return np.nan
+        key = (entity_id, year, relation, level)
+        cached = self._phi_cache.get(key)
+        if cached is None:
+            keys = self._pack(ms)
+            cached = (self._count(keys, relation, year, level), int(keys.size))
+            self._phi_cache[key] = cached
+        hits_m, n_m = cached
+
+        star = self._star_keys(entity_id, year, int(ccode))
+        hits_s = self._count(star, relation, year, level)
+        denom = n_m + int(star.size)
+        return float((hits_m + hits_s) / denom) if denom else np.nan
+
+    def _star_keys(self, entity_id: str, year: int, ccode: int) -> np.ndarray:
+        """Packed dyads from `ccode` to every member, off the precomputed index array."""
+        i = self._ix.get(int(ccode))
+        js = self._member_idx.get((entity_id, year))
+        if i is None or js is None or js.size == 0:
+            return np.empty(0, np.int64)
+        js = js[js != i]
+        if js.size == 0:
+            return np.empty(0, np.int64)
+        lo, hi = np.minimum(js, i), np.maximum(js, i)
+        keys = lo * np.int64(self._n) + hi
+        keys.sort()
+        return keys
+
+    def _count(self, keys: np.ndarray, relation: str, year: int, level: int) -> int:
+        if keys.size == 0:
+            return 0
+        arr = self._keys.get((relation, year))
+        if arr is None or arr.size == 0:
+            return 0
+        pos = np.clip(np.searchsorted(arr, keys), 0, arr.size - 1)
+        hit = arr[pos] == keys
+        if level <= 1:
+            return int(hit.sum())
+        return int((hit & (self._wts[(relation, year)][pos] >= level)).sum())
+
+    # ------------------------------------------------------------------------ U2
+    def u2_shortcut(self, horizons=range(0, 11), levels: dict | None = None,
+                    negatives: str = NEVER_EVENT, max_neg_per_pos: int = 4,
+                    groups_for_split: dict | None = None, n_splits: int = 5,
+                    seed: int = 0, also_linear: bool = True) -> pd.DataFrame:
+        """AUC of a density-only probe, per horizon. Manifesto §5.2.
+
+        The fraction of the forecasting task recoverable with no representation at all, as a
+        function of how far ahead one looks. Three inherited constraints are not optional:
+
+        * **Non-linear.** CLIQUEBAIT measured linear 0.915 against gradient-boosted 0.979 on
+          identical features, because the leak is a clique-indicator effect. The linear probe is
+          reported alongside so the gap is visible here too rather than asserted.
+        * **Cross-fitted.** Scoring rows with a probe fitted on those same rows puts the whole
+          curve above 0.99 and hides the collapse the diagnostic exists to measure.
+        * **Split by cluster, not by row.** Folds are grouped on `groups_for_split` -- the
+          membership-equivalent family (LEDGER.md §1.3) -- so a coalition's candidates cannot be
+          split across folds and the probe cannot memorise a coalition it will be scored on.
+        """
+        from sklearn.ensemble import GradientBoostingClassifier
+        from sklearn.linear_model import LogisticRegression
+        from sklearn.model_selection import GroupKFold, cross_val_predict
+        from sklearn.pipeline import make_pipeline
+        from sklearn.preprocessing import StandardScaler
+
+        levels = levels or {r: (1,) for r in self.relations}
+        rows = []
+        for h in horizons:
+            panel = self.accession_panel(h, negatives, max_neg_per_pos, seed)
+            if panel.empty or panel.label.nunique() < 2:
+                continue
+
+            feats, names = [], []
+            for rel in self.relations:
+                for k in levels.get(rel, (1,)):
+                    v = np.array([self.phi_candidate(r.entity_id, r.year, r.ccode, rel, k)
+                                  for r in panel.itertuples()], float)
+                    feats.append(v)
+                    names.append(f"phi_{rel}_k{k}")
+                    # The clique indicator is the feature the leak actually lives in.
+                    feats.append((v >= 1 - 1e-9).astype(float))
+                    names.append(f"clique_{rel}_k{k}")
+            size = np.array([self._members[(r.entity_id, r.year)].size + 1
+                             for r in panel.itertuples()], float)
+            feats += [size, np.log(size)]
+            names += ["size", "log_size"]
+
+            X = np.column_stack(feats)
+            y = panel.label.to_numpy()
+            ok = ~np.isnan(X).any(axis=1)
+            X, y, sub = X[ok], y[ok], panel[ok]
+            if len(np.unique(y)) < 2:
+                continue
+
+            grp = (sub.entity_id.map(groups_for_split).fillna(sub.entity_id).to_numpy()
+                   if groups_for_split else sub.entity_id.to_numpy())
+            k_folds = min(n_splits, len(pd.unique(grp)))
+            if k_folds < 2:
+                continue
+            cv = GroupKFold(n_splits=k_folds)
+
+            gbm = GradientBoostingClassifier(random_state=seed, n_estimators=300, max_depth=3)
+            p_gbm = cross_val_predict(gbm, X, y, cv=cv, groups=grp,
+                                      method="predict_proba")[:, 1]
+            rec = {"horizon": h, "negative_stratum": negatives,
+                   "n_pos": int(y.sum()), "n_neg": int((1 - y).sum()),
+                   "n_clusters": int(len(pd.unique(grp))), "n_features": X.shape[1],
+                   "auc_shortcut": float(roc_auc_score(y, p_gbm))}
+            if also_linear:
+                lin = make_pipeline(StandardScaler(),
+                                    LogisticRegression(max_iter=3000))
+                p_lin = cross_val_predict(lin, X, y, cv=cv, groups=grp,
+                                          method="predict_proba")[:, 1]
+                rec["auc_shortcut_linear"] = float(roc_auc_score(y, p_lin))
+                rec["nonlinear_gain"] = rec["auc_shortcut"] - rec["auc_shortcut_linear"]
+            rec["features"] = ",".join(names)
+            rows.append(rec)
+        return pd.DataFrame(rows)
 
     # ------------------------------------------------------------------------ U1
     def accession_panel(self, horizon: int, negatives: str = NEVER_EVENT,
@@ -152,8 +294,8 @@ class HorizonAudit:
                 t = y - horizon
                 if t not in self._member_years.get(eid, ()):     # entity must exist at t
                     continue
-                ms = self._members.get((eid, t))
-                if ms is None or cc in set(ms.tolist()):
+                mset = self._member_sets.get((eid, t))
+                if mset is None or cc in mset:
                     continue                                     # already a member: not at risk
                 rows.append((eid, cc, t, 1))
 
@@ -166,8 +308,8 @@ class HorizonAudit:
             tries += 1
             eid, t = ent_years[int(rng.integers(len(ent_years)))]
             cc = all_states[int(rng.integers(len(all_states)))]
-            ms = self._members.get((eid, t))
-            if ms is None or cc in set(ms.tolist()):
+            mset = self._member_sets.get((eid, t))
+            if mset is None or cc in mset:
                 continue
             ys = joined.get((eid, cc), set())
             if negatives == NEVER_EVENT and ys:

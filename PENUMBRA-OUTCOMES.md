@@ -25,7 +25,7 @@ its output and are stated as measurements with dates, not as pre-measurement cau
 | | prediction | test statistic | verdict |
 |---|---|---|---|
 | **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | not yet measured |
-| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | not yet measured |
+| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **shortcut clause FALSIFIED**, see V1; $\Delta^\star_{\text{hi}}$ clause not yet measured |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | not yet measured |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | not yet measured |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | not yet measured |
@@ -105,6 +105,86 @@ within a few years produces accession events that are neither independent nor th
 decision the programme models. Pre-specification: report T1 with and without the first $k$
 years of each state's system membership, $k$ fixed before fitting, and treat the difference as
 a reported sensitivity rather than choosing the favourable one.
+
+---
+
+## Verdicts
+
+### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03
+
+`scripts/run_u2.py --regime primary` → `results/u2_real.json`. Regime 1965–2014, 6,732 accession
+events, 438 family clusters, gradient-boosted probe cross-fitted with folds grouped on the family,
+both negative strata. Features are per-relation densities and clique indicators at the declared
+co-membership level ladder, plus group size — no learned representation of any kind.
+
+$\mathrm{AUC}_{\text{shortcut}}(\Delta)$, primary stratum (*never-event*):
+
+| $\Delta$ | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| AUC | .8905 | .8762 | .8759 | .8703 | .8675 | **.8703** | .8679 | .8638 | **.8687** | .8661 |
+
+P2 requires the curve to decay **monotonically** and reach the non-leaking band inside the
+observable range, and states it is *"falsified by a flat curve"*. Measured: total decay from
+$\Delta = 1$ to $\Delta = 10$ is **0.0244**, and the curve **rises at two of nine steps** (bold).
+Nine years of additional forecast horizon cost the density-only probe two and a half AUC points.
+That is a flat curve by any reading, and the falsification condition is the manifesto's own.
+
+**What is falsified and what is not.** The shortcut clause of P2 fails. The
+$\Delta^\star_{\text{hi}} \leq 6$ clause is a separate measurement that needs U1 on real data and
+is untouched by this. P1 is likewise unmeasured.
+
+**What the falsification does *not* settle, and must not be made to.** §8's gloss on P2 is that
+its failure would mean *"forecasting does not escape the leak and the reformulation fails on its
+own terms"*. That reading assumes the flat 0.87 is leakage. Three independent measurements point
+the other way and none of them is a reinterpretation after the fact:
+
+1. **COW IGO does not systematically back-date.** Five of 495 organisations mention signature or
+   accession dating and one of those explicitly refuses to back-date (`PROVENANCE.md` §2). There is
+   no mechanism planting the event in the observation window for the relation carrying $r^\star$
+   across 493 of 573 entities.
+2. **The clique-indicator effect is absent.** CLIQUEBAIT's D1 override rests on linear 0.915
+   against gradient-boosted 0.979 — a gain of **+0.064** — because a leak is an exact-clique
+   effect that a linear probe cannot see. Here the mean gain is **−0.0014**, and the linear probe
+   matches or beats the boosted one at **7 of 10** horizons. Whatever produces 0.87 is linear in
+   the densities, which is what graded structural signal looks like and is not what a planted
+   clique looks like.
+3. **Co-membership is saturated** at density 0.995, so being a clique in it carries no information
+   in the first place (`LEDGER.md` §6.2).
+
+So the honest verdict is: **the curve is flat, P2's stated condition is met, and whether that is
+"the leak survives every horizon" or "there was little leak and densities carry real signal" is
+exactly what U1 decides.** The provenance evidence leans hard to the second. Recording the
+falsification now and the interpretation later is the only order that keeps both honest — and if
+U1 returns a narrow penumbra, §11's contingency for "the penumbra turns out to be trivially narrow"
+is the reframe, not a rescue invented at that point.
+
+### V1a — horizon contamination, measured for the first time
+
+The two negative strata separate at **every** horizon, *never-event* above
+*not-at-this-horizon* by a mean of **0.0129** (range 0.0073–0.0200). That gap is the contamination
+§5.1 predicted and the zero-lag formulation cannot have: pooling states that accede at some *other*
+horizon into the negatives puts units carrying the event's traces on the negative side, and the
+task gets harder. It is small, it is consistent, and it is the first quantification of the cost of
+the stratum choice. A paper that does not declare which stratum it used is reporting a number with
+a 0.013 ambiguity in it.
+
+### V1b — the inherited requirement for a non-linear probe does not transfer
+
+CLIQUEBAIT's PROTOCOL §5 says "use a **non-linear** probe for D1", on the evidence of a 0.064 gap.
+On this corpus the gap is zero to negative. The rule is not wrong; its *justification* is
+corpus-specific, and the honest generalisation is that both probes are reported and the gap is
+itself a diagnostic — a large gap indicates a clique-indicator effect, a null gap indicates there
+is not one. That is a stronger statement than the inherited rule and it is available only because
+both were run. Recorded here rather than as a change to `PROTOCOL.md`, which belongs to the other
+programme.
+
+### V1c — horizon 0 is not expressible in the T1 risk set
+
+No panel exists at $\Delta = 0$. At the accession year the state is already recorded as a member,
+so it is not in the risk set, and every positive filters out. Detection at zero lag — the
+formulation CLIQUEBAIT audited — is therefore not a special case of this one but a different task
+over a different risk set. That is a structural property worth stating plainly, because a reader
+will expect $\Delta = 0$ to anchor the curve and it cannot.
 
 ---
 
