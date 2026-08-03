@@ -493,3 +493,27 @@ column is not reported from that script at all.
 Recorded because indexing a coefficient matrix by position rather than by name is the class of error
 that produces a plausible number attached to the wrong variable, which no amount of reading the
 output would reveal.
+
+## D-21 — P6's verdict is reported as falsification AND reversal, because its wording covers only one
+**2026-08-03.** `scripts/run_p6.py`; verdict in `PENUMBRA-OUTCOMES.md` V7.
+
+P6 says it is "falsified if shortcut reliance and shift fragility are uncorrelated". At rho = -0.529,
+p = 0.116 over ten models they are uncorrelated at any conventional level, so it is falsified. But the
+spread is large -- 0.172 in reliance, 0.062 in fragility -- so this is not the immaterial case
+CLIQUEBAIT's H5 lesson warns about, and the sign is negative: the two most shortcut-reliant models
+perform BETTER out of regime than in it. P6's wording is silent on that case, which is simultaneously
+a falsification and a reversal of the mechanism the manifesto assumes.
+
+Both are reported. Folding the reversal into "uncorrelated" would discard the informative half, and
+the verdict logic in the script has a branch for it that was written before the numbers existed.
+
+The reversal is explained rather than left as a curiosity: co-membership density is 0.9704 in
+1948-1963 against 0.9954 in 1965-2014, with 116 organisations per year against 273. The relation is
+less saturated in the earlier regime, so density features carry more information there, which is
+exactly where the density-only models improve.
+
+That generalises into a finding about the diagnostic. **Shortcut reliance is not a property of a
+model.** It depends on how saturated the leaking relation is in the regime the model is evaluated in,
+and saturation drifts with the size of the institutional population. H4 in the prior programme and P6
+here both treat a model-times-regime interaction as a model attribute, which is why neither could be
+made to work.

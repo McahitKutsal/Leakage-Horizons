@@ -17,10 +17,10 @@ synthetics against a known back-dating horizon, U1 and U2 run on real data, and 
 interval-censored competing-risks hazard implemented, verified against closed forms, and fitted for
 both T1 and T2.
 
-**Five of seven predictions have been touched.** P4 and P5 hold. P1 and P2 are non-identified —
+**Six of seven predictions have been touched.** P4 and P5 hold, P6 is falsified. P1 and P2 are non-identified —
 by the instrument, not by the world. P3 cannot be read cleanly because the horizon it names does not
-exist and it does not say which discrimination it means. P6 and P7 are untouched: P6 needs the
-shift analysis across regimes, P7 needs ladder rungs 4–7, which are not built.
+exist and it does not say which discrimination it means. P6 is falsified and its
+association runs backwards (V7). Only P7 is untouched; it needs ladder rungs 4-7, which are not built.
 
 One verdict was **withdrawn** (V0) and its replacement reversed its conclusion. That is recorded at
 the top of the verdicts rather than buried, because the retraction is the most informative thing in
@@ -42,7 +42,7 @@ to the third has to cite the measurement that did it.
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | **HOLDS** (V6): two covariates reverse -- cohesion and duration |
-| **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | U2 by regime | not yet measured |
+| **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | ten models across the 1964 break | **FALSIFIED** (V7): rho = -0.529, p = 0.116, and the association runs *backwards* -- explained by saturation drifting in time |
 | **P7** | graph earns its keep at long horizons or not at all | ladder rung 6/7 minus rung 4, by $\Delta$ | not yet measured |
 
 ## Deliverables (§10)
@@ -272,6 +272,64 @@ group size** with the share of the corpus at zero power stated, and a pooled cli
 heterogeneous size distribution is not interpretable. For corpora like this one the graded
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
+
+### V7 — P6 is falsified, and the association runs backwards for a reason that can be named
+
+`scripts/run_p6.py` → `results/p6.json`. P6 is CLIQUEBAIT's H4 restated, and H4 was **orphaned**
+there: its motivating anomaly dissolved into relation dropout and the statistic it named did not
+calibrate. §2 says this programme supplies genuine temporal shift by construction, so this is a debt
+being paid rather than a new question.
+
+Ten models spanning the reliance gradient, trained on 1965–2014 and evaluated across the 1964
+coverage break. **Shortcut reliance** is the AUC a model loses when its density features are held at
+their means, measured *within* the training regime so shift cannot contaminate it. **Shift fragility**
+is in-regime AUC minus out-of-regime AUC.
+
+| model | reliance | fragility |
+|---|---|---|
+| duration only | 0.0000 | **+0.0256** |
+| node only | 0.0000 | +0.0208 |
+| node + all $\phi$ | 0.0034 | +0.0195 |
+| node + all $\phi$ + clique | 0.0160 | +0.0081 |
+| clique only | 0.0613 | +0.0274 |
+| all $\phi$ only | **0.1393** | **−0.0333** |
+| all $\phi$ + clique only | **0.1721** | **−0.0347** |
+
+**Spearman $\rho = -0.529$, $p = 0.116$** over ten models. P6's falsification condition is that
+reliance and fragility are uncorrelated, and at $p = 0.116$ they are. **P6 is falsified as stated.**
+
+**But "uncorrelated" understates it, and the understatement matters.** The reliance spread is 0.172
+and the fragility spread 0.062, so this is not the immaterial case CLIQUEBAIT's H5 lesson warns
+about — where a control scored $\rho = -0.887$ while moving 0.004. It is a real-magnitude association
+in the **opposite direction to P6**, underpowered at ten models. The two most shortcut-reliant models
+have *negative* fragility: they perform **better** out of regime than in it, 0.7369 → 0.7702 and
+0.7698 → 0.8045. P6 predicted that these would be the fragile ones.
+
+P6's wording does not cover this. It says "falsified if shortcut reliance and shift fragility are
+uncorrelated" and is silent on a negative association, which is both a falsification *and* a reversal
+of the mechanism the manifesto assumes. Recorded as both rather than folded into the null.
+
+**The reversal has a mechanism, and it is V3's saturation moving in time.**
+
+| | 1948–1963 | 1965–2014 |
+|---|---|---|
+| co-membership density | **0.9704** | **0.9954** |
+| mean shared organisations per dyad | 14.8 | 26.1 |
+| organisations per year | 116 | 273 |
+| states per year | 88 | 169 |
+
+The relation is markedly **less** saturated in the earlier regime, because there were less than half
+as many organisations. Density features are therefore more informative there — which is exactly where
+the density-only models improve. So shortcut-reliant models are not robust to shift in general; they
+are helped by *this* shift, because it moves them into a regime where their features carry more
+information. A different shift, toward more saturation, should hurt them.
+
+**This is a finding about the diagnostic, not only about P6.** Shortcut reliance is not a stable
+property of a model: it depends on how saturated the leaking relation happens to be in the regime the
+model is evaluated in, and saturation drifts with the size of the institutional population. Any
+programme that treats "shortcut reliance" as a model attribute — CLIQUEBAIT's H4 did, and P6 inherits
+it — is treating a model-times-regime interaction as though it belonged to the model. That is why H4
+could not be made to work in the prior programme and why restating it did not rescue it.
 
 ### V6 — T2. P5 holds, P4 holds on the comparable metric, and §5.3's intervention is a no-op
 
