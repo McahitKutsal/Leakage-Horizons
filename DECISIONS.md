@@ -417,3 +417,17 @@ same determined subset, with the undetermined share reported rather than imputed
 implementable. Rule-assigned dates need nothing in the likelihood and everything in the evaluation:
 a date assigned from ten years of later data cannot score a forecast made before it was knowable,
 so those 103 terminations are excluded from rolling-origin evaluation rather than from estimation.
+
+## D-17 — the likelihood is vectorised, and the rewrite is proved equal to the verified one
+**2026-08-03.** `penumbra/hazard.py`, `scripts/test_hazard_fast.py`.
+
+T1's unit is the (coalition, state) dyad and there are of order 10^5 of them, so the reference
+implementation's Python loop over entities would need millions of iterations per L-BFGS gradient.
+The rewrite is segment operations over rows sorted by (entity, period).
+
+Replacing verified code with faster code is only safe if the two are shown to agree, so both value
+and gradient are compared across six panel shapes exercising every branch -- one cause and several,
+exact and interval events, with and without left truncation, and cause-unknown intervals -- plus a
+check that a fit through the fast path is scored identically by the reference path. Worst
+disagreement: 4.6e-13 on the likelihood, 2.3e-13 on the gradient. The closed-form checks of D-16
+still pass through the new path.

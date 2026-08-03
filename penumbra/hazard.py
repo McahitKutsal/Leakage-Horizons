@@ -128,6 +128,91 @@ class DiscreteHazard:
         return np.hstack(B + [X])
 
     # ------------------------------------------------------------- likelihood
+    # ------------------------------------------------------------ vectorised
+    def _prepare(self, panel: PeriodPanel):
+        """Row-level index arrays the vectorised likelihood needs, computed once per fit.
+
+        The reference implementation loops over entities in Python, which is fine for a few
+        hundred and impossible for T1's ~10^5 (coalition, state) dyads: L-BFGS would need millions
+        of Python iterations per fit. Everything below is a segment operation over rows sorted by
+        (entity, period). `scripts/test_hazard.py` checks the two agree to machine precision on
+        panels where both can run, which is the only reason the fast path is trustworthy.
+        """
+        n_ent = panel.n_entities
+        starts = np.searchsorted(panel.entity, np.arange(n_ent), side="left")
+        ends = np.searchsorted(panel.entity, np.arange(n_ent), side="right")
+        empty = ends <= starts
+
+        last_row = np.where(empty, -1, ends - 1)
+        ev = (panel.cause != CENSORED) & ~empty
+        # Rows inside each event entity's interval (t_L, t_R]
+        rows, owner = [], []
+        for i in np.nonzero(ev)[0]:
+            lo, hi = int(starts[i]), int(ends[i])
+            per = panel.period[lo:hi]
+            idx = np.nonzero((per > panel.t_L[i]) & (per <= panel.t_R[i]))[0]
+            if idx.size == 0:
+                raise ValueError(f"entity {i}: interval "
+                                 f"({panel.t_L[i]}, {panel.t_R[i]}] covers no observed period")
+            rows.append(lo + idx)
+            owner.append(np.full(idx.size, i))
+        return {
+            "starts": starts, "ends": ends, "empty": empty, "last_row": last_row,
+            "is_event": ev,
+            "cens_rows": last_row[(~ev) & ~empty],
+            "ev_rows": np.concatenate(rows) if rows else np.empty(0, np.int64),
+            "ev_owner": np.concatenate(owner) if owner else np.empty(0, np.int64),
+            "ev_cause": panel.cause,
+        }
+
+    def _neg_loglik_fast(self, theta: np.ndarray, Z: np.ndarray, panel: PeriodPanel, pre: dict):
+        import torch
+
+        th = torch.tensor(theta, dtype=torch.float64, requires_grad=True)
+        Zt = torch.tensor(Z, dtype=torch.float64)
+        eta = Zt @ th.reshape(self.J, -1).T
+        full = torch.cat([torch.zeros(eta.shape[0], 1, dtype=torch.float64), eta], dim=1)
+        logp = full - torch.logsumexp(full, dim=1, keepdim=True)
+        lsp, log_h = logp[:, 0], logp[:, 1:]
+
+        # Within-entity cumulative log survivor, by subtracting the running total at each block's
+        # start. logS[r] = log S at the end of row r's period; prevS[r] = log S entering it.
+        cs = torch.cumsum(lsp, dim=0)
+        base = torch.cat([torch.zeros(1, dtype=torch.float64), cs[:-1]])
+        offset = base[torch.tensor(pre["starts"][~pre["empty"]], dtype=torch.long)]
+        off_full = torch.zeros_like(cs)
+        seg = torch.tensor(panel.entity, dtype=torch.long)
+        remap = torch.full((panel.n_entities,), -1, dtype=torch.long)
+        remap[torch.tensor(np.nonzero(~pre["empty"])[0], dtype=torch.long)] = torch.arange(
+            int((~pre["empty"]).sum()), dtype=torch.long)
+        off_full = offset[remap[seg]]
+        logS = cs - off_full
+        prevS = base - off_full
+
+        total = torch.zeros((), dtype=torch.float64)
+        if pre["cens_rows"].size:
+            total = total + logS[torch.tensor(pre["cens_rows"], dtype=torch.long)].sum()
+
+        if pre["ev_rows"].size:
+            r = torch.tensor(pre["ev_rows"], dtype=torch.long)
+            o = torch.tensor(pre["ev_owner"], dtype=torch.long)
+            cause = torch.tensor(pre["ev_cause"], dtype=torch.long)[o]
+            known = cause != CAUSE_UNKNOWN
+            lh = torch.where(known,
+                             log_h[r].gather(1, (cause.clamp(min=1) - 1).unsqueeze(1)).squeeze(1),
+                             torch.logsumexp(log_h[r], dim=1))
+            terms = prevS[r] + lh
+            # segment logsumexp over each event entity's interval rows
+            uo, inv = torch.unique(o, return_inverse=True)
+            m = torch.full((uo.numel(),), -1e300, dtype=torch.float64)
+            m = m.scatter_reduce(0, inv, terms, reduce="amax", include_self=True)
+            total = total + (m + torch.log(torch.zeros(uo.numel(), dtype=torch.float64)
+                                           .index_add(0, inv, torch.exp(terms - m[inv])))).sum()
+
+        nll = -total + self.l2 * (th ** 2).sum()
+        nll.backward()
+        return float(nll.detach()), th.grad.detach().numpy()
+
     def _neg_loglik(self, theta: np.ndarray, Z: np.ndarray, panel: PeriodPanel):
         """Negative log-likelihood and gradient.
 
@@ -193,7 +278,8 @@ class DiscreteHazard:
         for j in range(1, self.J + 1):
             rate = max((panel.cause == j).sum(), 1) / max(len(panel.period), 1)
             theta0[j * Z.shape[1] - Z.shape[1]] = np.log(rate / (1 - rate))
-        res = minimize(self._neg_loglik, theta0, args=(Z, panel), jac=True,
+        pre = self._prepare(panel)
+        res = minimize(self._neg_loglik_fast, theta0, args=(Z, panel, pre), jac=True,
                        method="L-BFGS-B", options={"maxiter": maxiter})
         self.coef_ = res.x.reshape(self.J, -1)
         self.result_ = res
