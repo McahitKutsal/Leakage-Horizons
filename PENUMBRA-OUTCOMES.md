@@ -30,7 +30,7 @@ to the third has to cite the measurement that did it.
 | | prediction | test statistic | verdict |
 |---|---|---|---|
 | **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | not yet measured |
-| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **shortcut clause FALSIFIED**, see V1; $\Delta^\star_{\text{hi}}$ clause not yet measured |
+| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | first verdict **WITHDRAWN** (V0); re-measurement pending |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | not yet measured |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | not yet measured |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | not yet measured |
@@ -211,7 +211,7 @@ falsification now and the interpretation later is the only order that keeps both
 U1 returns a narrow penumbra, §11's contingency for "the penumbra turns out to be trivially narrow"
 is the reframe, not a rescue invented at that point.
 
-### V1a — horizon contamination, measured for the first time
+### V1a — horizon contamination, measured for the first time — **numbers void, see V0**
 
 The two negative strata separate at **every** horizon, *never-event* above
 *not-at-this-horizon* by a mean of **0.0129** (range 0.0073–0.0200). That gap is the contamination
@@ -221,7 +221,7 @@ task gets harder. It is small, it is consistent, and it is the first quantificat
 the stratum choice. A paper that does not declare which stratum it used is reporting a number with
 a 0.013 ambiguity in it.
 
-### V1b — the inherited requirement for a non-linear probe does not transfer
+### V1b — the inherited requirement for a non-linear probe does not transfer — **numbers void, see V0**
 
 CLIQUEBAIT's PROTOCOL §5 says "use a **non-linear** probe for D1", on the evidence of a 0.064 gap.
 On this corpus the gap is zero to negative. The rule is not wrong; its *justification* is
@@ -231,7 +231,7 @@ is not one. That is a stronger statement than the inherited rule and it is avail
 both were run. Recorded here rather than as a change to `PROTOCOL.md`, which belongs to the other
 programme.
 
-### V1c — horizon 0 is not expressible in the T1 risk set
+### V1c — horizon 0 is not expressible in the T1 risk set — **stands, see V0**
 
 No panel exists at $\Delta = 0$. At the accession year the state is already recorded as a member,
 so it is not in the risk set, and every positive filters out. Detection at zero lag — the
@@ -239,7 +239,7 @@ formulation CLIQUEBAIT audited — is therefore not a special case of this one b
 over a different risk set. That is a structural property worth stating plainly, because a reader
 will expect $\Delta = 0$ to anchor the curve and it cannot.
 
-### V1d — U2 can manufacture a penumbra, and the confound is structural to the diagnostic
+### V1d — U2 can manufacture a penumbra, and the confound is structural to the diagnostic — **mechanism stands, numbers void, see V0**
 
 The out-of-regime replication (1948–1963) appeared to *support* P2 where the primary regime
 falsified it: the boosted probe fell from 0.844 at $\Delta = 1$ to 0.701 at $\Delta = 10$, a decay
