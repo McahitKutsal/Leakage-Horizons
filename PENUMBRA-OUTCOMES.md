@@ -186,6 +186,41 @@ edge that disappears") is written for alliance entities, and §11 states that $r
 co-membership rather than alliance edges for the organisation majority of the corpus. The
 instrument is entity-type agnostic; only the example is partial.
 
+**C13 — the resampling unit moves from the entity to the membership-equivalent family, and the
+direction of the move is what makes it legitimate.** C4 pre-specified coalition-level resampling
+as primary with a state-level cross-check. Measured on 2026-08-03: clustering organisations at
+Jaccard $\geq 0.90$ over at least five shared years yields **31 families covering 107 of 491
+organisations**, and within a family, pairs of deaths fall within two years of each other
+**26.9 %** of the time (7 of 26) against **10.1 %** for random pairs drawn from the same
+population — enrichment **2.66×**, nominal one-sided $p = 0.013$. The nominal $p$ is
+anti-conservative, since pairs inside a family share entities, so the finding is suggestive.
+Pre-specification: the family is the primary cluster-bootstrap unit for T2, a singleton family
+being an entity; entity-level resampling is reported alongside as the anti-conservative
+comparison. C4's state-level cross-check for T1 stands unchanged.
+
+Changing a pre-specification after a measurement needs its justification stated, so: family-level
+resampling can only **widen** intervals. Moving to a more conservative unit on discovering
+dependence is a different act from moving to a less conservative one on discovering an
+inconvenient interval, and only the second is the thing pre-specification exists to prevent. The
+first baseline computed for this comparison was also wrong in the direction of the conclusion —
+it drew random pairs from all 534 organisations including pre-1946 deaths rather than from the
+491 the families come from, which lowered the baseline to 7.2 % and inflated the enrichment to
+3.72×. Naming the comparison stratum is PROTOCOL §1 and this is what it is for; the corrected
+figure is the one above.
+
+**C14 — membership overlap cannot identify duplicate entities, and a rule built on it would have
+deleted the corpus's most useful variation.** Matching the 70 ATOP multilateral treaties against
+the 491 organisations on membership Jaccard gives 178 candidate pairs at $J \geq 0.6$, seven at
+$J = 1.000$ — but 27 treaties match more than one organisation and 41 organisations match more
+than one treaty, one treaty matching **24**. Those 24 are the Pan-American system: the OAS, PAHO,
+the Inter-American Children's Institute, the Inter-American Defense Board, the Commission of
+Women, the Highway Congresses association. Another treaty matches 16 European bodies over EU
+membership. Same members, different bodies, **different fates** — which is exactly the variation
+T2 explains. Pre-specification: no automatic deduplication; a `same_instrument` link is asserted
+only on instrument-level evidence, hand-verified, and printed in full, and any statistic pooling
+the two entity types reports its double-count exposure. Full rule and the task declarations it
+feeds are in `LEDGER.md`.
+
 ---
 
 ## Outstanding, carried from CLIQUEBAIT
