@@ -231,3 +231,41 @@ Outcome: $\Delta^\star_{\text{lo}}$ recovers $\beta + 1$ in **6 of 6** settings.
 fires in 2 of 6 and is otherwise unreachable, which was flagged as a risk before any measurement
 and is now demonstrated as a property of the definition. C18 fixes how P2 is read when that
 happens, and the answer is not "falsified".
+
+## D-10 — the provenance declaration §5.4 demands, and what reading it changed
+**2026-08-03.** `scripts/parse_igo_provenance.py` → `results/igo_provenance.json`;
+declaration in `PROVENANCE.md`.
+
+PROTOCOL §1 must precede §2 and §3, so this ran before any real-data $\Delta^\star$. The v3 short
+codebook carries the warning without the evidence — members are sometimes dated by accession or
+signature, "these exceptions are listed below (see section IV)", and section IV is not in it. The
+list exists only in the **v2.1** codebook, 93 pages of per-organisation notes. Parsed to exactly
+the **495** records the codebook states, which is the check; two parse artefacts were sentences
+inside notes opening with a year and a period and are named in the output rather than filtered
+away.
+
+**The finding is a negative one and it matters more than a positive would have.** Five of 495
+organisations mention signature or accession dating. Reading all five: one back-dates membership
+(the Oil Pollution Compensation Funds, "members coded according to first convention signed"), one
+back-dates the founding only, one **explicitly refuses** to back-date (the Tropical Timber
+Organization: treaties signed 1985, `formed` coded 1987), one is forward-dated, one is about
+emanation status. So signature back-dating is not the mechanism by which a penumbra would appear in
+the relation that carries $r^\star$ for 493 of 573 entities. If the penumbra is there it comes from
+elsewhere, and if it is not, P1 is in trouble for a reason we now understand rather than a reason we
+would have guessed at.
+
+**Coverage disagrees with the documentation in both directions.** Over the 486 organisations in
+both: 18 declare missing years the data does not carry as `-9`, and **45 carry `-9` in 205
+organisation-years the documentation never mentions**. The second is the case PROTOCOL §1 is written
+against, and it is the same defect class CLIQUEBAIT found in the benchmark it audited — undeclared
+coverage, discovered only by recomputation. A further 48 of v3's 534 organisations have no notes at
+all, having been added after v2.1.
+
+**Dormancy is textual.** 16 organisations carry *inactive* or *dormant* in prose with no variable
+recording it, which corroborates D-06 rather than softening it.
+
+**C17's anchor list, as far as the evidence goes:** `trades`, `conflicts_with` and `votes_with`
+outside 1964 are eligible — a reporting-year flow, a dispute onset and a roll-call cannot
+anticipate an accession. `allies` is **undecided**, blocked on the unreachable ATOP codebook, so it
+cannot serve as a declared anchor yet. `igo_comembership` is $r^\star$, not an anchor. The band is
+fixed here, before the curve is computed, which is the only order in which either means anything.
