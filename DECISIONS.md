@@ -592,3 +592,29 @@ The lesson is not about tensors. This project applies a strict rule to scientifi
 rejected a verdict the pre-specified rule had returned, because the standard error was the size of
 the effect -- and I did not apply the same rule to statements about my own code. Three guesses cost
 more than one profile would have.
+
+## D-25 — the capacity confound was measured rather than argued about
+**2026-08-03.** `scripts/run_p7.py --width`; results in `PENUMBRA-OUTCOMES.md` V9.
+
+Section 7 matches capacity on depth, width and head. That does not equalise parameter count:
+relation-specific weights cost parameters by construction, so rung 7 carries 1.9x rung 4's 54,849.
+The ladder's gains rose monotonically with parameter count, which is exactly the shape a capacity
+artefact would have, and exactly the confound CLIQUEBAIT found in the paper it audited -- a weak
+baseline made the graph look worth 0.05-0.09 where a matched control gave 0.023.
+
+So the control was widened until its parameter count matched each graph rung. Widths 96 and 128 give
+80,993 and 109,185 parameters against rung 6's 78,849 and rung 7's 103,937.
+
+The confound does not explain the gains. Doubling the control's parameters is worth **+0.0009**; the
+control is saturated in capacity. Rung 6 keeps +0.0076 and rung 7 keeps +0.0245 against
+parameter-matched controls.
+
+Worth recording for a reason beyond P7: this is the first place an inherited CLIQUEBAIT rule has been
+applied in full and *not* changed the answer. The rule is not redundant -- it fired hard in the prior
+programme -- it simply does not trigger on this corpus. Reporting that as "we checked and it did not
+matter" is different from not checking, and the difference is the whole point of a protocol.
+
+One incompleteness, stated rather than smoothed: the width-128 control has four seed-runs across two
+launches (0.8627, 0.8608, 0.8622, 0.8610) rather than a single clean three-seed run, because a third
+seed hung and was not chased. The four values span 0.002, so the point estimate is not in doubt, but
+the run is not as tidy as the others.

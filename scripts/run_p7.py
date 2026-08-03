@@ -205,6 +205,11 @@ def main() -> int:
     ap.add_argument("--epochs", type=int, default=12)
     ap.add_argument("--lag", type=int, default=3)
     ap.add_argument("--seeds", type=int, nargs="+", default=[0, 1])
+    ap.add_argument("--width", type=int, default=64,
+                    help="hidden and embedding width. §7 matches capacity on depth, width and "
+                         "head, which does NOT equalise parameter count: relation-specific weights "
+                         "cost parameters by construction. Widening the control until its "
+                         "parameter count matches a graph rung separates architecture from size.")
     ap.add_argument("--chunk", type=int, default=20000,
                     help="rows per head batch; bounds the GPU peak without changing what is "
                          "evaluated")
@@ -229,7 +234,7 @@ def main() -> int:
             torch.manual_seed(seed)
             np.random.seed(seed)
             torch.cuda.empty_cache() if DEVICE == "cuda" else None
-            model = make_model(rung, meta, lag=args.lag)
+            model = make_model(rung, meta, hidden=args.width, embed=args.width, lag=args.lag)
             params[rung] = n_parameters(model)
             opt = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-4)
             t0 = time.time()
@@ -294,6 +299,7 @@ def main() -> int:
     args.json.parent.mkdir(parents=True, exist_ok=True)
     args.json.write_text(json.dumps({"regime": list(regime), "origins": ORIGINS,
                                      "horizons": HORIZONS, "epochs": args.epochs,
+                                     "width": args.width,
                                      "train_neg_rate": args.neg_rate,
                                      "eval_on_full_risk_set": True,
                                      "n_parameters": params, "p7": verdict,

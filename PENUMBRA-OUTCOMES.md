@@ -17,11 +17,14 @@ synthetics against a known back-dating horizon, U1 and U2 run on real data, and 
 interval-censored competing-risks hazard implemented, verified against closed forms, and fitted for
 both T1 and T2.
 
-**Six of seven predictions have been touched.** P4 and P5 **hold**. P6 is **falsified**, and its
-association runs backwards for a reason that can be named (V7). P1 and P2 are **non-identified** — by
-the instrument, not by the world. P3 cannot be read cleanly, because the horizon it names does not
-exist and it does not say which discrimination it means. Only **P7** is untouched; it needs ladder
-rungs 4–7, which are not built.
+**All seven predictions have been adjudicated.** P4 and P5 **hold**. P6 and P7 are **falsified**, and
+in both cases the association runs *backwards* from the stated mechanism, for reasons that can be
+named (V7, V9). P1 and P2 are **non-identified** — by the instrument, not by the world, and now on
+both candidate $r^\star$ for two different reasons (V2, V8). P3 cannot be read cleanly, because the
+horizon it names does not exist and it does not say which discrimination it means.
+
+The measurement phase is complete. T3 remains unbuilt and §4 labels it exploratory; the outstanding
+work is listed at the end of this file.
 
 One verdict was **withdrawn** (V0) and its replacement reversed its conclusion. That is recorded at
 the top of the verdicts rather than buried, because the retraction is the most informative thing in
@@ -44,7 +47,7 @@ to the third has to cite the measurement that did it.
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | **HOLDS** (V6): two covariates reverse -- cohesion and duration |
 | **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | ten models across the 1964 break | **FALSIFIED** (V7): rho = -0.529, p = 0.116, and the association runs *backwards* -- explained by saturation drifting in time |
-| **P7** | graph earns its keep at long horizons or not at all | ladder rung 6/7 minus rung 4, by $\Delta$ | not yet measured |
+| **P7** | graph earns its keep at long horizons or not at all | ladder rung 6/7 minus rung 4, by $\Delta$ | **FALSIFIED** (V9): flat or decreasing in $\Delta$ for every graph rung, and the contribution is *largest* at $\Delta{=}1$ — the mechanism reversed. But rungs 6 and 7 do beat parameter-matched controls |
 
 ## Deliverables (§10)
 
@@ -55,7 +58,7 @@ to the third has to cite the measurement that did it.
 | LEDGER — event corpus | **built and validated**: 573 entities, 10,556 events, four dating strata. `agreement` entities deferred (LEDGER.md §1.1) |
 | Three tasks with declared risk sets, origin times, censoring rules | **declared before construction** (LEDGER.md §4). T1 and T2 built and fitted; **T3 not started** |
 | Cause-specific hazard results for termination | **done** (V6): 152 events, P5 holds with two sign reversals, ATOP's 19 uncoded entering through the cause-unknown branch |
-| Architectural ladder, each rung earning its place | **rungs 1–3 done** (V5), each beating the one below on both metrics. Rungs 4–7 need the encoders and are not built, so P7 is untouched |
+| Architectural ladder, each rung earning its place | **all seven rungs done** (V5, V9). Rungs 1-3 and 6-7 each beat the one below; **rung 5 does not** and by §7's own rule does not appear in the headline. Rungs 6 and 7 also beat parameter-matched controls |
 
 ---
 
@@ -273,6 +276,70 @@ group size** with the share of the corpus at zero power stated, and a pooled cli
 heterogeneous size distribution is not interpretable. For corpora like this one the graded
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
+
+### V9 — P7 is falsified, its mechanism runs backwards, and one rung of §7's ladder falls
+
+`scripts/run_p7.py` → `results/p7.json`, plus parameter-matched controls in
+`results/p7_ctrl_w96.json`. Rungs 4–7 over the full risk set, three seeds each, twelve epochs, four
+rolling origins × four horizons. Training subsamples negatives at 0.15 because the risk set is 0.3 %
+positive; **evaluation is always on the full risk set**, pinned in the code so a later optimisation
+cannot reach it.
+
+| rung | params | $\Delta{=}1$ | 3 | 5 | 10 | mean |
+|---|---|---|---|---|---|---|
+| 4 — MLP control, width 64 | 54,849 | .8631 | .8693 | .8605 | .8504 | .8608 |
+| 4 — MLP control, width 96 | 80,993 | .8666 | .8712 | .8622 | .8520 | **.8630** |
+| 5 — GraphSAGE, homogeneous | 59,649 | .8568 | .8619 | .8525 | .8417 | **.8532** |
+| 6 — RGCN, heterogeneous | 78,849 | .8785 | .8784 | .8675 | .8580 | **.8706** |
+| 7 — temporal over $G_{\leq t}$ | 103,937 | .8911 | .8935 | .8841 | .8760 | **.8862** |
+
+**§7's rule costs rung 5 its place.** The homogeneous encoder is **worse** than the capacity-matched
+graph-free control — −0.0076 on the mean, beating it in only 2 of 12 origin-horizon cells. §7 says a
+rung that does not beat the one below "does not appear in the paper's headline", so rung 5 does not.
+Rungs 6 and 7 each beat the rung below in **12 of 12** cells (+0.0174 and +0.0156).
+
+**The capacity confound was measured, not assumed away, and it does not explain the gains.** §7
+matches capacity on depth, width and head, which does *not* equalise parameter count: relation-specific
+weights cost parameters by construction, so rung 7 carries 1.9× rung 4's. Widening the control until
+its parameter count matches:
+
+| | contribution |
+|---|---|
+| rung 6 (78,849) vs MLP width 96 (80,993) | **+0.0076** |
+| rung 7 (103,937) vs MLP width 128 (109,185) | **+0.0245** |
+| **width alone**: MLP 64 → 96 (+26k params) | +0.0022 |
+| **width alone**: MLP 64 → 128 (+54k params) | +0.0009 |
+
+The control is **saturated in capacity**: doubling its parameters buys 0.0009. So message passing is
+doing the work, not size. This is the first place an inherited CLIQUEBAIT rule has been applied in
+full and *not* changed the answer — its warning (a weak baseline made the graph look worth 0.05–0.09
+where a matched one gave 0.023) is sound, and on this corpus it simply does not fire. That is worth
+stating as such: the rule is not redundant, it did not trigger.
+
+**P7 is FALSIFIED.** It predicts the contribution is larger at long horizons, "falsified if the
+contribution is flat or decreasing in $\Delta$". Contribution over the width-64 control, by horizon:
+
+| | $\Delta{=}1$ | 3 | 5 | 10 | trend |
+|---|---|---|---|---|---|
+| rung 5 − rung 4 | −0.0063 | −0.0074 | −0.0080 | −0.0087 | $\rho = -1.000$, $p = 0.000$ |
+| rung 6 − rung 4 | +0.0154 | +0.0091 | +0.0070 | +0.0076 | $\rho = -0.800$ |
+| rung 7 − rung 4 | +0.0280 | +0.0242 | +0.0236 | +0.0256 | $\rho = -0.400$ |
+
+Every graph rung is flat or decreasing, and the one significant trend is decreasing. **The mechanism
+runs backwards too.** P7 argued that near-term events are dominated by covariates and administrative
+traces while distant ones require structural context. Measured, the graph's contribution is *largest
+at $\Delta = 1$* — where P7 said it should be smallest — and erodes with distance. Whatever message
+passing supplies is most useful for the nearest events, which is the opposite of the stated rationale
+and cannot be rescued by choosing a different horizon.
+
+**C3's pre-specification could not be honoured, and the substitution is stated.** C3 fixed P7 to be
+read at $\Delta^\star_{\text{hi}}$. That horizon does not exist (V2, V8). The trend across all
+horizons is reported instead, which is P7's substance without its anchor.
+
+**What survives, and it is a positive result.** Rung 7 is the one architectural novelty §7 says the
+programme is entitled to propose, and it earns its place twice over: +0.0156 over rung 6 in 12 of 12
+cells, and +0.0245 over a parameter-matched control. §7 committed in advance to reporting a negative
+architectural result if the temporal encoder failed. It did not fail. The prediction *about* it did.
 
 ### V8 — the manifesto's original $r^\star$, tested at last. Noise-limited, and that completes the argument
 
