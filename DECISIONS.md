@@ -383,3 +383,37 @@ CLIQUEBAIT chose on the grounds that it "survived all three settings tested": no
 had this size distribution, the protein benchmark's median complex being 3 against LEDGER's mean
 positive stratum of 66. Clique contrasts are reported stratified by size from here on, with the
 share of the corpus at zero power stated.
+
+## D-16 — the likelihood was verified by closed-form tests, not by review
+**2026-08-03.** `penumbra/hazard.py`, `scripts/test_hazard.py`.
+
+Independent review of the interval-censored competing-risks derivation was attempted twice and both
+workflows died on the session limit with nothing recoverable (237k and 279k subagent tokens, zero
+findings). Subagents are unusable in this session, so the derivation was done directly and checked
+against properties that must hold by algebra. That is a different guarantee from a reviewer, not a
+weaker one: a failing property localises the error, whereas a reviewer might only doubt it.
+
+Seven checks, all passing:
+
+- the exact-event case equals pooled binary regression over entity-periods to 2.8e-14, which is the
+  reduction section 7 asserts;
+- an interval of width one reduces to the exact term exactly, which is the off-by-one check against
+  the corpus convention t_L = y-1, t_R = y;
+- the cause-specific interval term summed over causes equals S(t_L) - S(t_R) exactly, so the two
+  branches of the likelihood agree;
+- a constant hazard is recovered (0.1518 fitted against 0.1518 empirical, 0.15 true);
+- a row preceding its entity's entry raises rather than being trimmed, because immortal time
+  (section 9.1) in a trimmed panel looks correct and in a refused one gets investigated;
+- the determinacy rule behaves at an origin, including the straddling case;
+- events-per-parameter reproduces C8's bound -- 22 absorption events support zero covariates at ten
+  per parameter, which is why P5 is tested on the collapsed contrast.
+
+**Two rules the manifesto leaves open, decided here.** Interval censoring forces both and they share
+one principle: assess only what is determined. At origin o an entity whose interval straddles o is
+neither a positive nor a negative and is excluded with the count reported (`determined_at`), which
+closes the section 9.2 rolling-origin hole. Calibration under interval censoring is assessed on the
+same determined subset, with the undetermined share reported rather than imputed
+(`calibration_at`), which is how section 9.3's demand for calibration as a primary metric becomes
+implementable. Rule-assigned dates need nothing in the likelihood and everything in the evaluation:
+a date assigned from ten years of later data cannot score a forecast made before it was knowable,
+so those 103 terminations are excluded from rolling-origin evaluation rather than from estimation.

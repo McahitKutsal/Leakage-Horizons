@@ -214,7 +214,7 @@ Summary in `results/ledger_summary.json`.
 | left-truncated | 75 (founded before 1946) |
 | terminated / censored | 190 / 383 |
 | families | 475, of which **43** hold more than one entity |
-| events | **10,528** — 8,219 accession, 1,621 exit, 498 founding, 190 termination |
+| events | **10,556** — 8,243 accession, 1,625 exit, 498 founding, 190 termination |
 | dating strata | 9,779 exact, 646 declared-resolution, **103 rule-assigned** |
 | termination causes | 103 dissolution, 32 replaced, 22 absorbed, 33 uncoded (ATOP) |
 | membership rows | 505,951 — 502,634 full, 1,082 associate, 2,235 observer |
