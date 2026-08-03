@@ -15,10 +15,25 @@ three of four, which buys nothing here because the events stop first.
 
 ### 1.1 Two entity types, one registry, no merging
 
-| type | source | population in window | what an entity is |
-|---|---|---|---|
-| `alliance` | ATOP 5.1 | 70 multilateral (≥3 members), 564 including bilateral | a treaty, identified by `atopid` |
-| `organisation` | COW IGO v3 | 491 active | a body, identified by `ionum` |
+| type | source | population in window | what an entity is | built |
+|---|---|---|---|---|
+| `alliance` | ATOP 5.1 | 70 multilateral (≥3 members), 564 including bilateral | a treaty, identified by `atopid` | v1 |
+| `organisation` | COW IGO v3 | 491 active | a body, identified by `ionum` | v1 |
+| `agreement` | DESTA v02.03 | 903 base treaties | a preferential or economic agreement, identified by `base_treaty` | **deferred** |
+
+**Why `agreement` is deferred rather than dropped.** DESTA contributes no entity terminations at
+all (§2.2), so T2 is unaffected by its absence, and its 208 accession events are 3 % of COW IGO's
+6,115. What it does contribute is unique — the whole of dating stratum 2 and the
+signed-but-never-in-force negatives — and both are consumed by U1 validation, which cannot run
+until the corpus exists. It also needs its own crosswalk with its own validation: DESTA keys
+states by ISO numeric code, of 204 distinct parties 179 match COW by name and 25 do not, and nine
+of those are **not COW system members at all** — Cook Islands, Faroe Islands, Greenland, Hong
+Kong, Macao, Montserrat, Niue, Palestinian Territories, Western Sahara. Those are trade parties
+that are not states, and they must be excluded from the risk set explicitly rather than
+force-matched onto whichever state administers them. Its files are also cp1252, not the latin-1
+the other sources need, which silently corrupts an apostrophe in three country names. Building
+that halfway to keep the corpus on schedule is the kind of shortcut this programme exists to
+find in other people's work.
 
 The prior canon's mistake is not repeated: it held NATO as six entities — `NATO_founding`,
 `NATO_15`, `NATO_16_GFR` and so on — one per membership composition, which is what a detection
@@ -81,7 +96,7 @@ conservative one on discovering an inconvenient interval. Recorded as C13.
 | event | entity type | source field | count in window |
 |---|---|---|---|
 | founding | both | `sdate` / `begyr` | 304 organisations (1965+), 564 treaties |
-| accession | both | `0 → 1` in membership / `yrent > begyr` | 6,290 (1966+) / 335 multilateral |
+| accession | both | `0 → 1` in membership / `yrent > begyr` | 6,115 (1966+) / 335 multilateral |
 | exit | both | `1 → 0` / `yrexit` | 901 (1966+) / 756 |
 | termination | both | `dead`/`integrated`/`replaced` / `endyr` | **157** organisations / 26 multilateral treaties |
 
@@ -188,14 +203,51 @@ no event. They are U1's specificity control (C9).
 
 ---
 
-## 5. Outputs
+## 5. Built — v1, 2026-08-03
+
+`scripts/build_ledger.py`, which validates before it writes and writes nothing on a failure.
+Summary in `results/ledger_summary.json`.
+
+| | |
+|---|---|
+| entities | **573** — 493 organisations, 80 alliances |
+| left-truncated | 75 (founded before 1946) |
+| terminated / censored | 190 / 383 |
+| families | 475, of which **43** hold more than one entity |
+| events | **10,528** — 8,219 accession, 1,621 exit, 498 founding, 190 termination |
+| dating strata | 9,779 exact, 646 declared-resolution, **103 rule-assigned** |
+| termination causes | 103 dissolution, 32 replaced, 22 absorbed, 33 uncoded (ATOP) |
+| membership rows | 505,951 — 502,634 full, 1,082 associate, 2,235 observer |
+| risk-set exclusions | 190,750 missing cells over 19,335 organisation-years |
+
+Rule-assigned dates are **54.2 %** of all terminations. More than half of T2's event supply is
+dated by a rule that consumes ten years of subsequent data, which is why §9.7 exists and why the
+$\Delta^\star$ claim rests on stratum 1 alone.
+
+### Two source findings the build turned up
+
+**COW keeps some organisations in the file after their coded death.** The Francophone Agency
+(`ionum` 270) is coded dead in 2005, `replaced` by a successor, and its rows run to 2014 with
+membership still changing — one accession in 2008 and 622 membership-years after its exit. §4.2
+censors an entity at termination, so those belong to the successor and are dropped, counted, and
+reported in `dropped_declared`. It is the only entity of 198 whose last observed year exceeds its
+`deaddate`, so this is an exception rather than a pattern, and it is handled as one.
+
+**The `-1` code never appears.** The v3 codebook gives `-9` as missing data and `-1` as
+state-not-a-system-member for the IGO-year file, and C5 pre-specifies both as outside the risk
+set. Materialised, `-9` occurs 190,750 times and **`-1` not once**: state-system membership is
+carried by `0` in this file. C5's rule is unchanged and one half of it is inert, which is worth
+knowing before someone reads a zero exclusion count as a clean join.
+
+### Outputs
 
     data/interim/igo_state_crosswalk.csv     217 IGO columns -> COW codes, validated both ways
-    data/ledger/entities.parquet             registry: id, type, source, origin, truncation flag
-    data/ledger/events.parquet               id, type, cause, (t_L, t_R], dating stratum, source
+    data/ledger/entities.parquet             registry: id, type, origin, truncation, family, exit
+    data/ledger/events.parquet               id, type, cause, (t_L, t_R], stratum, knowable_from
     data/ledger/membership.parquet           (entity, state, year, status) for risk sets
     data/ledger/families.csv                 membership-equivalence families, the resampling unit
-    data/ledger/same_instrument.csv          hand-verified ATOP <-> COW IGO links, short
+    data/ledger/riskset_exclusions.parquet   per organisation-year missing / not-system counts
+    data/ledger/same_instrument.csv          hand-verified ATOP <-> COW IGO links — not yet built
 
 ## 6. Open before the first fit
 

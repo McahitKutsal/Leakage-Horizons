@@ -38,9 +38,14 @@ measured before being ruled out.
 | | ATOP 5.1, 1946+ | COW IGO v3, 1965+ |
 |---|---|---|
 | entities | 52 multilateral (70 by member count) | **470** |
-| accessions | 335 multilateral | **6,290** |
-| terminations | **26** multilateral | 135 candidates |
+| accessions | 335 multilateral | **6,115** |
+| terminations | **26** multilateral | 135 candidates, 157 coded 1946+ |
 | exits | 756 member-level | 901 |
+
+The accession figure read 6,290 until 2026-08-03 and was wrong; see D-08. The decision does not
+turn on it — 6,115 is the same order and the same conclusion — but the figure is corrected here
+rather than left standing, because the next number derived from it would not have been so
+forgiving.
 
 §6 declares several hundred entities and low thousands of events a **precondition**. ATOP
 alone reaches neither, and 26 termination events cannot support competing-risks estimation at
@@ -153,3 +158,32 @@ Two by-products worth more than they look. The signature-to-entry-into-force gap
 rather than assumed (C7). And 282 agreements were signed from 1946 and never entered force —
 units with full administrative traces and no event, which is the specificity control U1 has
 otherwise had no way to construct (C9).
+
+## D-08 — one definition of "which columns are states", and the figure it had already spoiled
+**2026-08-03.** Caught by `scripts/build_ledger.py` disagreeing with
+`scripts/audit_corpus_scale.py` on a number both were meant to produce.
+
+`audit_corpus_scale.py` carried its own list of the IGO file's non-state columns and it had
+drifted from the one in `penumbra/crosswalk.py`: it omitted `dead`, `integrated`, `replaced`,
+`sdate` and `deaddate`. So `dead` moving from 0 to 1 at a termination was counted as a state
+acceding, and the accession figure came out **6,290** instead of **6,115** — 175 phantom
+accessions, one per organisation that died in the era.
+
+Three things worth recording rather than just fixing.
+
+The defect is **two definitions of one thing**, not a typo, and the fix is that `IGO_META` now
+lives in `penumbra/crosswalk.py` and is imported. This is the same class of error CLIQUEBAIT
+documents in the benchmark it audits: five construction details that did not match the released
+code, found only because someone recomputed them.
+
+It was caught by **cross-checking two independent code paths against each other**, not by review.
+The wrong number is entirely plausible — right order, right shape, wrong by 3 % — and no reading
+of the script would have flagged it. `exits` was unaffected and matched at 901 in both paths,
+which is itself the tell: `dead` goes 0 to 1 and never back, so only accessions could inflate.
+
+The **frozen manifesto does not cite it.** §0's amendment record quotes ATOP's 52 alliances and 26
+terminations and no accession count, so the pre-registration is unaffected and no clause needs
+reinterpreting. The figure appeared in D-03's decision table and in LEDGER.md; both are corrected
+in place with the old value named. The §11 decision does not turn on it — 6,115 is the same order
+and the same conclusion — but the correction is recorded because the next quantity derived from it
+would not have been so forgiving.

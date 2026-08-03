@@ -21,12 +21,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 ATOP = ROOT.parent / "CLIQUEBAIT" / "data" / "ATOP 5.1 (.csv)"
 IGO = ROOT / "data" / "raw" / "cow_igo" / "igo_year_formatv3.csv"
 DESTA = ROOT / "data" / "raw" / "desta" / "desta_list_of_treaties_02_03.csv"
@@ -41,10 +43,13 @@ WINDOW_START = 1946
 # from state birth and from missing data respectively.
 FULL_MEMBER, NO_MEMBER = 1, 0
 
-# Columns of the IGO year file that describe the organisation rather than a state's membership.
-IGO_META = ["ioname", "orgname", "year", "longorgname", "ionum", "igocode", "version",
-            "accuracyofpre1965membershipdates", "sourcesandnotes", "imputed",
-            "political", "social", "economic"]
+# Which columns of the IGO year file are states and which describe the organisation is defined
+# in ONE place. This script carried its own list and the two drifted: it omitted `dead`,
+# `integrated`, `replaced`, `sdate` and `deaddate`, so `dead` going 0 -> 1 at a termination was
+# counted as a state acceding. That inflated the accession figure from 6,115 to 6,290 -- a number
+# quoted in DECISIONS.md D-03 before the corpus was built and caught only when LEDGER, using the
+# shared definition, disagreed. Two definitions of one thing is the defect, not the typo.
+from penumbra.crosswalk import IGO_META  # noqa: E402
 
 
 # --------------------------------------------------------------------------------- ATOP
@@ -100,7 +105,7 @@ def _load_igo() -> tuple[pd.DataFrame, list[str]]:
     # read about.
     d = pd.read_csv(IGO, sep="\t", low_memory=False, encoding="latin-1")
     d = d.sort_values(["ionum", "year"]).reset_index(drop=True).copy()
-    state_cols = [c for c in d.columns if c not in IGO_META]
+    state_cols = [c for c in d.columns if c not in IGO_META]  # IGO_META is shared
     return d, state_cols
 
 
