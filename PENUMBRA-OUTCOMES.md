@@ -29,8 +29,8 @@ to the third has to cite the measurement that did it.
 
 | | prediction | test statistic | verdict |
 |---|---|---|---|
-| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | not yet measured |
-| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | first verdict **WITHDRAWN** (V0); re-measurement pending |
+| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — instrumental non-identification (V2) |
+| **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2). Flat-curve clause not met — curve decays 0.133 — but decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ unreachable |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | not yet measured |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | not yet measured |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | not yet measured |
@@ -162,6 +162,108 @@ than assumed.
 rather than the audit. It was caught by looking at the **sign** of a statistic that had no business
 being negative, and refusing a verdict that arrived in the convenient direction. That is the only
 mechanism that would have caught it, and it is worth saying so in the paper.
+
+### V2 — the corrected measurement. No penumbra is detected, and neither P1 nor P2 is decided
+
+Everything below is on the matched panel of V0, primary regime 1965–2014, anchors and primary level
+$k = 25$ declared before the runs. Four measurements, and they only make sense together.
+
+**(a) The shortcut curve decays, monotonically and for real.** `results/u2_matched.parquet`.
+
+| $\Delta$ | 1 | 2 | 3 | 5 | 7 | 10 | decay |
+|---|---|---|---|---|---|---|---|
+| GBM 300/3 | .7658 | .7241 | .7030 | .6693 | .6479 | .6330 | **0.133** |
+| GBM 30/2 | .7388 | .7040 | .6810 | .6510 | .6287 | .6109 | 0.128 |
+| linear | .7423 | .7081 | .6861 | .6566 | .6442 | .6196 | 0.123 |
+
+Monotone at every step, and **capacity-invariant** — so this is not V1d's artefact. Note what the
+matched risk set cost: 0.87 at $\Delta = 1$ became **0.766**, so roughly 0.10 of the withdrawn
+figure was group size.
+
+**(b) A decaying shortcut curve is not evidence for P2, because it is also the null.** P2 reads
+decay as the leak falling away and flatness as the leak surviving. But predicting ten years ahead
+is harder than predicting one year ahead *with no leakage at all*, so decay is what the null
+predicts too. Flatness would have been the surprise. P2's confirmation condition is therefore
+not diagnostic as written, and the manifesto does not supply the test that would make it so.
+
+**(c) The test that does: U2 with $r^\star$ excluded, horizon by horizon.** This is D2's
+horizon-resolved analogue and it is not in the manifesto's U2 specification.
+
+| $\Delta$ | anchors only | with $r^\star$ | $r^\star$'s contribution |
+|---|---|---|---|
+| 1 | .5657 | .7658 | **.2001** |
+| 3 | .5463 | .7030 | .1567 |
+| 5 | .5572 | .6693 | .1121 |
+| 7 | .5377 | .6479 | .1102 |
+| 10 | .5376 | .6330 | **.0954** |
+| decay | **0.028** | 0.133 | halves |
+
+Without co-membership the probe is barely above chance and nearly flat. **Essentially all the
+predictive content is in $r^\star$, and its contribution halves across nine horizons.** So the
+decay in (a) is not forecasting difficulty — the anchors show almost none of it — it is
+specifically $r^\star$'s contribution falling away.
+
+**(d) And that still does not identify a penumbra**, because a decaying contribution from
+$r^\star$ is equally what a genuine predictor does. Co-membership in 2003 predicts a 2004 accession
+better than co-membership in 1994 does, for the ordinary reason that relationships change. To call
+the decay a shadow requires the traces to be administrative, and `PROVENANCE.md` §2 says they are
+not: five of 495 organisations mention signature or accession dating and one explicitly refuses.
+Meanwhile the statistic that *would* separate the two — exact cliqueness, CLIQUEBAIT's leakage
+fingerprint — is **flat** across all ten horizons (0.0606 → 0.0545 at $k = 25$) and, per V3,
+structurally blind on a third of the corpus.
+
+**Verdicts.**
+
+* **P1 — not decided.** $\Delta^\star_{\text{lo}}$ is never reached at $k = 25$: the clique contrast
+  stays above the band (0.055–0.061 against 0.019–0.026) at every horizon without decaying. Per C18
+  that is instrumental non-identification, reported as prominently as a verdict and not as support.
+  Reading it as "the penumbra exceeds ten years" would be wrong: a penumbra decays, and this does
+  not move.
+* **P2 — not decided either, and the clause structure is the reason.** The "falsified by a flat
+  curve" condition is **not met** — the curve decays 0.133, monotonically, capacity-invariantly. But
+  the decay is not diagnostic per (b), and $\Delta^\star_{\text{hi}}$ is unreachable because
+  $r^\star$ never loses top rank on clique contrast, exactly the structural failure C18 predicted
+  from synthetics and now reproduced on real data. Non-identification, not confirmation.
+* **$\phi$-alone AUC for $r^\star$ at $k = 25$ is 0.52–0.53** — barely above chance, and *below* the
+  anchor band at every horizon. The relation that carries all the graded signal carries almost none
+  of it in the form $\phi$ measures.
+
+**What this is, stated plainly.** No penumbra is detected in the relation that carries $r^\star$ for
+493 of 573 entities, and the instrument cannot distinguish that from a penumbra it is unable to see.
+That is §5.4's limit — the automated part is triage, the verdict needs the coding rules — arrived at
+empirically rather than quoted. The coding rules say there is no systematic back-dating, so the
+reading that survives all four measurements is: **co-membership is a genuine, decaying predictor of
+accession, not an administrative shadow.** §11's contingency for a trivially narrow penumbra is the
+operative one, and the programme's weight moves to T2 and to the instrument findings.
+
+### V3 — the exact-clique statistic is blind on large groups, and a third of the corpus contributes nothing
+
+Clique rate at $k = 25$ by group size, horizon 3, matched panel:
+
+| members | 2–5 | 6–10 | 11–20 | 21–40 | 41–80 | **81+** |
+|---|---|---|---|---|---|---|
+| positives | .487 | .451 | .449 | .105 | .021 | **.0000** |
+| negatives | .291 | .202 | .244 | .059 | .011 | **.0000** |
+| contrast | .196 | .249 | .205 | .047 | .010 | **.000** |
+| n positives | 115 | 324 | 816 | 1044 | 1284 | **2056** |
+
+The contrast is informative below about twenty members, an order of magnitude weaker by forty, and
+**exactly zero above eighty** — where 2,056 of 5,639 positives live. **36 % of the corpus cannot
+contribute to the statistic at all**, and 52 % of every positive clique comes from the 11–20 band.
+The pooled 0.058 is a size-weighted average of a small-coalition subpopulation.
+
+The mechanism is arithmetic: a clique at level $k$ requires *every* dyad to clear the threshold, and
+a 90-member coalition has 4,005 dyads. The probability of all of them clearing anything is nil, so
+the statistic is not weak on large groups — it is identically zero.
+
+**This bounds the statistic CLIQUEBAIT selected.** Its `clique_contrast` was chosen as "the only
+ranking statistic that survived all three settings tested", and none of those settings had this size
+distribution: the protein benchmark's median complex size is **3**, and LEDGER's positive strata
+average **66**. Pre-specification, forced: any clique-based contrast is reported **stratified by
+group size** with the share of the corpus at zero power stated, and a pooled clique contrast over a
+heterogeneous size distribution is not interpretable. For corpora like this one the graded
+$\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
+cliqueness is not.
 
 ### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03 — **WITHDRAWN, see V0**
 

@@ -361,3 +361,25 @@ which checks LEDGER rather than the audit built on it -- it was caught by the *s
 that had no business being negative. And the void verdict pointed in the direction the accumulated
 evidence already favoured, which is exactly when a result is least likely to be questioned. The
 retraction was written before the replacement numbers existed for that reason.
+
+## D-15 — the two measurements that decided V2, and the one the manifesto does not specify
+**2026-08-03.** `results/u2_matched.parquet`, `results/u2_d2_horizon.parquet`; verdict in
+`PENUMBRA-OUTCOMES.md` V2 and V3.
+
+**U2 with r* excluded, horizon by horizon.** The manifesto specifies U2 as one probe over all
+relations, which cannot separate a decaying leak from ordinary forecasting difficulty -- both
+produce a decaying curve, and difficulty is the null. Running the probe with and without r* does
+separate them, and it is D2's horizon-resolved analogue. Measured: the anchors alone sit at
+0.54-0.57 and decay 0.028, while r* adds 0.200 at horizon 1 falling to 0.095 at horizon 10. So
+essentially all the graded signal is in r* and its contribution halves, which is neither
+difficulty nor -- given the provenance -- an administrative shadow. This exclusion contrast is now
+part of every U2 report.
+
+**Clique power by group size.** The exact-clique contrast is 0.20-0.25 below twenty members, 0.047
+at 21-40, 0.010 at 41-80 and identically 0.000 above eighty, where 2,056 of 5,639 positives live. A
+90-member coalition has 4,005 dyads and a clique needs all of them, so the statistic is not weak
+there, it is zero. The pooled 0.058 is a small-coalition subpopulation. This bounds the statistic
+CLIQUEBAIT chose on the grounds that it "survived all three settings tested": none of those settings
+had this size distribution, the protein benchmark's median complex being 3 against LEDGER's mean
+positive stratum of 66. Clique contrasts are reported stratified by size from here on, with the
+share of the corpus at zero power stated.
