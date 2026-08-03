@@ -258,6 +258,49 @@ stops imputing after 1964 and `votes_with` returns in 1965, the longest intact-c
 (1965–2014, 50 years) and the exactly-dated event stratum begin in the same year, which makes that
 window the primary analysis regime and 1948–1963 an out-of-regime replication.
 
+**C17 — the non-leaking band must be anchored on a relation that shares $r^\star$'s structure, and
+anchoring it on relations that merely do not leak makes $\Delta^\star_{\text{lo}}$ overshoot.**
+Measured on the synthetic corpus, `scripts/calibrate_delta_star.py`. With latent-similarity and
+noise relations as the only anchors, their clique rate is exactly **0.000**, because they have no
+group mechanism at all: to form a clique every dyad must arrive from the background. A relation
+that records current membership honestly still shows a residual clique rate of about **0.05**, since
+only the acceding state's dyads are missing and a latent neighbour's dyads are favoured by a
+similarity-weighted background. So the band was an order of magnitude tighter than the residual it
+had to admit, and $\Delta^\star_{\text{lo}}$ fired two horizons late or never — at $\beta = 3$ the
+contrast collapsed from 1.000 to 0.050 exactly on cue at $\Delta = 4$ and was rejected against a
+band of 0.0487.
+
+The fix is structural rather than a tolerance. The generator now carries `r_current`: the same
+construction as $r^\star$, the same completeness, and $\beta = 0$ by declaration — a relation that
+records the present and does not anticipate. It is the band's primary anchor. Pre-specification for
+real data: **the band's anchor must be a relation known from the coding rules to record without
+back-dating, not merely one believed not to leak.** Which relations those are cannot be decided by
+any statistic and comes from §5.4's provenance paragraph, exactly as CLIQUEBAIT's triage/verdict
+distinction requires. A band set on structurally dissimilar anchors systematically reports the
+penumbra as wider than it is, which biases P1 toward confirmation.
+
+**C18 — $\Delta^\star_{\text{lo}}$ calibrates exactly; $\Delta^\star_{\text{hi}}$ is frequently
+unreachable, and P2 must not be falsified by that.** With the corrected band, the lower bound
+recovers the known back-dating horizon in **6 of 6 settings**, $\beta = 0 \ldots 5$, landing on
+$\beta + 1$ every time. That is the target the definition implies: traces are present for
+$\Delta \leq \beta$, so the smallest trace-free horizon is $\beta + 1$. The estimator works.
+
+The upper bound does not behave. Over horizons 0–8 it fired in **2 of 6** settings on the
+*never-event* stratum and was unreachable in the rest. The cause is the conjunction §5.1 requires:
+$r^\star$ must lose top rank **and** its $\phi$-alone AUC must enter the band, and rank is a
+relative statistic that a structurally similar anchor keeps contesting. This was flagged as a risk
+before any measurement and is now demonstrated.
+
+The consequence for the frozen text is precise and must be honoured rather than argued around. P2
+is falsified by a flat shortcut curve or by $\Delta^\star_{\text{hi}} > 6$. An **unreachable**
+upper bound is not a large one. Pre-specification: where $\Delta^\star_{\text{hi}}$ does not exist
+within the observable horizon range, that is reported as **instrumental non-identification of the
+upper bound** and P2 is recorded as *not testable at this bound*, never as falsified. The
+programme does not get to end on an artefact of its own measuring device, and it does not get to
+quietly rescue P2 either — the non-identification is reported as prominently as a verdict would
+have been. The synthetic result above is the evidence that this is a property of the definition
+rather than of any particular corpus.
+
 ---
 
 ## Outstanding, carried from CLIQUEBAIT

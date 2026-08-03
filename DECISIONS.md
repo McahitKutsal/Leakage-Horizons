@@ -187,3 +187,47 @@ reinterpreting. The figure appeared in D-03's decision table and in LEDGER.md; b
 in place with the old value named. The §11 decision does not turn on it — 6,115 is the same order
 and the same conclusion — but the correction is recorded because the next quantity derived from it
 would not have been so forgiving.
+
+## D-09 — the synthetic testbed gets a back-dating axis, and it graded the estimator
+**2026-08-03.** `penumbra/synthetic.py`, `penumbra/umbra.py`,
+`scripts/calibrate_delta_star.py` → `results/delta_star_calibration.json`.
+
+CLIQUEBAIT's generator has a leakage coefficient and measures at zero lag. PENUMBRA calibrates a
+**horizon**, so the generator gains $\beta$: how many steps before an event its traces appear.
+Leakage enters as a displacement of what $r^\star$ believes the membership to be — $r^\star$'s view
+is the truth shifted $\beta$ steps earlier, which is §1's accession protocol signed before it takes
+effect rather than an abstraction of it. The target follows from the definition and was fixed
+before the run: traces exist for $\Delta \leq \beta$, so $\Delta^\star = \beta + 1$.
+
+Two invariances, both inherited as hard constraints and both verified. **Density**: $r^\star$'s
+density is identical across the whole $\alpha \times \beta$ grid, range $0.0$ to eight decimals.
+**Completeness**: realised completeness equals $\alpha$ everywhere, maximum deviation 0.0004, with
+the edge budget never clamped. The second is the one the design could have lost. Back-dating
+enlarges the pool of eligible dyads, so a fixed budget split among all open windows would sample
+each coalition more sparsely at higher $\beta$ and degrade the clique property — confounding
+$\beta$ with the very thing `clique_contrast` measures. Defining $\alpha$ as completeness rather
+than budget share keeps the axes orthogonal, and the budget is sized once from the worst-case year
+over the whole sweep (1,568 dyads at $\beta \leq 10$, hence density 0.09) so that $\alpha = 1$ can
+mean complete.
+
+Three defects surfaced, in falling order of how badly they would have gone unnoticed.
+
+**The band was a knife edge.** Set at the anchors' point estimate it returned "never reached" at
+every $\beta$, on a corpus where the signal collapses exactly on cue. Bands are now derived from
+sampling noise — a Clopper-Pearson upper limit for zero successes at the observed positive count,
+and the null SD of AUC — so nothing is chosen by eye, which is what §5.1 demands.
+
+**The anchors were structurally wrong**, and this is the finding worth the most. Relations with no
+group mechanism sit at a clique rate of exactly zero; a relation that records the present honestly
+still shows about 0.05. The band was an order of magnitude too tight and $\Delta^\star_{\text{lo}}$
+overshot. Fixed by adding `r_current` — same construction, same completeness, $\beta = 0$ by
+declaration. C17 carries the pre-specification this forces on real data.
+
+**The anchors also have to be density-matched.** At $r^\star$ density 0.09 against anchors at 0.06,
+$r^\star$ ranked top at every horizon on density alone and the sensitive bound never fired.
+CLIQUEBAIT established that $\omega$ over-ranks dense relations; the clique rate inherits it.
+
+Outcome: $\Delta^\star_{\text{lo}}$ recovers $\beta + 1$ in **6 of 6** settings. The upper bound
+fires in 2 of 6 and is otherwise unreachable, which was flagged as a risk before any measurement
+and is now demonstrated as a property of the definition. C18 fixes how P2 is read when that
+happens, and the answer is not "falsified".
