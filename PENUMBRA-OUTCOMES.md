@@ -11,12 +11,17 @@ held, what did not, and where the manifesto's own instructions have to be overri
 prior programme falsified one of its five hypotheses and overrode three of its four
 diagnostics. That is the expected rate, not a failure mode.
 
-**Status, 2026-08-03.** No model has been fitted, no $\Delta^\star$ estimated, no prediction
-adjudicated. What *has* been measured is the source audit — event counts per source and cause,
-COW IGO's dating rules, and the DESTA signature-to-force gap — all of it by
-`scripts/audit_corpus_scale.py` into `results/corpus_scale.json`. That audit is why the
-manifesto's round-2 amendment happened and why no third round may. Concerns C7–C11 below are
-its output and are stated as measurements with dates, not as pre-measurement caution.
+**Status, 2026-08-03.** The corpus is built and validated, the observation graph is built and its
+coverage audited, the provenance is declared in `PROVENANCE.md`, $\Delta^\star_{\text{lo}}$ is
+calibrated against a known back-dating horizon on synthetics, and U2 has run on real data. **One
+clause of one prediction is adjudicated** — see V1. No hazard model has been fitted, so P3–P7 are
+untouched, and $\Delta^\star$ has not been estimated on real data, so P1 and P2's second clause are
+untouched.
+
+Three kinds of entry live below and the difference between them is the point. **C1–C6** were
+written with nothing measured. **C7–C18** are measurements taken before the thing they bear on was
+computed. **V-entries** are verdicts on §8's predictions. Anything moving from the second category
+to the third has to cite the measurement that did it.
 
 ---
 
@@ -36,12 +41,12 @@ its output and are stated as measurements with dates, not as pre-measurement cau
 
 | | status |
 |---|---|
-| $\Delta^\star$ definition with signature-to-force external validation | definition amended into §5.1; not yet estimated |
-| UMBRA — lagged diagnostic suite U1–U3 | not started |
-| LEDGER — event corpus | source audit done incl. causes, dating rules and DESTA gap; corpus not built |
-| Three tasks with declared risk sets, origin times, censoring rules | not started |
-| Cause-specific hazard results for termination | not started |
-| Architectural ladder, each rung earning its place | not started |
+| $\Delta^\star$ definition with signature-to-force external validation | defined (§5.1); **calibrated on synthetics**, $\Delta^\star_{\text{lo}}$ recovering $\beta+1$ in 6 of 6 (C18); not yet estimated on real data. External anchor measured (C7) |
+| UMBRA — lagged diagnostic suite U1–U3 | **U1 built and calibrated; U2 built and run on real data (V1).** U3 focal exclusion implemented in `graph.focal_excluded_weight`, not yet run |
+| LEDGER — event corpus | **built and validated**: 573 entities, 10,528 events, four dating strata. `agreement` entities deferred (LEDGER.md §1.1) |
+| Three tasks with declared risk sets, origin times, censoring rules | **declared** in LEDGER.md §4 before construction; T1 panels built, T2 and T3 not run |
+| Cause-specific hazard results for termination | not started. 157 coded events, three causes; P5 tested as two per C8 |
+| Architectural ladder, each rung earning its place | not started. Rung 3, the density-only baseline, is V1's curve |
 
 ---
 
@@ -185,6 +190,51 @@ so it is not in the risk set, and every positive filters out. Detection at zero 
 formulation CLIQUEBAIT audited — is therefore not a special case of this one but a different task
 over a different risk set. That is a structural property worth stating plainly, because a reader
 will expect $\Delta = 0$ to anchor the curve and it cannot.
+
+### V1d — U2 can manufacture a penumbra, and the confound is structural to the diagnostic
+
+The out-of-regime replication (1948–1963) appeared to *support* P2 where the primary regime
+falsified it: the boosted probe fell from 0.844 at $\Delta = 1$ to 0.701 at $\Delta = 10$, a decay
+of 0.143 — six times the primary regime's. Read at face value that is the penumbra closing, in the
+window where the manifesto would most expect it.
+
+It is not. It is the probe overfitting a smaller sample, and the test is decisive because the decay
+moves with **probe capacity** rather than with anything about the data:
+
+| | $n_{\text{pos}}$ at $\Delta=1 \to 10$ | GBM 30 trees / depth 2 | 100 / 2 | 300 / 3 | linear |
+|---|---|---|---|---|---|
+| replication 1948–1963 | 1061 → 508 | 0.0575 | 0.1162 | **0.1434** | 0.0411 |
+| primary 1965–2014 | 6294 → 4024 | 0.0304 | 0.0313 | **0.0244** | 0.0290 |
+
+(cells are the decay in $\mathrm{AUC}_{\text{shortcut}}$ from $\Delta = 1$ to $\Delta = 10$.)
+
+In the small regime the apparent decay **nearly triples** as capacity triples, while the linear
+probe sits fixed at 0.041. In the primary regime the decay is capacity-invariant at 0.024–0.031 and
+agrees with the linear probe's 0.029. The corroborating symptom was visible before the test: at
+$\Delta = 10$ the boosted probe gave 0.701 on one negative stratum and 0.824 on the other, from the
+same positives — a 0.12 swing from a sampling change, which is variance, not signal.
+
+**Why this is not a local nuisance.** The positive count *necessarily* falls with horizon: an event
+at $t + \Delta$ needs an origin at $t$, so the longest horizons always have the fewest usable
+events. A high-capacity probe therefore always overfits *more* at long horizons than at short ones,
+and produces a decaying curve **whatever the leakage is**. The confound is built into the shape of
+the diagnostic rather than into this corpus, and it runs in exactly the direction that confirms the
+hypothesis U2 is meant to test.
+
+And the inherited protocol points straight at it. CLIQUEBAIT's PROTOCOL §5 says "use a
+**non-linear** probe for D1", on good evidence at zero lag where the sample does not shrink. Carried
+into a horizon-resolved setting without that caveat, it is an instruction to build a penumbra
+detector that finds penumbras in small corpora.
+
+**Pre-specification, forced by this and applying to every U2 figure the paper reports.** The curve
+is reported at **at least three probe capacities plus the linear probe**, and a decay that varies
+with capacity is reported as an artefact rather than as evidence of a penumbra. The linear probe is
+the capacity floor and the honest reading of any U2 curve is the capacity-invariant part of it.
+
+**Consequence for V1: the falsification is strengthened, not weakened.** The primary regime's flat
+curve is exactly the case that survives capacity variation and matches the linear floor, so it is
+not an artefact of probe choice. And the replication does not rescue P2, because its decay
+evaporates under the one test that distinguishes decay from overfitting.
 
 ---
 

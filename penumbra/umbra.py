@@ -186,7 +186,8 @@ class HorizonAudit:
     def u2_shortcut(self, horizons=range(0, 11), levels: dict | None = None,
                     negatives: str = NEVER_EVENT, max_neg_per_pos: int = 4,
                     groups_for_split: dict | None = None, n_splits: int = 5,
-                    seed: int = 0, also_linear: bool = True) -> pd.DataFrame:
+                    seed: int = 0, also_linear: bool = True,
+                    n_estimators: int = 300, max_depth: int = 3) -> pd.DataFrame:
         """AUC of a density-only probe, per horizon. Manifesto §5.2.
 
         The fraction of the forecasting task recoverable with no representation at all, as a
@@ -243,10 +244,12 @@ class HorizonAudit:
                 continue
             cv = GroupKFold(n_splits=k_folds)
 
-            gbm = GradientBoostingClassifier(random_state=seed, n_estimators=300, max_depth=3)
+            gbm = GradientBoostingClassifier(random_state=seed, n_estimators=n_estimators,
+                                             max_depth=max_depth)
             p_gbm = cross_val_predict(gbm, X, y, cv=cv, groups=grp,
                                       method="predict_proba")[:, 1]
             rec = {"horizon": h, "negative_stratum": negatives,
+                   "n_estimators": n_estimators, "max_depth": max_depth,
                    "n_pos": int(y.sum()), "n_neg": int((1 - y).sum()),
                    "n_clusters": int(len(pd.unique(grp))), "n_features": X.shape[1],
                    "auc_shortcut": float(roc_auc_score(y, p_gbm))}

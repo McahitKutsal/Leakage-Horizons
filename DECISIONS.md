@@ -290,3 +290,24 @@ number in V1 by an unknown amount.
 One reporting mistake worth recording so it is not repeated: the long runs were piped through
 `tail`, which buffers, so no interim progress was visible and liveness could only be confirmed by
 looking at the process. Long runs should not be piped.
+
+## D-12 — U2 is reported at multiple probe capacities, because it can invent a penumbra
+**2026-08-03.** Evidence and the capacity table are in `PENUMBRA-OUTCOMES.md` V1d.
+
+The out-of-regime replication looked like it supported P2 where the primary regime falsified it: the
+boosted probe decayed 0.143 across nine horizons against the primary regime's 0.024. The decay
+turned out to scale with probe capacity -- 0.058, 0.116, 0.143 at 30/2, 100/2 and 300/3 trees and
+depth -- while the linear probe stayed at 0.041. In the primary regime the same sweep gives
+0.030, 0.031, 0.024: capacity-invariant, and matching the linear probe's 0.029.
+
+The reason this is a protocol matter and not a tuning note is that the positive count necessarily
+falls with horizon, since an event at t+D needs an origin at t. A high-capacity probe therefore
+always overfits more at long horizons than at short ones and produces a decaying curve whatever
+the leakage is. The confound is in the shape of the diagnostic, and it runs in the direction that
+confirms the hypothesis being tested.
+
+Every U2 figure is therefore reported at three or more capacities plus the linear probe, and a
+decay that moves with capacity is reported as an artefact. This also bounds an inherited rule:
+CLIQUEBAIT's "use a non-linear probe for D1" is sound at zero lag, where the sample does not
+shrink, and becomes a penumbra generator when carried into a horizon-resolved setting without that
+caveat.
