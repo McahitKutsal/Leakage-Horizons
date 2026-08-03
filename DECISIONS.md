@@ -431,3 +431,22 @@ exact and interval events, with and without left truncation, and cause-unknown i
 check that a fit through the fast path is scored identically by the reference path. Worst
 disagreement: 4.6e-13 on the likelihood, 2.3e-13 on the gradient. The closed-form checks of D-16
 still pass through the new path.
+
+## D-18 — T1 reports two AUCs, because one of them would repeat V0's mistake
+**2026-08-03.** `scripts/run_t1_ladder.py`; results in `PENUMBRA-OUTCOMES.md` V5.
+
+The first ladder run reported only the pooled AUC over the whole risk set at each origin, which gave
+rung 2 a score of 0.79-0.91 -- above U2's density-only 0.766. Comparing those two would have been
+the V0 error again with a better excuse: U2's negatives are matched within a coalition-year, while
+the pooled T1 evaluation lets the model win on which coalitions grow and which states are joiners.
+
+Both are now reported. The pooled metric is the right one for §4's forecasting question, which is
+genuinely pooled. The within-coalition metric holds the coalition fixed and asks only which
+candidate state accedes, which is the quantity comparable to U2 and to U1's contrasts. They differ
+by about 0.25, and the gap is a result rather than a nuisance.
+
+It also changes a ladder verdict. Rung 3's densities beat rung 2 by only +0.0096 pooled -- marginal
+enough that an inattentive application of §7's rule might have dropped them -- but by +0.0393
+within-coalition, four times larger, and in 16 of 16 cells. Node covariates answer which coalitions
+grow; densities answer which state, for this coalition. Reporting a single number would have
+obscured which question each rung was answering.

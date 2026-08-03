@@ -182,6 +182,53 @@ class HorizonAudit:
             return int(hit.sum())
         return int((hit & (self._wts[(relation, year)][pos] >= level)).sum())
 
+    def phi_batch(self, entity_id: str, year: int, ccodes: np.ndarray,
+                  relation: str, level: int = 1) -> np.ndarray:
+        """phi for many candidates against one (entity, year), computed together.
+
+        Every candidate for the same coalition-year shares the member-only dyads, so the only
+        per-candidate work is the star from the candidate to each member. Doing all candidates at
+        once turns 10^7 scalar calls into 10^5 array operations, which is what makes covariates for
+        a 2.2M-row risk set affordable at all. Exactness is unchanged: this is the same
+        decomposition `phi_candidate` uses, evaluated on a matrix instead of a vector.
+        """
+        ms_idx = self._member_idx.get((entity_id, year))
+        if ms_idx is None or ms_idx.size == 0:
+            return np.full(len(ccodes), np.nan)
+        key = (entity_id, year, relation, level)
+        cached = self._phi_cache.get(key)
+        if cached is None:
+            keys = self._pack(self._members[(entity_id, year)])
+            cached = (self._count(keys, relation, year, level), int(keys.size))
+            self._phi_cache[key] = cached
+        hits_m, n_m = cached
+
+        arr = self._keys.get((relation, year))
+        cand_idx = np.array([self._ix.get(int(c), -1) for c in ccodes], np.int64)
+        out = np.full(len(ccodes), np.nan)
+        ok = cand_idx >= 0
+        if not ok.any():
+            return out
+        ci = cand_idx[ok][:, None]                       # (m, 1)
+        js = ms_idx[None, :]                             # (1, k)
+        lo, hi = np.minimum(ci, js), np.maximum(ci, js)
+        keys = lo * np.int64(self._n) + hi                # (m, k)
+        self_pair = ci == js
+        if arr is None or arr.size == 0:
+            hits_s = np.zeros(keys.shape[0], np.int64)
+            n_star = (~self_pair).sum(axis=1)
+        else:
+            pos = np.clip(np.searchsorted(arr, keys), 0, arr.size - 1)
+            hit = (arr[pos] == keys) & ~self_pair
+            if level > 1:
+                hit &= self._wts[(relation, year)][pos] >= level
+            hits_s = hit.sum(axis=1)
+            n_star = (~self_pair).sum(axis=1)
+        denom = n_m + n_star
+        vals = np.where(denom > 0, (hits_m + hits_s) / np.maximum(denom, 1), np.nan)
+        out[ok] = vals
+        return out
+
     # ------------------------------------------------------------------------ U2
     def u2_shortcut(self, horizons=range(0, 11), levels: dict | None = None,
                     negatives: str = NEVER_EVENT, max_neg_per_pos: int = 4,

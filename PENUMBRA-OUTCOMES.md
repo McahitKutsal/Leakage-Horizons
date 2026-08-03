@@ -31,7 +31,7 @@ to the third has to cite the measurement that did it.
 |---|---|---|---|
 | **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — instrumental non-identification (V2) |
 | **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2). Flat-curve clause not met — curve decays 0.133 — but decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ unreachable |
-| **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | not yet measured |
+| **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | not yet measured |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | not yet measured |
 | **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | U2 by regime | not yet measured |
@@ -264,6 +264,67 @@ group size** with the share of the corpus at zero power stated, and a pooled cli
 heterogeneous size distribution is not interpretable. For corpora like this one the graded
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
+
+### V5 — T1's ladder, rungs 1–3. Every rung earns its place, and the two AUCs disagree by 0.25
+
+`scripts/run_t1_ladder.py` → `results/t1_ladder.json`. Regime 1965–2014, the dyad-level risk set of
+LEDGER.md §4.1: **2,211,354 dyad-years, 93,450 (coalition, state) dyads, 6,606 event dyads**, an
+event rate of 0.00299 per dyad-year. Four rolling origins × four horizons, family cluster bootstrap,
+discrimination and calibration reported jointly per §9.3.
+
+| rung | features | pooled AUC | within-coalition AUC | calibration slope |
+|---|---|---|---|---|
+| 1 — duration alone | 1 | 0.476–0.715 | 0.481–0.524 | −0.13 … 1.03 |
+| 2 — + node covariates | 22 | 0.791–0.913 | 0.530–0.630 | 0.66–1.03 |
+| 3 — + densities | 34 | **0.798–0.920** | **0.570–0.680** | 0.64–0.99, mean 0.82 |
+
+**§7's rule is satisfied at every step, and it is a rule rather than a preference.**
+
+| | pooled | within-coalition |
+|---|---|---|
+| rung 2 − rung 1 | **+0.3195**, 16/16 cells | **+0.0975**, 16/16 |
+| rung 3 − rung 2 | **+0.0096**, 15/16 | **+0.0393**, 16/16 |
+
+**(a) The two AUCs differ by about 0.25, and that gap is the finding.** Pooled, the model scores
+0.80–0.92; holding the coalition fixed and asking only *which candidate state accedes*, it scores
+0.57–0.68 — a median of 120 coalition strata per cell. So most of the pooled discrimination is
+between-coalition and between-state structure: which coalitions grow, and which states join things
+in general. That is legitimate for the forecasting question §4 poses, and it is **not** the quantity
+U2's matched design measured. Both are reported because V0 was retracted for conflating exactly
+these, and reporting one number here would repeat the error with a better excuse.
+
+**(b) Relational features answer a different question from node covariates, and the split is
+clean.** Rung 3's gain over rung 2 is **+0.010 pooled** and **+0.039 within-coalition** — four times
+larger once the coalition is held fixed. Node covariates say which coalitions grow and which states
+are joiners; densities say *which state, for this coalition*. On the pooled metric the densities look
+marginal and would have been dropped by an inattentive reading of §7's rule; on the metric that
+isolates the relational question they are the larger contribution.
+
+**(c) The gain grows with horizon, weakly.** Rung 3 − rung 2, within-coalition: +0.036 at $\Delta=1$,
++0.039 at 3, +0.038 at 5, **+0.045 at 10**. That is the direction P7 predicts — relational structure
+mattering more at distance — but P7 is about rungs 6/7 against rung 4, not rung 3 against 2, so this
+is suggestive of the mechanism and not a test of the prediction.
+
+**(d) Duration alone is worse than chance at half the origins**, and its calibration slope runs from
+−0.13 to 1.03. Accession is not explained by how long a dyad has been eligible, so §7's floor is a
+genuine floor rather than a formality.
+
+**(e) Calibration, which the prior programme left as an acknowledged qualitative failing.** Rung 3's
+slope averages **0.82** across origin-horizon cells and never exceeds 1.0. The model is
+systematically overconfident by about 18 % on the logit scale — modest, consistent, and now a number
+rather than a caveat. §9.3 asked for exactly this.
+
+**P3 cannot be read cleanly, for two independent reasons, and neither is resolved by choosing a
+number.** P3 predicts T1 discrimination in 0.70–0.85 *at $\Delta = \Delta^\star$*, falsified above
+0.95. First, $\Delta^\star$ is not identified (V2), so the horizon P3 names does not exist. Second,
+the prediction does not say which discrimination: pooled lands at 0.80–0.92, straddling the band and
+exceeding it at three origins; within-coalition lands at 0.57–0.68, below it throughout. The pooled
+metric is the closer analogue of the 0.993 figure P3 anchors against, since that was a pooled
+group-classification AUC — but C1 already recorded that this comparison is not like-for-like. **What
+can be said without choosing:** nothing anywhere near 0.95, so P3's falsification condition is not
+met, and no reading of the numbers indicates residual leakage. P3 is recorded as **not cleanly
+decided**, with both metrics stated, and the choice between them is left to the reader rather than
+made silently in the direction that fits.
 
 ### V4 — the observer channel exists, is unmeasurable, and a quarter of accessions are lost to missing data
 
