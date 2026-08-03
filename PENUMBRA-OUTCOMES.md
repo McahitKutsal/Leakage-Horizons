@@ -32,8 +32,8 @@ to the third has to cite the measurement that did it.
 | **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — instrumental non-identification (V2) |
 | **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2). Flat-curve clause not met — curve decays 0.133 — but decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ unreachable |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
-| **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | not yet measured |
-| **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | not yet measured |
+| **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
+| **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | **HOLDS** (V6): two covariates reverse -- cohesion and duration |
 | **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | U2 by regime | not yet measured |
 | **P7** | graph earns its keep at long horizons or not at all | ladder rung 6/7 minus rung 4, by $\Delta$ | not yet measured |
 
@@ -264,6 +264,66 @@ group size** with the share of the corpus at zero power stated, and a pooled cli
 heterogeneous size distribution is not interpretable. For corpora like this one the graded
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
+
+### V6 — T2. P5 holds, P4 holds on the comparable metric, and §5.3's intervention is a no-op
+
+`penumbra/t2.py`, `results/t2_ladder.json`, `results/t2_focal.json`. Regime 1965–2014: **535
+coalitions, 16,146 coalition-years, 152 events** — 83 dissolution, 30 replaced, 20 absorbed, and 19
+whose cause ATOP cannot tell us. Those 19 enter through the likelihood's **cause-unknown** branch,
+contributing $S(t_L) - S(t_R)$, rather than being dropped (17 % of events) or assigned a cause
+(invented data). That branch was written for algebraic consistency and verified before ATOP's gap
+was known to need it.
+
+**83 of the events carry rule-assigned dates** — all the dissolutions, since the ten-year plenary
+rule *is* how COW dates them. They stay in estimation and leave rolling-origin evaluation per §9.7.
+
+Covariates are the four pre-specified in D-19, **after a 36-feature fit was rejected as
+under-identified**: with 38 parameters per cause the three causes had 2.18, 0.79 and 0.53 events per
+parameter. At four covariates the collapsed model has 13.8 and 8.3. The reduction was made on
+substantive grounds before any coefficient was read, because choosing covariates by significance is
+the garden of forking paths.
+
+**P5 — HOLDS.** Cause-specific coefficients, dissolution against superseded:
+
+| | log duration | log size | internal co-membership | polity2 mean | polity2 sd |
+|---|---|---|---|---|---|
+| dissolution | **+0.135** | −0.402 | **+0.255** | −0.080 | −0.115 |
+| superseded | **−0.238** | −0.121 | **−0.086** | −0.014 | −0.105 |
+
+Two covariates reverse sign, not one: internal co-membership density and duration dependence. P5
+asked for at least one, so the prediction is met, and the pooled model would have averaged both
+reversals to near zero. Duration reads cleanly — old coalitions fade, young ones get replaced or
+merged. The cohesion reversal is counterintuitive and is reported without a story attached: with 83
+and 50 events, an explanation would be decoration.
+
+**P4 — holds on the comparable metric, and the ambiguity is the same one P3 has.** T2's any-cause
+AUC is **0.614**, cause-specific 0.633 for dissolution and 0.576 for superseded. Against T1's pooled
+0.80–0.92, termination is clearly harder and P4 holds. Against T1's within-coalition 0.57–0.68, T2
+is *inside* the range and P4 would not hold. The like comparison is pooled against pooled — both are
+"across all units at risk", T2's units being coalitions and T1's being dyads, and T2 has no strata
+to hold fixed — so **P4 is recorded as holding**, with the within-coalition figure stated so the
+reader can see what the choice was.
+
+**§5.3's focal-group exclusion is a no-op here, and that is a finding about the intervention.** §4
+calls competing risks the substantive contribution of T2 and §5.3 calls focal exclusion "a refinement
+forced by T2", severe regardless of $\Delta^\star$. Measured:
+
+| $\phi$ level | focal exclusion moves loglik by | moves AUC by |
+|---|---|---|
+| $k = 1$ | **−1.88** | −0.0039 |
+| $k = 25$ | −0.22 | −0.0013 |
+
+Eight and a half times larger at $k = 1$ than at $k = 25$, and negligible at both. The reason is V3's
+saturation, not the level: at $k = 1$ co-membership has density 0.995, so removing the focal
+organisation leaves the relation still saturated; at $k = 25$ the focal organisation is one unit of a
+twenty-five-unit threshold. Either way the intervention barely moves the fit.
+
+**This is bounded and the boundary matters.** §5.3's argument is about *alliance* edges — "an
+alliance that ends is an alliance edge that disappears" — and `allies` has density 0.15, nowhere near
+saturated, so focal exclusion should bite there. It is untested: `allies` is excluded from the anchor
+set because its dating convention is unverified (PROVENANCE §4), and alliance entities are 80 of 535.
+What is shown is that for the relation carrying $r^\star$ across the organisation majority, the
+intervention §5.3 was written to force is not doing work. The alliance case remains open.
 
 ### V5 — T1's ladder, rungs 1–3. Every rung earns its place, and the two AUCs disagree by 0.25
 

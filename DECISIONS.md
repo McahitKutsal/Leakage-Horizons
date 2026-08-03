@@ -450,3 +450,46 @@ enough that an inattentive application of §7's rule might have dropped them -- 
 within-coalition, four times larger, and in 16 of 16 cells. Node covariates answer which coalitions
 grow; densities answer which state, for this coalition. Reporting a single number would have
 obscured which question each rung was answering.
+
+## D-19 — T2's covariates are pre-specified at four, because 36 was under-identified
+**2026-08-03, before any cause-specific coefficient was read.** Evidence:
+`hazard.events_per_parameter` on the T2 panel.
+
+The T2 panel was first built with 36 covariates -- size, six node covariates in mean and standard
+deviation, five relation densities, and missingness indicators. It fitted without complaint and the
+fit is worthless: with 83 dissolution, 30 replaced and 20 absorbed events against 38 parameters per
+cause, events per parameter are **2.18, 0.79 and 0.53**. At the conventional ten per parameter the
+three causes support 6, 1 and 0 covariates. The 36-feature fit is not reported.
+
+Reducing the feature set by looking at which covariates came out significant would be the garden of
+forking paths, so the four are chosen on substantive grounds and named here before any coefficient
+was inspected:
+
+1. **log size** -- the most basic structural property of a coalition;
+2. **internal co-membership density** at the D-13 primary level -- §5's own group-level statistic,
+   and the cohesion measure the programme is about;
+3. **mean member polity2** -- the standard regime-type covariate in this literature;
+4. **standard deviation of member polity2** -- regime *heterogeneity*, which is the standard
+   argument for why coalitions break up, and the covariate most likely to behave differently across
+   causes, which is what P5 is about.
+
+At four covariates plus intercept and baseline the collapsed model has 13.8 events per parameter for
+dissolution and 8.3 for superseded, which is at or near the convention. The three-cause model is
+still fitted and reported descriptively, and its absorption arm is explicitly labelled as
+under-identified rather than presented as an estimate.
+
+## D-20 — a labelling slip in a diagnostic script, caught and stated
+**2026-08-03.** The focal-exclusion comparison script read `mod.coef_[0, 2]` as the co-membership
+coefficient. The coefficient columns are [intercept, log_duration, log_size, phi, polity2_mean,
+polity2_std], so index 2 is **log_size** and the column printed as `beta_phi` was log_size
+throughout. The model was unaffected -- the preceding run printed the full table with proper column
+names and phi is +0.255 there -- but the diagnostic's third column was mislabelled and would have
+been quoted as a coefficient it is not.
+
+Caught by the value: -0.402 in the "phi" column exactly matched log_size in the earlier table. The
+loglik and AUC columns of that comparison are unaffected and are what V6 reports; the coefficient
+column is not reported from that script at all.
+
+Recorded because indexing a coefficient matrix by position rather than by name is the class of error
+that produces a plausible number attached to the wrong variable, which no amount of reading the
+output would reveal.
