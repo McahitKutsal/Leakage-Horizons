@@ -221,6 +221,43 @@ only on instrument-level evidence, hand-verified, and printed in full, and any s
 the two entity types reports its double-count exposure. Full rule and the task declarations it
 feeds are in `LEDGER.md`.
 
+**C15 — the leaking relation for four fifths of the corpus is saturated, so $\phi$ is generalised
+to a level ladder.** §11 makes $r^\star$ entity-type dependent: alliance edges for an alliance,
+co-membership for an organisation. Built from COW IGO's full memberships, co-membership has mean
+density **0.9954** over 1965–2014 — with 491 organisations over about 168 states almost every pair
+shares something — so a binary $\phi_r(S)$ is $\approx 1$ for positives and negatives alike and its
+clique contrast is $\approx 0$. The channel that must carry the leak for 493 of 573 entities
+carries no signal in the form the manifesto's $\phi$ assumes.
+
+Neither obvious repair works, and both were measured rather than reasoned about. Thresholding the
+dyad weight is non-monotone in density — 0.258 at $w \geq 40$, back up to **0.281** at $w \geq 50$,
+because the surviving nodes collapse onto densely connected European states. Excluding
+near-universal organisations leaves 0.706 after dropping all 47 that ever reach half the state
+system, and 0.482 after dropping 87 at a 0.3 share.
+
+Pre-specification: co-membership is treated as weighted, with
+$\phi_r(S; k) = |\{(u,v) \in \Pi(S): w_r(u,v) \geq k\}| / |\Pi(S)|$, so a clique at level $k$ is a
+group every dyad of which shares at least $k$ organisations. At $k = 1$ this *is* the manifesto's
+$\phi_r(S)$, so the frozen definition is generalised and not contradicted, and `clique_contrast`
+keeps the property that made it the only statistic to survive all three of CLIQUEBAIT's settings.
+$k$ is a declared ladder and $\Delta^\star$ is reported per level; the primary $k$ is fixed on the
+synthetic testbed where §5.1 already requires the non-leaking band to be calibrated, and never by
+matching a density to another relation's. Construction rule and the observed weight distribution
+are in `LEDGER.md` §6.2.
+
+**C16 — an undeclared coverage hole at 1964, found in the prior programme's own artefact.**
+`votes_with` carries zero edges in 1964, the only such year in 1946–2016, and CLIQUEBAIT's rebuilt
+`graph_1964.pt` confirms it by shipping three edge types rather than four. Its `FINDINGS.md` §4
+declares the 1946–47 trade gap and the 2015–16 conflict gap and not this one, because 1964 sits in
+the training period. The probable cause is substantive — the nineteenth General Assembly session
+took no recorded votes during the Article 19 crisis — but **that is unverified** and is on
+`LEDGER.md`'s open list. Pre-specification: 1964 is its own coverage regime and no ranking metric
+is pooled across it, per PROTOCOL §3, whatever the cause turns out to be. One consequence is
+favourable and worth recording so it is not mistaken for a design choice later: because COW IGO
+stops imputing after 1964 and `votes_with` returns in 1965, the longest intact-coverage regime
+(1965–2014, 50 years) and the exactly-dated event stratum begin in the same year, which makes that
+window the primary analysis regime and 1948–1963 an out-of-regime replication.
+
 ---
 
 ## Outstanding, carried from CLIQUEBAIT

@@ -249,7 +249,85 @@ knowing before someone reads a zero exclusion count as a clean join.
     data/ledger/riskset_exclusions.parquet   per organisation-year missing / not-system counts
     data/ledger/same_instrument.csv          hand-verified ATOP <-> COW IGO links — not yet built
 
-## 6. Open before the first fit
+## 6. The observation graph
+
+Built by `scripts/build_graph.py` into `data/graph/`; coverage in `results/graph_coverage.json`.
+Four relations are CLIQUEBAIT's rebuilt canonical edges, reused unchanged. The fifth does not
+exist in the prior work and has to, because §11 makes $r^\star$ depend on entity type.
+
+| relation | source | edges 1965–2014 | mean density | mean edges/yr |
+|---|---|---|---|---|
+| `igo_comembership` | built here, COW IGO v3 full members | 717,950 | **0.9954** | 14,359 |
+| `trades` | IMF IMTS, CLIQUEBAIT rebuild | 459,768 | 0.6405 | 9,195 |
+| `votes_with` | UNGA ideal points, k-NN k=30 | 148,834 | 0.2297 | 2,976 |
+| `allies` | ATOP v5.1 defence pacts, CLIQUEBAIT rebuild | 49,118 | 0.1536 | 982 |
+| `conflicts_with` | COW MID 5.0 | 2,526 | 0.0398 | 50 |
+
+### 6.1 An undeclared coverage hole at 1964
+
+`votes_with` carries **zero edges in 1964**, the only such year in 1946–2016, and CLIQUEBAIT's own
+rebuilt `graph_1964.pt` confirms it by shipping three edge types instead of four. Its `FINDINGS.md`
+§4 declares the trade gap at 1946–47 and the conflict gap at 2015–16 and does not declare this
+one — because it falls in the training period, where nobody was looking. Found here by applying
+that programme's own rule to its own artefact.
+
+The likely explanation is substantive rather than defective: the UN General Assembly's nineteenth
+session, 1964–65, proceeded without recorded votes during the Article 19 crisis over peacekeeping
+arrears, so there are no roll-calls to build ideal points from. **That is stated as the probable
+cause, not a verified one** — it has not been checked against the ideal-point release's own
+documentation, and it is on the open list below. Either way the consequence for this programme is
+identical, because PROTOCOL §3 forbids pooling a ranking metric across it regardless of why the
+hole is there.
+
+Regimes, a regime being a maximal run of years over which the set of non-empty relations is
+constant:
+
+| years | relations | note |
+|---|---|---|
+| 1946–1947 | 4 | no `trades`; IMF DOTS begins 1948 |
+| 1948–1963 | 5 | |
+| **1964** | 4 | no `votes_with` |
+| **1965–2014** | 5 | 50 years, the analysis regime |
+
+**The dominant coverage regime and the exactly-dated event stratum begin in the same year.** COW
+IGO stops imputing after 1964 and `votes_with` returns in 1965, so 1965–2014 is simultaneously the
+longest intact-coverage window and the window where event dates are not block-resolved. That
+alignment is luck, not design, and it makes 1965–2014 the primary analysis window with 1948–1963
+available as an out-of-regime replication.
+
+### 6.2 Co-membership is saturated, so $\phi$ is generalised to a level ladder
+
+At weight $\geq 1$ the relation has density **0.9954** — very nearly a complete graph, because
+with 491 organisations over about 168 states almost every pair shares something. A binary
+$\phi_{r}(S)$ is therefore $\approx 1$ for positives *and* negatives, its clique contrast is
+$\approx 0$, and the relation carries no discriminative power at all despite being the channel
+that must carry the leak for four fifths of the corpus.
+
+Thresholding the dyad weight does not fix it and misleads: density falls to 0.258 at $w \geq 40$
+and then **rises** to 0.281 at $w \geq 50$, because the surviving node set collapses onto densely
+connected European states and density is measured over surviving nodes. Excluding near-universal
+organisations does not fix it either — dropping all 47 whose peak membership share reaches half
+the state system leaves density at 0.706, and dropping 87 of them at a 0.3 share still leaves
+0.482. The saturation is structural.
+
+**Rule.** Co-membership enters UMBRA as a **weighted** relation, and the density is generalised to
+a declared level ladder:
+
+$$\phi_r(S; k) \;=\; \frac{|\{(u,v) \in \Pi(S) : w_r(u,v) \geq k\}|}{|\Pi(S)|}$$
+
+so that "$S$ is a clique in $r$ at level $k$" means every dyad in $S$ shares at least $k$
+organisations. At $k = 1$ this is exactly the manifesto's $\phi_r(S)$, so the frozen definition is
+generalised rather than contradicted, and `clique_contrast` — the only ranking statistic that
+survived all three settings CLIQUEBAIT tested — keeps its meaning. $\Delta^\star$ is reported per
+level, and $k$ is a **ladder** rather than a tuned constant, which is PROTOCOL §4's rule about
+perturbation budgets applied to a construction parameter. The primary level is fixed on the
+synthetic testbed, where §5.1 already requires the non-leaking band to be calibrated, and never
+by matching a density to another relation's. Recorded as C15.
+
+Observed weight quantiles over 1965–2014, for choosing the ladder's range: median 25, quartiles
+17 and 33, 90th percentile 42, maximum 107.
+
+## 7. Open before the first fit
 
 1. **ATOP `termmode`/`termcaus` crosswalk.** Blocked on a codebook this network cannot reach.
    Until then ATOP terminations are causeless and no pooled cause-specific number is reported.
@@ -260,3 +338,8 @@ knowing before someone reads a zero exclusion count as a clean join.
 4. **Observer-status coverage** — associate and observer codes exist, but their coverage across
    years has not been verified against the materialised file, and PROTOCOL §1 says documentation
    is not evidence.
+5. **The 1964 `votes_with` hole** — confirm against the ideal-point release's own documentation
+   whether the nineteenth General Assembly session is the cause. The handling does not depend on
+   the answer; the provenance paragraph §5.4 demands does.
+6. **The co-membership level ladder's primary $k$** — to be fixed on the synthetic testbed with
+   the back-dating parameter $\beta$, before any $\Delta^\star$ on real data is computed.
