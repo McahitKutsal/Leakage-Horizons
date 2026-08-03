@@ -265,6 +265,39 @@ heterogeneous size distribution is not interpretable. For corpora like this one 
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
 
+### V4 — the observer channel exists, is unmeasurable, and a quarter of accessions are lost to missing data
+
+Three things came out of testing a mechanism §1 names explicitly and V2's four measurements could
+not see. §1 says the shadow contains "interim protocols … observers are seated", and
+`build_igo_comembership` counts **full members only**, so if accession is preceded by observer
+status the penumbra would live in a channel $r^\star$ excludes by construction.
+
+**(a) The test was circular, and that was my error.** `igo_membership_events` defined an accession as
+`prev == 0 & cur == 1`, which excludes any state that held observer or associate status the year
+before. Asking "were acceding states observers first" of events defined to exclude prior observers
+can only return zero, and it did — 0.0000 at every lag against a control rate of 0.0012.
+
+**(b) The channel is real and negligible.** Entries into full membership over 1965–2014, by prior
+status: **6,397 from no membership, 22 from observer, 2 from associate**, and 1,977 from missing
+data. So the observer route is 24 of 8,398 — **0.29 %**. The event definition is corrected to admit
+entry from any non-member status, and no number in V2 or V3 is re-run, because 24 events against
+6,397 is below the resolution of every figure in them. Saying so is the point: a fix that cannot
+move a result should be recorded and not used as an excuse to recompute one.
+
+**(c) §1's observer mechanism is not measurable in this corpus.** With 24 cases there is no power to
+test whether seating an observer precedes accession, at any horizon. That is a limit on what the
+corpus can say about the manifesto's own stated mechanism, and it is a limit rather than a finding:
+COW IGO records observer status sparsely (2,235 observer-years in 505,951 membership rows, 0.44 %),
+so the absence may be the source's coverage rather than the world's behaviour.
+
+**(d) 1,977 accessions — 24 % of all entries into full membership — are unusable.** Their prior year
+is `-9`, missing data, so whether the state was already a member is unknown and C5 puts it outside
+the risk set. That rule is right, and its cost had not been reported: **the risk-set rule discards a
+quarter of the observable entries into membership.** It compounds with PROVENANCE §3's finding that
+205 organisation-years of missing data are undeclared by the codebook. Every T1 count in this
+programme is therefore a count of *cleanly observable* accessions, and the denominator that phrase
+implies belongs in the paper next to it.
+
 ### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03 — **WITHDRAWN, see V0**
 
 `scripts/run_u2.py --regime primary` → `results/u2_real.json`. Regime 1965–2014, 6,732 accession

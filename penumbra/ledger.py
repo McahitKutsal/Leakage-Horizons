@@ -163,8 +163,15 @@ def igo_membership_events(term_year: dict[str, int] | None = None) -> tuple[pd.D
         if y < WINDOW_START or y > WINDOW_END:
             continue
         prev, cur = M[i - 1], M[i]
-        acc = (prev == 0) & (cur == 1)
-        exi = (prev == 1) & (cur == 0)
+        # Entering full membership from any non-member status is an accession. The first version
+        # required prev == 0, which silently excluded the 22 observer-to-member and 2
+        # associate-to-member transitions -- and those are the only accessions in the corpus with
+        # a visible administrative precursor, which is exactly what section 1 says a penumbra looks
+        # like. 24 of 8,398 entries, so the omission changes no published number, but the
+        # reasoning it broke was circular: a test for "were acceding states observers first" run
+        # on events defined to exclude prior observers can only ever return zero.
+        acc = np.isin(prev, [0, 2, 3]) & (cur == 1)
+        exi = (prev == 1) & np.isin(cur, [0, 2, 3])
         if not (acc.any() or exi.any()):
             continue
 
