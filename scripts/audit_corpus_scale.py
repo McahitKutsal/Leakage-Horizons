@@ -29,12 +29,16 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 ATOP = ROOT.parent / "CLIQUEBAIT" / "data" / "ATOP 5.1 (.csv)"
 IGO = ROOT / "data" / "raw" / "cow_igo" / "igo_year_formatv3.csv"
+DESTA = ROOT / "data" / "raw" / "desta" / "desta_list_of_treaties_02_03.csv"
 
 WINDOW_START = 1946
 
-# COW IGO v3 membership codes. -9 and -1 are not zeros: a state that does not exist, or whose
-# membership is unrecorded, is out of the risk set, and counting a transition out of either as
-# an accession would manufacture events from state birth and from missing data.
+# COW IGO v3 membership codes, per the v3 codebook section III.A: 0 no membership, 1 full,
+# 2 associate, 3 observer, -9 MISSING DATA, -1 STATE NOT A SYSTEM MEMBER. The two negative
+# codes are the ones that matter and they are easy to get backwards. Neither is a zero: a
+# state that does not yet exist and a state whose membership was not recorded are both out of
+# the risk set, and counting a transition out of either as an accession manufactures events
+# from state birth and from missing data respectively.
 FULL_MEMBER, NO_MEMBER = 1, 0
 
 # Columns of the IGO year file that describe the organisation rather than a state's membership.
@@ -150,6 +154,107 @@ def audit_igo(era_start: int = 1965) -> dict:
     }
 
 
+def audit_igo_causes() -> dict:
+    """Termination events by coded cause -- T2's whole event supply.
+
+    The v3 IGO-year file carries `dead`, `integrated`, `replaced`, `sdate` and `deaddate`
+    alongside the membership matrix; the v2.3 unit-level file is not needed and using it would
+    have spliced two versions together for no gain. `integrated` and `replaced` are modes of
+    `dead` rather than alternatives to it, which is what makes the three causes exhaustive and
+    mutually exclusive.
+    """
+    d, _ = _load_igo()
+    u = (d.groupby("ionum")
+         .agg(name=("ioname", "first"), sdate=("sdate", "first"),
+              deaddate=("deaddate", "max"), last=("year", "max"),
+              dead=("dead", "max"), integrated=("integrated", "max"),
+              replaced=("replaced", "max"))
+         .reset_index())
+    dd = pd.to_numeric(u.deaddate, errors="coerce")
+    terminated = (u.dead == 1) | (u.integrated == 1) | (u.replaced == 1)
+
+    def by_cause(lo: int) -> dict:
+        s = u[terminated & (dd >= lo)]
+        return {
+            "total": int(len(s)),
+            # dissolution is the residual: dead, neither integrated nor replaced. Per the v3
+            # codebook this is also where dormancy lands, via the ten-year plenary rule -- so
+            # this cell is the one carrying rule-assigned dates (manifesto section 9.7).
+            "dissolution": int(((s.integrated != 1) & (s.replaced != 1)).sum()),
+            "replaced": int((s.replaced == 1).sum()),
+            "absorption_integrated": int((s.integrated == 1).sum()),
+        }
+
+    m = u[terminated & dd.notna()]
+    return {
+        "causes_1946plus": by_cause(1946),
+        "causes_1965plus": by_cause(1965),
+        "deaddate_matches_last_observed_year": int((m["last"] == pd.to_numeric(m.deaddate)).sum()),
+        "deaddate_coded_total": int(len(m)),
+        "vanish_without_termination_flag_1965_2013":
+            int(len(u[(u["last"] < 2014) & (u["last"] >= 1965) & (~terminated)])),
+        "note": "dissolution is the cell dated by the ten-year plenary rule, so its dates "
+                "consume up to ten years of data after the event (manifesto section 9.7)",
+    }
+
+
+def audit_desta() -> dict:
+    """The signature-to-entry-into-force gap: section 6's external anchor on the penumbra.
+
+    Section 6 calls this the closest thing to ground truth the programme has outside synthetics, and
+    the round-1 amendment folded it into the likelihood rather than leaving it a side check.
+    Measuring it is therefore measuring a quantity P1 is committed against, which is why the
+    date this ran is recorded and P1 was not touched afterwards.
+    """
+    t = pd.read_csv(DESTA, low_memory=False, encoding="latin-1")
+    post = t[t.year >= WINDOW_START]
+    both = post[post.entryforceyear.notna() & post.year.notna()]
+    gap = (both.entryforceyear - both.year).astype(float)
+    return {
+        "source": "DESTA v02.03 list of treaties",
+        "entries_signed_in_window": int(len(post)),
+        "by_entry_type": {str(k): int(v) for k, v in post.entry_type.value_counts().items()},
+        "codes_entity_termination": False,
+        "termination_note": "entry_type has base_treaty / accession / withdrawal / protocol or "
+                            "amendment / consolidated. Withdrawal is a MEMBER exit, not an "
+                            "agreement termination, so DESTA supplies no T2 entity events",
+        "gap_n": int(len(gap)),
+        "gap_mean": round(float(gap.mean()), 3),
+        "gap_median": float(gap.median()),
+        "gap_max": float(gap.max()),
+        "gap_ge_1yr_share": round(float((gap >= 1).mean()), 4),
+        "gap_ge_2yr_share": round(float((gap >= 2).mean()), 4),
+        "gap_ge_3yr_share": round(float((gap >= 3).mean()), 4),
+        # Signed and never in force: administrative traces exist, the event never happens. This
+        # is a negative class no other source in LEDGER supplies.
+        "signed_never_entered_force": int(((t.year >= WINDOW_START)
+                                           & t.entryforceyear.isna()).sum()),
+    }
+
+
+def audit_horizon_window() -> dict:
+    """Usable forecast origins per horizon. Checks a worry rather than confirming one.
+
+    Relation coverage is CLIQUEBAIT's rebuilt graph (FINDINGS section 4); the event supply ends
+    with COW IGO in 2014. The concern was that long horizons would leave too few origins. They
+    do not -- the window is 67 years and the horizon only eats from the top. The real
+    dependence problem is that one event contributes to every horizon from a different origin,
+    so points on a Delta-curve are not independent.
+    """
+    rel = {"allies": (1946, 2016), "trades": (1948, 2016),
+           "votes_with": (1946, 2016), "conflicts_with": (1946, 2014)}
+    g_first, g_last = max(lo for lo, _ in rel.values()), min(hi for _, hi in rel.values())
+    ev_last = 2014
+    return {
+        "graph_all_relations": [g_first, g_last],
+        "event_supply_ends": ev_last,
+        "origins_per_horizon": {str(D): max(0, min(g_last, ev_last - D) - g_first + 1)
+                                for D in range(11)},
+        "note": "origins are ample at every horizon; the curve points share events, which is a "
+                "dependence problem and not a power problem",
+    }
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--json", type=Path, default=None)
@@ -157,6 +262,7 @@ def main() -> None:
     args = ap.parse_args()
 
     atop, igo = audit_atop(), audit_igo(args.era_start)
+    causes, desta, horizon = audit_igo_causes(), audit_desta(), audit_horizon_window()
 
     print(f"ATOP 5.1 - alliance treaties as entities, {WINDOW_START}+")
     print(f"  entities formed in window       {atop['treaties_formed_in_window']:>7}")
@@ -184,9 +290,35 @@ def main() -> None:
     for k, v in sorted(igo["date_accuracy_by_entity"].items(), key=lambda kv: -kv[1]):
         print(f"    {v:>5}  {k}")
 
+    print("\nT2 event supply - COW IGO terminations by coded cause")
+    for lab, key in (("1946+", "causes_1946plus"), ("1965+", "causes_1965plus")):
+        c = causes[key]
+        print(f"  {lab}  total {c['total']:>4}   dissolution {c['dissolution']:>4}"
+              f"   replaced {c['replaced']:>3}   absorption {c['absorption_integrated']:>3}")
+    print(f"  deaddate == last observed year: {causes['deaddate_matches_last_observed_year']}"
+          f" of {causes['deaddate_coded_total']}")
+    print(f"  vanish with no termination flag (1965-2013): "
+          f"{causes['vanish_without_termination_flag_1965_2013']}")
+    print("  NB dissolution is dated by the ten-year plenary rule -> manifesto 9.7")
+
+    print("\nDESTA - signature to entry-into-force gap (section 6's external anchor)")
+    print(f"  n {desta['gap_n']}   mean {desta['gap_mean']}   median {desta['gap_median']}"
+          f"   max {desta['gap_max']}")
+    print(f"  share >=1yr {desta['gap_ge_1yr_share']}   >=2yr {desta['gap_ge_2yr_share']}"
+          f"   >=3yr {desta['gap_ge_3yr_share']}")
+    print(f"  signed but never entered force: {desta['signed_never_entered_force']}")
+    print(f"  entry types: {desta['by_entry_type']}")
+    print(f"  supplies entity terminations: {desta['codes_entity_termination']}")
+
+    print("\nUsable forecast origins per horizon")
+    o = horizon["origins_per_horizon"]
+    print("  " + "  ".join(f"D{k}={v}" for k, v in o.items()))
+
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
-        args.json.write_text(json.dumps({"atop": atop, "cow_igo": igo}, indent=2))
+        args.json.write_text(json.dumps({"atop": atop, "cow_igo": igo,
+                                         "cow_igo_causes": causes, "desta": desta,
+                                         "horizon_window": horizon}, indent=2))
         print(f"\nwritten to {args.json}")
 
 

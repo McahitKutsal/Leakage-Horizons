@@ -62,9 +62,12 @@ not the modelled decision; and $r^\star$ ceases to be one relation, since an all
 leaks through alliance edges and an organisation through co-membership, so U1 stratifies by
 entity type.
 
-Unverified and open: `death_candidates_in_era` is last-observed-year, not COW's coded
-dead/dormant status. The unit-level file has not been checked and must be before any T2 number
-is quoted.
+~~Unverified and open: `death_candidates_in_era` is last-observed-year, not COW's coded
+dead/dormant status.~~ **Closed 2026-08-03, see D-06.** The v3 IGO-year file carries `dead`,
+`integrated`, `replaced`, `sdate` and `deaddate` directly — the earlier column listing missed
+them because it printed only the tail of a 235-column frame. No cross-version splice was
+needed. The coded `deaddate` equals the last observed year in **197 of 198** cases, so the proxy
+was sound, and only 2 organisations vanish from the file without a termination flag.
 
 ## D-04 — $\Delta^\star$ is bracketed, and the manifesto was amended to say so
 **2026-08-02, before any measurement.** Evidence: CLIQUEBAIT `FINDINGS.md` §10, WS3
@@ -103,3 +106,50 @@ implement, and record it here if so.
 Network: `correlatesofwar.org`, `designoftradeagreements.org` and `ucdp.uu.se` reachable
 through the MITM proxy with `truststore`; `atopdata.org` refuses the handshake, as CLIQUEBAIT
 also found, and ATOP is therefore read from the local primary release.
+
+## D-06 — read the coding rules; two clauses of the manifesto did not survive
+**2026-08-03.** Evidence: COW IGO v3 codebook §§III.A and III.A(b)–(c);
+`scripts/audit_corpus_scale.py`. Manifesto amended round 2, then fixed.
+
+§5.4 says the automated part of UMBRA is triage and the verdict requires reading the coding
+rules, and that the resulting paragraph is load-bearing rather than boilerplate. Applied to the
+event sources rather than to the relations, it falsified two statements in §4's T2:
+
+- *"COW IGO distinguishes dead from dormant."* It does not. Dormancy is what death **means** in
+  that source: an organisation is coded dead once it has gone ten consecutive years without a
+  plenary session. There is no separate dormancy code.
+- *"transformation of membership beyond recognition"* as a termination cause. The codebook lists
+  rename, reorganise and reconstitute as **continuity**, explicitly not termination. The cause
+  cannot be measured on this corpus.
+
+It also found a cause the manifesto never named — `replaced`, 32 events from 1946 — which is
+larger than the `integrated` absorption cause P5 is built on (22). §4 now states the three
+causes the source actually codes.
+
+**The ten-year rule is the substantive finding, and it needed a new protocol item.** For the
+largest cause the recorded date precedes the point at which the event became knowable, by up to
+a decade. That is neither censoring nor the penumbra. The penumbra is traces reaching backwards
+into the observation window; here the event's own timestamp is assigned using data from beyond
+it, so a label at $t+\Delta$ encodes information through $t+\Delta+10$. §9 gains item 7, stated
+in general form because any curation rule with a waiting period does the same thing, which is
+the kind of clause §11's "the contribution is the instrument" mitigation needs.
+
+**Where the amendment window closed.** The event counts and the DESTA gap were measured before
+these edits were made, so round 2 was restricted to correcting claims about what the sources
+*contain*. No prediction was touched — in particular P1 stands although the measured DESTA gap
+has a median of 1 year against its committed $\Delta^\star_{\text{lo}} \geq 2$ (recorded as C7).
+The manifesto is fixed as of 2026-08-03 and no third round is legitimate.
+
+## D-07 — DESTA v02.03, and what it does not supply
+**2026-08-03.** `data/raw/desta/`, three files from the v02.03 release.
+
+DESTA codes accession (208 entries from 1946) and withdrawal (72) as first-class entry types
+alongside base treaties (903), so it supplies T1 events directly. It does **not** code agreement
+termination: withdrawal is a member exit. T2's entity events therefore come from COW IGO and
+ATOP only, and their two termination vocabularies must be crosswalked before any pooled T2
+number is quoted (C10).
+
+Two by-products worth more than they look. The signature-to-entry-into-force gap is now measured
+rather than assumed (C7). And 282 agreements were signed from 1946 and never entered force —
+units with full administrative traces and no event, which is the specificity control U1 has
+otherwise had no way to construct (C9).
