@@ -11,12 +11,20 @@ held, what did not, and where the manifesto's own instructions have to be overri
 prior programme falsified one of its five hypotheses and overrode three of its four
 diagnostics. That is the expected rate, not a failure mode.
 
-**Status, 2026-08-03.** The corpus is built and validated, the observation graph is built and its
-coverage audited, the provenance is declared in `PROVENANCE.md`, $\Delta^\star_{\text{lo}}$ is
-calibrated against a known back-dating horizon on synthetics, and U2 has run on real data. **One
-clause of one prediction is adjudicated** — see V1. No hazard model has been fitted, so P3–P7 are
-untouched, and $\Delta^\star$ has not been estimated on real data, so P1 and P2's second clause are
-untouched.
+**Status, 2026-08-03, end of the first working period.** Corpus built and validated, observation
+graph built and coverage audited, provenance declared, $\Delta^\star_{\text{lo}}$ calibrated on
+synthetics against a known back-dating horizon, U1 and U2 run on real data, and the
+interval-censored competing-risks hazard implemented, verified against closed forms, and fitted for
+both T1 and T2.
+
+**Five of seven predictions have been touched.** P4 and P5 hold. P1 and P2 are non-identified —
+by the instrument, not by the world. P3 cannot be read cleanly because the horizon it names does not
+exist and it does not say which discrimination it means. P6 and P7 are untouched: P6 needs the
+shift analysis across regimes, P7 needs ladder rungs 4–7, which are not built.
+
+One verdict was **withdrawn** (V0) and its replacement reversed its conclusion. That is recorded at
+the top of the verdicts rather than buried, because the retraction is the most informative thing in
+this file.
 
 Three kinds of entry live below and the difference between them is the point. **C1–C6** were
 written with nothing measured. **C7–C18** are measurements taken before the thing they bear on was
@@ -42,11 +50,11 @@ to the third has to cite the measurement that did it.
 | | status |
 |---|---|
 | $\Delta^\star$ definition with signature-to-force external validation | defined (§5.1); **calibrated on synthetics**, $\Delta^\star_{\text{lo}}$ recovering $\beta+1$ in 6 of 6 (C18); not yet estimated on real data. External anchor measured (C7) |
-| UMBRA — lagged diagnostic suite U1–U3 | **U1 built and calibrated; U2 built and run on real data (V1).** U3 focal exclusion implemented in `graph.focal_excluded_weight`, not yet run |
-| LEDGER — event corpus | **built and validated**: 573 entities, 10,528 events, four dating strata. `agreement` entities deferred (LEDGER.md §1.1) |
-| Three tasks with declared risk sets, origin times, censoring rules | **declared** in LEDGER.md §4 before construction; T1 panels built, T2 and T3 not run |
-| Cause-specific hazard results for termination | not started. 157 coded events, three causes; P5 tested as two per C8 |
-| Architectural ladder, each rung earning its place | not started. Rung 3, the density-only baseline, is V1's curve |
+| UMBRA — lagged diagnostic suite U1–U3 | **U1, U2 and U3 all built and run.** U1 on real data (V2), U2 with the capacity sweep (V2, V1d), U3 focal exclusion run on T2 and found to be a no-op (V6) |
+| LEDGER — event corpus | **built and validated**: 573 entities, 10,556 events, four dating strata. `agreement` entities deferred (LEDGER.md §1.1) |
+| Three tasks with declared risk sets, origin times, censoring rules | **declared before construction** (LEDGER.md §4). T1 and T2 built and fitted; **T3 not started** |
+| Cause-specific hazard results for termination | **done** (V6): 152 events, P5 holds with two sign reversals, ATOP's 19 uncoded entering through the cause-unknown branch |
+| Architectural ladder, each rung earning its place | **rungs 1–3 done** (V5), each beating the one below on both metrics. Rungs 4–7 need the encoders and are not built, so P7 is untouched |
 
 ---
 
