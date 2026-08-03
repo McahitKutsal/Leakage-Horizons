@@ -266,17 +266,28 @@ class HorizonAudit:
 
     # ------------------------------------------------------------------------ U1
     def accession_panel(self, horizon: int, negatives: str = NEVER_EVENT,
-                        max_neg_per_pos: int = 4, seed: int = 0) -> pd.DataFrame:
+                        max_neg_per_pos: int = 4, seed: int = 0,
+                        matched: bool = True) -> pd.DataFrame:
         """Candidate (entity, state, year) rows for one horizon, labelled.
 
-        The risk set at `year` is states not already full members of the entity. Positives are
-        those acceding at `year + horizon`. Negatives depend on the declared stratum:
+        The risk set at `year` is states not already full members of the entity (LEDGER.md 4.1).
+        Positives are those acceding at `year + horizon`. The negative stratum is declared:
 
         * `never_event`   -- the state never accedes to that entity anywhere in the window. This
           is the estimand, because it is the only stratum with no back-dated traces in it.
         * `not_at_this_horizon` -- the full complement, so a state acceding at a *different*
           horizon counts as a negative. This is what a naive implementation computes, and it
           carries exactly the traces the statistic is trying to detect.
+
+        **`matched` draws negatives from the same (entity, year) as each positive**, and the first
+        version of this method did not. Drawing entity-years uniformly instead gave positive
+        groups a mean size of 66 against the negatives' 18 -- a 3.7x gap, because accessions
+        happen in large active organisations while a random entity-year is a small one. A group of
+        11 is far likelier to be a clique than a group of 51, so the clique contrast came out
+        NEGATIVE for the leaking relation and for trades: the statistic was measuring group size.
+        Matching on (entity, year) holds the group, and therefore its size, fixed across the two
+        classes, so phi can only differ through the candidate state's own relationship to the
+        members. This is what LEDGER.md 4.1 declares and the unmatched version was not.
 
         Negatives are subsampled at a declared rate with a fixed seed, because the full risk set
         is entities x states x years and the audit would otherwise cost more than the models.
@@ -302,45 +313,72 @@ class HorizonAudit:
                     continue                                     # already a member: not at risk
                 rows.append((eid, cc, t, 1))
 
-        # Negatives: draw (entity, state, year) triples from the risk set under the stratum.
-        ent_years = [(e, y) for (e, y) in self._members]
+        # Negatives. Matched: for each positive's (entity, year), draw eligible non-acceding
+        # states from that same stratum, so group size and organisation are held fixed.
         all_states = sorted({int(c) for ms in self._members.values() for c in ms})
-        n_neg = int(len(rows) * max_neg_per_pos)
-        tries, made = 0, 0
-        while made < n_neg and tries < 40 * n_neg:
-            tries += 1
-            eid, t = ent_years[int(rng.integers(len(ent_years)))]
-            cc = all_states[int(rng.integers(len(all_states)))]
+        n_states = len(all_states)
+
+        def _eligible(eid: str, t: int, cc: int) -> bool:
             mset = self._member_sets.get((eid, t))
             if mset is None or cc in mset:
-                continue
+                return False
             ys = joined.get((eid, cc), set())
             if negatives == NEVER_EVENT and ys:
-                continue
+                return False
             if negatives == NOT_AT_HORIZON and (t + horizon) in ys:
-                continue
-            rows.append((eid, cc, t, 0))
-            made += 1
+                return False
+            return True
+
+        if matched:
+            strata: dict[tuple, int] = {}
+            for eid, cc, t, lab in rows:
+                strata[(eid, t)] = strata.get((eid, t), 0) + 1
+            for (eid, t), n_pos_here in strata.items():
+                want, made, tries = n_pos_here * max_neg_per_pos, 0, 0
+                while made < want and tries < 40 * max(want, 1):
+                    tries += 1
+                    cc = all_states[int(rng.integers(n_states))]
+                    if not _eligible(eid, t, cc):
+                        continue
+                    rows.append((eid, cc, t, 0))
+                    made += 1
+        else:
+            ent_years = [(e, y) for (e, y) in self._members]
+            n_neg = int(len(rows) * max_neg_per_pos)
+            made, tries = 0, 0
+            while made < n_neg and tries < 40 * max(n_neg, 1):
+                tries += 1
+                eid, t = ent_years[int(rng.integers(len(ent_years)))]
+                cc = all_states[int(rng.integers(n_states))]
+                if not _eligible(eid, t, cc):
+                    continue
+                rows.append((eid, cc, t, 0))
+                made += 1
 
         panel = pd.DataFrame(rows, columns=["entity_id", "ccode", "year", "label"])
         panel.attrs["negative_stratum"] = negatives
         panel.attrs["horizon"] = horizon
+        panel.attrs["matched"] = matched
         return panel
 
     def u1_curve(self, horizons=range(0, 11), levels=(1,), negatives: str = NEVER_EVENT,
                  max_neg_per_pos: int = 4, seed: int = 0) -> pd.DataFrame:
-        """omega_r(Delta), the clique contrast, and phi-alone AUC, per relation per horizon."""
+        """omega_r(Delta), the clique contrast, and phi-alone AUC, per relation per horizon.
+
+        `levels` is either a tuple applied to every relation or a dict of per-relation tuples.
+        The per-relation form is what the real corpus needs: co-membership rides a ladder while
+        the anchor relations are presence relations that only have level 1 (LEDGER.md section 6.2).
+        """
+        lv = levels if isinstance(levels, dict) else {r: tuple(levels) for r in self.relations}
         out = []
         for h in horizons:
             panel = self.accession_panel(h, negatives, max_neg_per_pos, seed)
             if panel.empty or panel.label.nunique() < 2:
                 continue
-            groups = [np.append(self._members[(r.entity_id, r.year)], r.ccode)
-                      for r in panel.itertuples()]
             for rel in self.relations:
-                for k in levels:
-                    vals = np.array([self.phi(g, y, rel, k)
-                                     for g, y in zip(groups, panel.year)], float)
+                for k in lv.get(rel, (1,)):
+                    vals = np.array([self.phi_candidate(r.entity_id, r.year, r.ccode, rel, k)
+                                     for r in panel.itertuples()], float)
                     ok = ~np.isnan(vals)
                     y_ = panel.label.to_numpy()[ok]
                     v_ = vals[ok]
@@ -383,7 +421,8 @@ def _auc_null_sd(n_pos: int, n_neg: int) -> float:
 
 
 def delta_star(curve: pd.DataFrame, rstar: str, anchors: list[str],
-               level: int | None = None, conf: float = 0.95, z: float = 1.645) -> dict:
+               level: int | None = None, conf: float = 0.95, z: float = 1.645,
+               anchor_level: int = 1) -> dict:
     """Bracket $\\Delta^\\star$ between two statistics with opposite error profiles.
 
     `anchors` are the relations declared not to leak. No statistic can identify them -- section 5.4 --
@@ -399,7 +438,14 @@ def delta_star(curve: pd.DataFrame, rstar: str, anchors: list[str],
     result: an unreachable `hi` falsifies P2 for an instrumental reason and must be reported as
     that rather than as a wide penumbra.
     """
-    c = curve if level is None else curve[curve.level == level]
+    # r* is read at `level`; the anchors are presence relations and are read at `anchor_level`.
+    # Comparing a level-25 clique rate against a level-25 anchor would compare r* to nothing,
+    # since the anchors carry no weights above 1.
+    if level is None:
+        c = curve
+    else:
+        c = curve[((curve.relation == rstar) & (curve.level == level))
+                  | ((curve.relation != rstar) & (curve.level == anchor_level))]
     horizons = sorted(c.horizon.unique())
     lo = hi = None
     detail = []

@@ -115,7 +115,55 @@ a reported sensitivity rather than choosing the favourable one.
 
 ## Verdicts
 
-### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03
+### V0 — RETRACTION. V1 and the first U1 run are withdrawn: the negatives were not the declared risk set
+
+**Written 2026-08-03, before the corrected panel was run**, so that the retraction cannot be read
+as a response to nicer numbers. Everything in V1–V1d below is struck through in effect and kept
+visible; nothing is deleted, because the mistake is more instructive than the result was.
+
+`accession_panel` drew its negatives by sampling **(entity, year) uniformly at random** and then a
+state. LEDGER.md §4.1 declares the risk set as "states in the COW system at $t$ that are not full
+members of $c$ at $t$" — that is, *within* a coalition-year, not across them. The consequence,
+measured at $\Delta = 3$ on the primary regime:
+
+| | mean group size | median |
+|---|---|---|
+| positives | **66.4** | 51 |
+| negatives (as drawn) | **18.2** | 11 |
+
+A 3.7× gap, and structural rather than accidental: accessions happen in large active organisations,
+while a uniformly drawn coalition-year is a small one. A group of 11 dyads-few members is far more
+likely to be a clique than a group of 51, so:
+
+* **U1's clique contrast came out negative** — −0.12 at $k = 25$, −0.24 at $k = 17$, −0.12 for
+  `trades` — meaning negatives were cliques *more often* than positives. The statistic was
+  measuring group size, not leakage. The sign is what gave it away; the verdict it produced
+  ($\Delta^\star_{\text{lo}} = 1$, P1 falsified) is void.
+* **U2's 0.87 is not interpretable either.** `size` and `log_size` are in the feature set by the
+  manifesto's own D1 specification, so with unmatched negatives the probe could separate the
+  classes on "is this a big organisation that gains members" without any information about the
+  candidate state at all. V1's falsification of P2's shortcut clause is withdrawn pending
+  re-measurement.
+
+**Fix.** Negatives are now drawn from the **same (entity, year)** as each positive, which holds the
+group and therefore its size fixed across the classes, so $\phi$ can differ only through the
+candidate state's own relationship to the members. Verified: mean group size 66.4 against 66.4.
+`matched=False` is retained so the defective construction can be reproduced deliberately, since
+the size confound is itself worth reporting as a trap.
+
+**What survives and what does not.** V1a's stratum gap, V1b's null non-linear gain and V1d's
+capacity result were all computed on the defective panel and their *numbers* are void. V1c —
+horizon 0 being inexpressible in the T1 risk set — is a property of the risk set and stands. V1d's
+*mechanism* (a shrinking positive count at long horizons lets a high-capacity probe manufacture
+decay) does not depend on the panel and is expected to reproduce, but it is re-measured rather
+than assumed.
+
+**Why this was caught.** Not by review, and not by the validation suite, which checks the corpus
+rather than the audit. It was caught by looking at the **sign** of a statistic that had no business
+being negative, and refusing a verdict that arrived in the convenient direction. That is the only
+mechanism that would have caught it, and it is worth saying so in the paper.
+
+### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03 — **WITHDRAWN, see V0**
 
 `scripts/run_u2.py --regime primary` → `results/u2_real.json`. Regime 1965–2014, 6,732 accession
 events, 438 family clusters, gradient-boosted probe cross-fitted with folds grouped on the family,

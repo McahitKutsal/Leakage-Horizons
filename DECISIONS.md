@@ -311,3 +311,53 @@ decay that moves with capacity is reported as an artefact. This also bounds an i
 CLIQUEBAIT's "use a non-linear probe for D1" is sound at zero lag, where the sample does not
 shrink, and becomes a penumbra generator when carried into a horizon-resolved setting without that
 caveat.
+
+## D-13 — the primary co-membership level is fixed at k = 25, declared before U1 runs
+**2026-08-03, before any real-data $\Delta^\star$ exists.**
+
+LEDGER.md §6.2 makes co-membership a weighted relation on a level ladder and says the primary level
+must be fixed "on the synthetic testbed ... and never by matching a density to another relation's".
+The synthetic testbed cannot do it yet: its $r^\star$ is binary, so it has no level structure to
+calibrate against, and adding one is open work.
+
+That leaves a real hazard. $\Delta^\star_{\text{lo}}$ will come out differently at different $k$, and
+choosing $k$ after seeing which value gives which answer would be indistinguishable from choosing
+the answer. At $k = 1$ the relation is saturated at density 0.995, so positives and negatives are
+both cliques, the clique contrast is ~0, and $\Delta^\star_{\text{lo}}$ would come back as 1 and
+falsify P1 for a reason that is purely an artefact of a binary reading.
+
+**Rule, committed now:** the primary level is **$k = 25$**, the median number of shared
+organisations over the analysis regime. It is a property of the relation's own weight distribution,
+computed before any horizon curve existed (`LEDGER.md` §6.2 records the quantiles: 17 / 25 / 33 / 42),
+and it is independent of every outcome. The full ladder (1, 17, 25, 33, 42) is reported as
+sensitivity, and $\Delta^\star_{\text{lo}}(k)$ is reported as a curve, because how the leakage
+horizon moves with a construction parameter is exactly the sensitivity CLIQUEBAIT's PROTOCOL §1
+demands for threshold choices.
+
+**P1's verdict is read at $k = 25$ and at no other level**, whatever the other levels show. If the
+ladder disagrees sharply with itself that disagreement is the finding and is reported as one.
+
+## D-14 — the negatives were not the declared risk set; V1 withdrawn
+**2026-08-03.** Retraction written in `PENUMBRA-OUTCOMES.md` V0 **before** the corrected panel ran.
+
+`accession_panel` sampled negatives by drawing (entity, year) uniformly and then a state. LEDGER.md
+4.1 declares the risk set *within* a coalition-year, not across them. Measured at horizon 3:
+positive groups averaged 66.4 members, negatives 18.2 -- a 3.7x gap that is structural, since
+accessions happen in large active organisations while a uniformly drawn coalition-year is a small
+one.
+
+Both diagnostics were invalidated in the same way and in opposite-looking directions. U1's clique
+contrast went NEGATIVE for the leaking relation, because a small group clears an all-dyads
+condition far more easily than a large one, so the statistic measured size. U2's 0.87 became
+uninterpretable, because `size` and `log_size` are in the feature set by the manifesto's own D1
+specification and could separate the classes without any information about the candidate state.
+
+Negatives are now drawn from the same (entity, year) as each positive: mean group size 66.4 against
+66.4. `matched=False` is kept so the defect can be reproduced on purpose, since a size-confounded
+negative stratum is itself worth reporting as a trap for anyone building this diagnostic.
+
+Two things about how it was found. It was not caught by review or by the corpus validation suite,
+which checks LEDGER rather than the audit built on it -- it was caught by the *sign* of a statistic
+that had no business being negative. And the void verdict pointed in the direction the accumulated
+evidence already favoured, which is exactly when a result is least likely to be questioned. The
+retraction was written before the replacement numbers existed for that reason.
