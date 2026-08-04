@@ -41,7 +41,7 @@ to the third has to cite the measurement that did it.
 
 | | prediction | test statistic | verdict |
 |---|---|---|---|
-| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided** — non-identified on both $r^\star$: flat and above band on co-membership (V2), noise-limited on alliance edges (V8) |
+| **P1** | penumbra wider than one year, $\Delta^\star_{\text{lo}} \geq 2$ | U1 clique contrast, lower bound | **not decided**, and now for a *demonstrated* instrument reason (V10): on DESTA, where the penumbra is exact and externally coded, the pooled diagnostic returns 0.102 where the truth is 1.000. Non-identified on both $r^\star$ (V2, V8); ATOP's gap is uncomputable, so P1's own scope stays open |
 | **P2** | penumbra bounded, $\Delta^\star_{\text{hi}} \leq 6$, shortcut curve decays | U1 upper bound + U2 | **not decided** (V2, V8). Flat-curve clause not met — curve decays 0.133 — but the decay is not diagnostic, and $\Delta^\star_{\text{hi}}$ is unreachable on co-membership and noise-limited on alliance edges |
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
@@ -276,6 +276,77 @@ group size** with the share of the corpus at zero power stated, and a pooled cli
 heterogeneous size distribution is not interpretable. For corpora like this one the graded
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
+
+### V10 — a penumbra of known exact width exists, and UMBRA as specified cannot see it
+
+`penumbra/desta.py`, `scripts/validate_delta_star_desta.py` →
+`results/desta_delta_star.json`, `results/desta_focal_only.json`, `results/igo_focal_only.json`.
+
+§6 calls DESTA's signature-to-entry-into-force gap "the closest thing to ground truth the programme
+will have outside synthetics" and says it "should be exploited rather than merely noted". C7 measured
+it and stopped. This is what the measurement was for, and it settles what eight prior verdicts could
+only circle.
+
+DESTA codes both dates per agreement, so an agreement signed at $s$ and in force at $f$ has a
+back-dating width of exactly $f - s$ — a $\beta$ the **source** sets, on real data. 777 base treaties
+and 759 acceding states in 1946–2014, gaps with median 1, mean 1.71, maximum 17, and 39.4 % at two or
+more.
+
+**The back-dating is real and exact.** Asking only whether the acceding state is on *this
+agreement's* record $\Delta$ years before it takes effect:
+
+| coded gap | $\Delta{=}0$ | 1 | 2 | 3 | 4 | 5+ |
+|---|---|---|---|---|---|---|
+| 0 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| 1 | 1.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 |
+| 2 | 1.00 | 1.00 | 1.00 | 0.00 | 0.00 | 0.00 |
+| 3 | 1.00 | 1.00 | 1.00 | 1.00 | 0.00 | 0.00 |
+| 4 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 0.00 |
+
+Exactly one inside the gap, exactly zero outside it, at every width. Contrast **1.000**. So
+$\Delta^\star = \text{gap} + 1$, precisely, and the penumbra the programme was written about is not
+hypothetical — it is sitting in DESTA with its width printed next to it.
+
+**And the diagnostic as specified is blind to it.** UMBRA's $\phi_r(S)$ is a density over the whole
+relation. Built that way from the same agreements, the trace-presence curve is nearly flat — 0.752 at
+$\Delta = 0$ falling only to 0.621 at $\Delta = 8$ — and the contrast between inside and outside the
+coded gap collapses from 1.000 to **0.102**. Agreements with a coded gap of 3 still show 91 % presence
+eight years out.
+
+The mechanism is V3's saturation. The acceding state is already tied to the members through *other*
+agreements, so the focal agreement's back-dated dyads are 13,966 edge-years inside a relation of
+204,747 — **6.8 %** — and the pooled density is dominated by the rest.
+
+**The negative control confirms the reading and rules out an artefact of construction.** The same
+focal-only measurement on COW IGO gives **1.00 at $\Delta = 0$ and 0.025 at $\Delta \geq 1$**: the
+record carries a state from its accession year and not before. So COW IGO's $\beta$ is **zero**,
+measured directly, which is what PROVENANCE §2 concluded from reading five notes among 495. Two
+corpora, one with an exact known penumbra and one with none, and the same instrument on both.
+
+**The operation the manifesto is missing, and it is the mirror of the one it specifies.** §5.3
+prescribes focal-group **exclusion** — remove $E^{r^\star} \cap \Pi(S_c)$ — to stop the focal group's
+own edges standing in for the label. Detecting the penumbra requires the **opposite**: isolating
+those same edges, because they are the only place the back-dating lives. The manifesto specifies the
+removal and never the isolation, so UMBRA as written cannot measure the quantity it was built to
+measure whenever $r^\star$ carries contributions from anything other than the focal group. That is
+not a tuning failure; the two interventions serve opposite purposes and only one is in the document.
+
+**What this does to the earlier non-identifications.** It converts them from a suspicion to a
+demonstrated instrument property. V2's flat clique contrast, V6's no-op focal exclusion and V8's
+noise-limited alliance test were all read as "the instrument cannot separate a shadow from signal
+here". They now have a positive proof: on a corpus where the shadow is exact, externally coded and
+present, the pooled diagnostic returns 0.102 where the truth is 1.000.
+
+P1 and P2 stay non-identified, and the reason is now named rather than inferred. Two scope limits
+keep it that way and both are stated rather than worked around:
+
+* P1 is about **alliance-sourced** events. ATOP gives a treaty start date and a member entry year but
+  no separate signature and force dates, so its gap cannot be computed — the same unreachable
+  codebook as PROVENANCE §4. What is needed to decide P1 is now precisely specifiable: ATOP's dating
+  convention, or a source that codes both dates for alliances as DESTA does for trade.
+* For **organisation** accession the focal-only measurement gives $\beta = 0$, hence
+  $\Delta^\star = 1$. Were P1's scope extended there it would be falsified — but extending it is not
+  the reading of §8 and is not adopted.
 
 ### V9 — P7 is falsified, its mechanism runs backwards, and one rung of §7's ladder falls
 

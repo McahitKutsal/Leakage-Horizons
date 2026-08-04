@@ -618,3 +618,37 @@ One incompleteness, stated rather than smoothed: the width-128 control has four 
 launches (0.8627, 0.8608, 0.8622, 0.8610) rather than a single clean three-seed run, because a third
 seed hung and was not chased. The four values span 0.002, so the point estimate is not in doubt, but
 the run is not as tidy as the others.
+
+## D-26 — DESTA built, and §6's ground truth finally used as ground truth
+**2026-08-04.** `penumbra/desta.py`, `scripts/validate_delta_star_desta.py`; verdict V10.
+
+§6 called the signature-to-force gap the closest thing to ground truth outside synthetics and said it
+should be exploited rather than merely noted. C7 measured it on 2026-08-03 and left it as a caveat
+against P1. Using it as ground truth is what settles what eight verdicts could only circle, so the
+`agreement` entity type deferred in LEDGER.md 1.1 was built after all.
+
+**Crosswalk, on CLIQUEBAIT's rule.** 195 ISO numeric codes to 195 COW states, one-to-one, no
+collisions. Nine parties are declared **non-COW and excluded with a reason** rather than force-matched
+-- Cook Islands, Faroe Islands, Greenland, Hong Kong, Macao, Montserrat, Niue, Palestinian
+Territories, Western Sahara. They sign trade agreements and are not states; mapping them onto a
+metropole would attribute a territory's trade policy to another country. The builder raises rather
+than returning a partial crosswalk.
+
+**Two diagnosis notes worth keeping.** The crosswalk aborted on two parties and I diagnosed it as the
+cp1252 encoding. That was half right: accent-stripping *was* a real latent bug -- normalising
+"Cote d'Ivoire" deleted the circumflex instead of decomposing it, giving "ctedivoire" -- and fixing it
+did not fix these two, because COW genuinely calls them "Ivory Coast" and "Sao Tome and Principe". A
+correct fix for the wrong reason, then the actual reason. And one agreement has a gap of **-1**, in
+force before signature; recorded as a source anomaly rather than clipped.
+
+**What the ground truth showed, and it was not what §6 expected.** The back-dating is exact:
+focal-only trace presence is 1.00 inside the coded gap and 0.00 outside it at every width, so
+Delta* = gap + 1 precisely. The pooled relation-level density that UMBRA specifies sees almost none of
+it -- contrast 0.102 against a truth of 1.000 -- because the focal agreement's back-dated dyads are
+6.8% of a relation saturated by other agreements. The negative control on COW IGO gives beta = 0
+directly, confirming PROVENANCE 2's reading from the coding rules.
+
+The operation the manifesto lacks is the mirror of the one it has: 5.3 prescribes focal **exclusion**
+to stop the focal group's edges standing in for the label, and detecting the penumbra needs focal
+**isolation** of those same edges. Both are needed, for opposite purposes, and only one is in the
+document.
