@@ -135,6 +135,40 @@ def focal_excluded_weight(comembership: pd.DataFrame, membership: pd.DataFrame,
     return out.loc[out.weight > 0, ["year", "cow_i", "cow_j", "weight"]].reset_index(drop=True)
 
 
+def focal_only_weight(comembership: pd.DataFrame, membership: pd.DataFrame,
+                      entity_id: str) -> pd.DataFrame:
+    """The focal entity's OWN contribution to co-membership, isolated. The mirror of section 5.3.
+
+    `focal_excluded_weight` removes these dyads so the focal group's edges cannot stand in for the
+    label. This keeps only them, and V10 is why the library ships both: on DESTA, where the
+    back-dating width is coded per agreement, focal isolation recovers it **exactly** -- presence is
+    1.00 inside the coded gap and 0.00 outside it at every width -- while the pooled relation-level
+    density returns a contrast of 0.102 against a truth of 1.000, because the focal contribution is
+    6.8 % of a saturated relation.
+
+    The two operations serve opposite purposes and the manifesto specifies only one. Exclusion is for
+    *estimating without* the leak; isolation is for *measuring* it. A diagnostic suite that offers
+    only the first cannot measure the quantity it exists to measure whenever $r^\star$ carries
+    contributions from anything but the focal group.
+    """
+    mem = membership[(membership.status == FULL_MEMBER)
+                     & (membership.entity_id == entity_id)]
+    if mem.empty:
+        return comembership.iloc[0:0]
+
+    focal = []
+    for year, g in mem.groupby("year", sort=False):
+        codes = np.sort(g.ccode.to_numpy())
+        if codes.size < 2:
+            continue
+        i, j = np.triu_indices(codes.size, 1)
+        focal.append(pd.DataFrame({"year": year, "cow_i": codes[i], "cow_j": codes[j],
+                                   "weight": 1}))
+    if not focal:
+        return comembership.iloc[0:0]
+    return pd.concat(focal, ignore_index=True)
+
+
 def coverage_audit(relations: dict[str, pd.DataFrame]) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Per relation per year: edges and nodes. Then the regimes those imply.
 

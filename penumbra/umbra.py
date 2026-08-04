@@ -311,6 +311,33 @@ class HorizonAudit:
             rows.append(rec)
         return pd.DataFrame(rows)
 
+    def trace_presence(self, events: pd.DataFrame, horizons=range(0, 9),
+                       full_status: int = 1) -> pd.DataFrame:
+        """U1 under **focal isolation**: is the acceding member on the focal entity's own record
+        $\Delta$ years before the event?
+
+        This is the diagnostic V10 shows UMBRA was missing. It asks of the focal group alone, so a
+        saturating relation cannot drown the signal: on DESTA it recovers a coded back-dating width
+        exactly, where the pooled density recovers 10 % of it.
+
+        Returns one row per (event, horizon) with the share of the focal group's dyads to the
+        acceding member that the record already carries. A curve that steps from 1 to 0 at
+        $\Delta = \beta$ **is** the penumbra, measured rather than inferred.
+        """
+        acc = events[(events.event_type == "accession") & events.ccode.notna()]
+        rows = []
+        for r in acc.itertuples():
+            cc, t_ev = int(r.ccode), int(r.t_R)
+            for d in horizons:
+                t = t_ev - d
+                ms = self._member_sets.get((r.entity_id, t))
+                if ms is None:
+                    continue
+                rows.append({"entity_id": r.entity_id, "ccode": cc, "event_year": t_ev,
+                             "horizon": int(d), "on_focal_record": float(cc in ms),
+                             "n_members": len(ms)})
+        return pd.DataFrame(rows)
+
     # ------------------------------------------------------------------------ U1
     def accession_panel(self, horizon: int, negatives: str = NEVER_EVENT,
                         max_neg_per_pos: int = 4, seed: int = 0,

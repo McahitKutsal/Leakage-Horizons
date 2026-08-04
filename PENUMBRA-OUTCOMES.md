@@ -318,10 +318,16 @@ agreements, so the focal agreement's back-dated dyads are 13,966 edge-years insi
 204,747 — **6.8 %** — and the pooled density is dominated by the rest.
 
 **The negative control confirms the reading and rules out an artefact of construction.** The same
-focal-only measurement on COW IGO gives **1.00 at $\Delta = 0$ and 0.025 at $\Delta \geq 1$**: the
+focal-only measurement on COW IGO gives **1.00 at $\Delta = 0$ and 0.029 at $\Delta \geq 1$**: the
 record carries a state from its accession year and not before. So COW IGO's $\beta$ is **zero**,
 measured directly, which is what PROVENANCE §2 concluded from reading five notes among 495. Two
 corpora, one with an exact known penumbra and one with none, and the same instrument on both.
+
+The 2.9 % residual is not noise and is accounted for. It rises with horizon (0.024 at $\Delta = 1$ to
+0.037 at $\Delta = 8$), which is the signature of states that **left and rejoined**: a dyad already on
+the record before its recorded accession is one whose earlier membership the single-event
+simplification discards. `t1.count_recurrences` puts that at 1.9 % of accessions from an unrelated
+computation. Two independent routes to the same magnitude, and no residual left needing a story.
 
 **The operation the manifesto is missing, and it is the mirror of the one it specifies.** §5.3
 prescribes focal-group **exclusion** — remove $E^{r^\star} \cap \Pi(S_c)$ — to stop the focal group's

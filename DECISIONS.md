@@ -652,3 +652,24 @@ The operation the manifesto lacks is the mirror of the one it has: 5.3 prescribe
 to stop the focal group's edges standing in for the label, and detecting the penumbra needs focal
 **isolation** of those same edges. Both are needed, for opposite purposes, and only one is in the
 document.
+
+## D-27 — UMBRA ships the missing operation, and the library disagreed with the script that found it
+**2026-08-04.** `penumbra/graph.py::focal_only_weight`, `penumbra/umbra.py::trace_presence`.
+
+V10 found that the manifesto specifies focal **exclusion** and never focal **isolation**, and that
+without isolation the diagnostic cannot measure the quantity it exists to measure. Reporting that
+without shipping the fix would leave section 10's deliverable -- UMBRA as a domain-general library --
+carrying a known blind spot, so both operations are now exported with the reason attached to each.
+
+Moving the measurement from an ad-hoc script into the library **changed the numbers**, and the library
+was right. The script counted every (event, horizon) pair whether or not the entity existed at that
+year, scoring the non-existent ones as trace-absent; `trace_presence` skips them, because asking
+whether a state is on the record of an organisation that does not yet exist is not a question. The
+divergence grows with horizon -- exactly where more entity-years fall outside the entity's life -- and
+COW IGO's residual moves from 0.025 to 0.029. V10's conclusion is unchanged; its number is corrected.
+
+The residual then explained itself. It rises from 0.024 at horizon 1 to 0.037 at horizon 8, which is
+the signature of states that left and rejoined: a dyad already on the record before its recorded
+accession is one whose earlier spell the single-event simplification discards. `count_recurrences`
+puts recurrent accessions at 1.9 % from a computation sharing no code with this one. Two routes, the
+same magnitude, and nothing left over that needs a story.
