@@ -1046,3 +1046,77 @@ the paper, tested the way a reader would test it.
 `data/ledger/membership.parquet` and stops without it. The paper claims that both implementations and
 the cross-check are released, which is true, and does not claim a reader can run it; Section 10
 already says no one outside the author group has rebuilt either corpus.
+
+# Round eight: the bibliography, against the publisher's own record
+
+Asked to check the citations so that nobody is caught cheaply there. `scripts/check_citations.py`
+compares every entry with CrossRef, and with DBLP for the six proceedings papers that mint no DOI:
+the DOI resolves, the title, the print or issue year, the venue, the first author's family name, and
+the number of authors.
+
+**Forty-six entries, forty against CrossRef and six against DBLP, and after three corrections, none
+with a problem and none unchecked.**
+
+## R8.1 Three real errors
+
+**`cheney` pointed at the wrong edition.** The DOI `10.1561/9781601982339` is the standalone
+monograph, which now Publishers deposited as a 2007 book with no volume, issue or pages. Our entry
+gives *Foundations and Trends in Databases* 1(4), 379–474, 2009, which is the journal article and has
+its own DOI, `10.1561/1900000006`: CrossRef confirms type journal-article, that container, that
+volume, those pages, print year 2009. The DOI is the one thing in an entry a reader clicks, and it was
+taking them to a different object from the one described around it.
+
+**`atop` had a name parsed wrong.** `McLaughlin Mitchell, Sara` makes McLaughlin Mitchell the family
+name, so BibTeX would set "McLaughlin Mitchell, S." in the reference list and "McLaughlin Mitchell
+et al." in the text. Her family name is Mitchell; it is now `Mitchell, Sara McLaughlin`. Getting a
+cited author's name wrong is the cheapest catch there is, and it is worse than a wrong page number
+because it is a person's name.
+
+**Two titles had been altered.** `atop` read "1815 to 1944" and `mid5` read "2011 to 2014", where both
+papers use an en dash. Writing out an en dash is this project's rule for its own prose, applied by
+mistake to someone else's title. A cited title is a quotation; both now read `1815--1944` and
+`2011--2014`.
+
+## R8.2 Two the entry had right and CrossRef had wrong
+
+**`datasheets`.** ACM deposited Hal Daumé III as given name "Hal Daumé", family name "III". Our
+`Daum{\'e} III, Hal` is correct. Recorded in the checker's `CROSSREF_WRONG` table rather than
+tolerated, so that "the publisher's record disagrees" keeps meaning something.
+
+**`geiger`.** ACM deposits the part after the question mark as a subtitle, so CrossRef's title is just
+"Garbage in, garbage out?". The full title is ours. The checker now joins title and subtitle before
+comparing.
+
+## R8.3 The one hard numeric attribution, verified verbatim
+
+Section 2 says \citet{kapoor_leakage} "survey 294 papers across seventeen fields and give a taxonomy
+with eight leaves", and that their remedy is a model info sheet. The published abstract says "we find
+17 fields where leakage has been found, collectively affecting 294 papers", "a detailed taxonomy of
+eight types of leakage", and "model info sheets, which we introduce". All three exact.
+
+Worth noting which version that came from: **the arXiv preprint of the same paper says 329 papers, not
+294.** We cite the Patterns version and carry its number. Anyone working from the preprint would have
+written 329 against a published DOI and been wrong in a way no internal check could see.
+
+The taxonomy's shape is consistent too — the paper describes L1 with four leaves, L2, and L3.1 to
+L3.3, which is 4 + 1 + 3 = 8. The eight labels themselves were not independently re-read for this
+round; they were checked in round one, when the L1-to-L2 assignment was corrected.
+
+## R8.4 The checker's own three bugs
+
+Each would have made it useless, and each is the same mistake: comparing against the wrong field and
+believing the answer.
+
+**It read CrossRef's `published`**, which is defined as the earliest date on the record. Nine of our
+entries are online-first a year before their issue, and the issue year is what a citation carries. The
+first run reported nine correct entries as wrong — enough noise to make anyone switch the check off.
+It reads the print or issue year now, and reports which field a year came from when they differ.
+
+**It compared a title without its subtitle**, and an ampersand without unescaping the entity, so
+`geiger` and `do_hyper` were flagged for matching.
+
+**It swallowed every DBLP failure into "nothing found".** DBLP throttles a run of queries, the fifth
+and sixth failed, and two entries DBLP knows perfectly well were reported as verified — a checker
+saying "checked" about something it had not asked. It now distinguishes "DBLP answered and has
+nothing" from "DBLP would not answer", retries with a backoff, waits three seconds between queries,
+counts unchecked entries separately, and exits non-zero if any remain.
