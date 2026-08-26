@@ -22,6 +22,7 @@ The ladder (§7), each rung capacity-matched and required to beat the one below:
 """
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import numpy as np
@@ -36,6 +37,20 @@ NODES = (ROOT.parent / "CLIQUEBAIT" / "previous-work-code-base" / "coalition-gnn
 
 NODE_COLS = ["cinc", "polity2", "v2x_polyarchy", "v2x_libdem", "v2x_partipdem",
              "log_e_gdppc", "log_e_pop", "log_tpop", "log_milex", "log_milper"]
+
+
+def _corpus_fingerprint() -> dict:
+    """Sizes of the three corpus tables the risk set is derived from.
+
+    Cheap enough to compute on every call -- parquet carries row counts in its footer -- and sufficient
+    to catch a rebuild, since none of D-28, D-31 or D-32 left any of the three unchanged.
+    """
+    import pyarrow.parquet as pq
+    out = {}
+    for name in ("membership", "events", "entities"):
+        f = LEDGER / f"{name}.parquet"
+        out[name] = int(pq.ParquetFile(f).metadata.num_rows) if f.exists() else None
+    return out
 
 
 def count_recurrences(events: pd.DataFrame) -> dict:
@@ -70,8 +85,23 @@ def build_risk_set(regime=(1965, 2014)) -> pd.DataFrame:
     """
     lo, hi = regime
     cache = LEDGER / f"t1_riskset_{lo}_{hi}.parquet"
+    stamp = LEDGER / f"t1_riskset_{lo}_{hi}.corpus.json"
+    # **The cache is keyed on the corpus, not just the regime.** It was keyed on the regime alone and
+    # returned unconditionally, so a corpus rebuild left a stale risk set that the next ladder run would
+    # use in silence. The corpus went through four versions on 2026-08-04 and the cache had to be deleted
+    # by hand each time; forgetting once would have fitted the ladder to the previous corpus and produced
+    # numbers with nothing visibly wrong with them (D-40).
+    fp = _corpus_fingerprint()
     if cache.exists():
-        return pd.read_parquet(cache)
+        prev = None
+        if stamp.exists():
+            try:
+                prev = json.loads(stamp.read_text(encoding="utf-8"))
+            except Exception:
+                prev = None
+        if prev == fp:
+            return pd.read_parquet(cache)
+        print(f"  risk-set cache is stale ({prev} != {fp}); rebuilding")
 
     mem = pd.read_parquet(LEDGER / "membership.parquet")
     mem = mem[mem.year.between(lo, hi)]
@@ -104,19 +134,90 @@ def build_risk_set(regime=(1965, 2014)) -> pd.DataFrame:
     cand["dur"] = cand.groupby("dyad", sort=False).cumcount() + 1
     cache.parent.mkdir(parents=True, exist_ok=True)
     cand.to_parquet(cache, index=False)
+    stamp.write_text(json.dumps(fp), encoding="utf-8")
     return cand
 
 
-def build_panel(regime=(1965, 2014), rung: int = 3, phi_features: pd.DataFrame | None = None):
+OBSERVED_CLOCK = "observed"
+ELIGIBILITY_CLOCK = "eligibility"
+
+
+def _eligibility_clock(cand: pd.DataFrame, regime) -> tuple[pd.Series, np.ndarray]:
+    r"""Duration measured from when the state first became eligible, with the truncated part unobserved.
+
+    "Duration in dyad time" was stated and never defined against the coalition's founding, so `dur` was
+    `cumcount() + 1`: every dyad starts at 1 in the year it enters the *observed* risk set. Measured on the
+    1965-2014 risk set, **19.4 %** of dyads are truncated at the regime start with a median 11 and a
+    maximum 150 years of eligibility already elapsed, 41.2 % of rows come from coalitions founded before
+    the regime, and **58.4 % of positive dyads** do. Rung 1 is duration dependence *alone* and is the
+    baseline every other rung is compared against, so this is the worst place in the ladder for an
+    undeclared clock (D-37).
+
+    The two clocks answer different questions and neither is wrong:
+
+    * `observed` -- how long we have watched this dyad not accede. What `cumcount` gives.
+    * `eligibility` -- how long the state has been able to join this coalition, which begins at
+      $\max(\text{founded}, \text{state's first system year}, \text{window start})$. A state independent
+      in 1960 was not eligible in 1900, so the state's own entry bounds it.
+
+    Under the second, a truncated dyad enters observation at a positive age and `PeriodPanel.entry`
+    carries the offset, which is what that field is for. Returns the per-row duration and the per-dyad
+    entry offset.
+    """
+    lo = regime[0]
+    # Eligibility needs BOTH parties to exist, so it is a maximum over three dates, not a minimum. An
+    # earlier version wrote `min(max(founded, 1946), first_observed)`, which made a state independent in
+    # 1975 eligible from a 1950 founding -- the docstring said max and the code said min, and it inflated
+    # the truncated set from 19 % of dyads to 55 %. The state's own entry is the binding constraint for
+    # most post-colonial states and it has to be read over the full window: inside the 1965-2014 risk set
+    # every state that predates the regime looks like it entered in 1965.
+    mem = pd.read_parquet(LEDGER / "membership.parquet")
+    state_entry = mem.groupby("ccode").year.min()
+
+    g = cand.groupby("dyad", sort=False)
+    founded = g.entity_founded.min().fillna(lo).astype(int)
+    ccode = g.ccode.first().astype(int)
+    first_obs = g.year.min().astype(int)
+
+    elig = np.maximum(np.maximum(founded.to_numpy(), 1946),
+                      ccode.map(state_entry).fillna(1946).to_numpy().astype(int))
+    # Observation cannot begin before eligibility, and in practice begins at the regime start or at the
+    # dyad's first row, whichever is later. Clipping at `elig` keeps `period > entry` for every row,
+    # which is the invariant PeriodPanel refuses to build without.
+    obs = np.maximum(elig, np.minimum(first_obs.to_numpy(), np.maximum(elig, lo)))
+    elig_by_dyad = pd.Series(elig, index=founded.index)
+    dur = cand.year.to_numpy() - cand.dyad.map(elig_by_dyad).to_numpy() + 1
+    entry = (obs - elig).astype(int)
+    return pd.Series(dur, index=cand.index), entry
+
+
+def build_panel(regime=(1965, 2014), rung: int = 3, phi_features: pd.DataFrame | None = None,
+                clock: str = OBSERVED_CLOCK):
     """Assemble the dyad-period panel for a given rung.
 
     Returns `(panel, meta)`. `period` is **duration in dyad time**, so §7's rung 1 is duration
     dependence; the calendar year rides in `meta` because rolling-origin evaluation and the
     determinacy rule need it. Keeping both is not redundancy -- conflating them is how a duration
     model silently becomes a calendar model.
+
+    `clock` selects what "dyad time" means; see `_eligibility_clock`. The default stays `observed`
+    because that is what V5 was measured on and changing a default silently would move a published
+    number, and D-37 reports the ladder under both so the rung ordering can be checked for invariance
+    rather than assumed.
     """
+    if clock not in (OBSERVED_CLOCK, ELIGIBILITY_CLOCK):
+        raise ValueError(f"unknown clock {clock!r}")
     cand = build_risk_set(regime)
     n_dyads = int(cand.dyad.max()) + 1
+
+    entry = np.zeros(n_dyads, dtype=int)
+    if clock == ELIGIBILITY_CLOCK:
+        if "entity_founded" not in cand.columns:
+            ent = pd.read_parquet(LEDGER / "entities.parquet")[["entity_id", "founded"]]
+            cand = cand.merge(ent.rename(columns={"founded": "entity_founded"}),
+                              on="entity_id", how="left")
+        cand = cand.assign(dur=_eligibility_clock(cand, regime)[0].to_numpy())
+        entry = _eligibility_clock(cand, regime)[1]
 
     last = cand.groupby("dyad").agg(dur_max=("dur", "max"), acc=("acc_year", "max"),
                                     y_last=("year", "max"))
@@ -126,6 +227,9 @@ def build_panel(regime=(1965, 2014), rung: int = 3, phi_features: pd.DataFrame |
     has_ev = last.acc.notna().to_numpy()
     tR[:] = last.dur_max.to_numpy()
     tL[has_ev] = last.dur_max.to_numpy()[has_ev] - 1
+    # A censored dyad's t_L is ignored; an event dyad's must sit at or after its entry offset, or the
+    # interval would reach into periods before the dyad was observed.
+    tL = np.maximum(tL, entry)
     cause[has_ev] = 1
 
     X_parts, names = [], []
@@ -162,7 +266,7 @@ def build_panel(regime=(1965, 2014), rung: int = 3, phi_features: pd.DataFrame |
         X = (X - X.mean(axis=0)) / np.where(sd > 0, sd, 1.0)
 
     panel = PeriodPanel(entity=cand.dyad.to_numpy(), period=cand.dur.to_numpy(), X=X,
-                        entry=np.zeros(n_dyads, dtype=int), t_L=tL, t_R=tR, cause=cause)
+                        entry=entry, t_L=tL, t_R=tR, cause=cause)
     meta = {"year": cand.year.to_numpy(), "feature_names": names,
             "n_rows": len(cand), "n_dyads": n_dyads,
             "n_events": int((cause != CENSORED).sum()), "rung": rung, "regime": list(regime)}

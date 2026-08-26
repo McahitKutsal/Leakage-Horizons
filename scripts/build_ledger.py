@@ -20,8 +20,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from penumbra.ledger import (BRACKETED, DECLARED, EXACT, RULE_ASSIGNED,  # noqa: E402
-                             WINDOW_END, WINDOW_START, build)
+from penumbra.ledger import (BRACKETED, DECLARED, EXACT, MIN_MEMBERS,  # noqa: E402
+                             RULE_ASSIGNED, WINDOW_END, WINDOW_START, build)
+from penumbra.provenance import write_result  # noqa: E402
 
 OUT = ROOT / "data" / "ledger"
 
@@ -89,6 +90,31 @@ def validate(tabs: dict[str, pd.DataFrame]) -> list[str]:
     # Membership status codes: only full, associate, observer survive ingest.
     check(set(mem.status.unique()) <= {1, 2, 3}, f"unexpected status codes: "
                                                  f"{sorted(set(mem.status.unique()))}")
+
+    # **One row per (entity, ccode, year).** The invariant every consumer assumes and none checked, so
+    # a group size taken as `.size()` silently double-counts. ATOP codes a member once per treaty phase
+    # and phases overlap, which put 298 redundant rows over 298 keys into the corpus, 596 rows standing
+    # in duplicate pairs, and inflated 162 (entity, year) cells by up to a factor of two -- D-32.
+    # Asserted here rather than defended in each consumer, because it is a property of the corpus and
+    # this is the only place that can enforce it.
+    dup = int(mem.duplicated(subset=["entity_id", "ccode", "year"]).sum())
+    check(dup == 0, f"{dup} duplicated (entity, ccode, year) membership rows")
+
+    # The same invariant stated as the thing that actually breaks: group size by rows must equal group
+    # size by distinct members, everywhere. Redundant with the check above by construction, and kept
+    # because it is the form a consumer would write and so the form a regression would show up in.
+    full = mem[mem.status == 1]
+    by_rows = full.groupby(["entity_id", "year"]).size()
+    by_uniq = full.groupby(["entity_id", "year"]).ccode.nunique()
+    bad = int((by_rows != by_uniq).sum())
+    check(bad == 0, f"{bad} (entity, year) cells whose row count exceeds their member count")
+
+    # Multilateral means >= 3 distinct members, not >= 3 rows (D-31). Checked against the corpus's own
+    # membership rather than against the source, so the entity filter and the member-years agree.
+    sizes = full.groupby("entity_id").ccode.nunique()
+    small = sorted(sizes[sizes < MIN_MEMBERS].index)
+    check(not small, f"{len(small)} entities with fewer than {MIN_MEMBERS} distinct members ever: "
+                     f"{small[:5]}")
     return fail
 
 
@@ -159,8 +185,10 @@ def main() -> int:
         p = OUT / f"{name}.{ext}"
         df.to_csv(p, index=False) if ext == "csv" else df.to_parquet(p, index=False)
         print(f"  wrote {p.name:28} {len(df):>7} rows")
-    (ROOT / "results" / "ledger_summary.json").write_text(
-        json.dumps(summary, indent=2, default=str))
+    # Through `write_result` like every other artefact. My regex rewrite in D-35 missed this call because
+    # the path is a parenthesised expression rather than a name, and the corpus summary is the one file
+    # whose provenance matters most: `provenance.corpus_fingerprint` reads it to stamp everything else.
+    write_result(ROOT / "results" / "ledger_summary.json", summary, indent=2, default=str)
     return 0
 
 

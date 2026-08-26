@@ -51,8 +51,18 @@ def build_snapshots(regime=(1965, 2014)) -> dict:
     covariates and an absence flag, and hold no edges.
     """
     lo, hi = regime
-    edges = pd.concat([pd.read_parquet(p).assign(relation=p.stem.replace("edges_", ""))
-                       for p in sorted(GRAPH.glob("edges_*.parquet"))], ignore_index=True)
+    # **The relations are named, not globbed.** This read `GRAPH.glob("edges_*.parquet")`, so when
+    # `validate_delta_star_desta.py` wrote `edges_pta_signature.parquet` and `edges_pta_force.parquet`
+    # into the same directory for V10, they were silently pulled in. `RELATIONS` has five entries, so
+    # `relation.map(rel_ix)` returned NaN for the PTA rows, `np.stack` cast NaN into an int64 edge-type
+    # tensor, and RGCNConv died on a device-side CUDA assert -- an error with no visible connection to
+    # its cause, two indirections and a device boundary away. V9's P7 run predates those files, so the
+    # glob was latently broken from the moment V10 was measured and nothing said so (D-38).
+    missing = [r for r in RELATIONS if not (GRAPH / f"edges_{r}.parquet").exists()]
+    if missing:
+        raise FileNotFoundError(f"declared relations with no edge file: {missing}")
+    edges = pd.concat([pd.read_parquet(GRAPH / f"edges_{r}.parquet").assign(relation=r)
+                       for r in RELATIONS], ignore_index=True)
     edges = edges[edges.year.between(lo, hi)]
     nodes = pd.read_parquet(NODES)
     nodes = nodes[nodes.year.between(lo, hi)]
@@ -84,6 +94,14 @@ def build_snapshots(regime=(1965, 2014)) -> dict:
             ui = e.cow_i.map(idx).to_numpy()
             vi = e.cow_j.map(idx).to_numpy()
             et = e.relation.map(rel_ix).to_numpy()
+            # Refuse an unmapped endpoint or relation instead of casting NaN to int64. The cast is what
+            # turned a naming mismatch into a CUDA assert, and a NaN in an index array is the one kind
+            # of bad value that produces no error at the point it is created (D-38).
+            for arr, what in ((ui, "cow_i"), (vi, "cow_j"), (et, "relation")):
+                bad = pd.isna(arr).sum()
+                if bad:
+                    raise ValueError(f"{year}: {bad} edge rows with an unmapped {what}")
+            ui, vi, et = ui.astype(np.int64), vi.astype(np.int64), et.astype(np.int64)
             ei = np.concatenate([np.stack([ui, vi]), np.stack([vi, ui])], axis=1)
             et = np.concatenate([et, et])
         else:

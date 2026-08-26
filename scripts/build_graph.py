@@ -19,6 +19,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from penumbra.provenance import write_result  # noqa: E402
 from penumbra.graph import (IGO_COMEMBERSHIP, RELATION_SOURCES, WINDOW_END,  # noqa: E402
                            WINDOW_START, build_igo_comembership, coverage_audit,
                            load_relations)
@@ -74,7 +75,7 @@ def main() -> int:
         "regimes": regimes.to_dict("records"),
     }
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps(summary, indent=2, default=str))
+    write_result(args.json, summary, indent=2, default=str)
     print(f"\nwritten to {args.json}")
 
     if args.dry_run:

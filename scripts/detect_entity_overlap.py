@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.crosswalk import igo_membership_long  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 
 ATOP = ROOT.parent / "CLIQUEBAIT" / "data" / "ATOP 5.1 (.csv)"
 
@@ -42,12 +43,21 @@ MIN_SHARED_YEARS = 3
 
 
 def atop_membership() -> pd.DataFrame:
-    """Long-format (atopid, year, ccode) for multilateral treaties active in the window."""
-    a = pd.read_csv(ATOP / "atop5_1a.csv", low_memory=False)
-    m = pd.read_csv(ATOP / "atop5_1m.csv", low_memory=False)
+    """Long-format (atopid, year, ccode) for the treaties **the corpus admits**.
 
-    size = m.groupby("atopid").size()
-    keep = set(size[size >= MIN_MEMBERS].index) & set(a.loc[a.begyr >= WINDOW[0], "atopid"])
+    This function re-derived the entity filter and drifted from the corpus in two directions at once:
+    `groupby("atopid").size()` counts *rows*, and ATOP writes one row per member per phase, so a
+    bilateral pact over two phases passed a >= 3 members test (D-31); while `begyr >= WINDOW[0]` excludes
+    treaties founded before 1946 that the corpus keeps as left-truncated. Net effect, 70 treaties against
+    the corpus's 72 -- not obviously wrong from either number alone, which is the point.
+
+    A script that re-derives a filter will drift from the corpus that owns it. Reading
+    `entities.parquet` is the fourth place this lesson has been applied (D-28, D-31, D-32, D-35) and the
+    invariant is checked in exactly one place, `build_ledger.validate`.
+    """
+    m = pd.read_csv(ATOP / "atop5_1m.csv", low_memory=False)
+    ent = pd.read_parquet(ROOT / "data" / "ledger" / "entities.parquet")
+    keep = set(ent.loc[ent.entity_type == "alliance", "source_id"].astype(int))
     m = m[m.atopid.isin(keep)].copy()
 
     # yrexit == 0 means the membership never ended in the source. Treating it as year zero would
@@ -156,13 +166,23 @@ def family_fate_correlation(fams: list[list[int]], deaddate: dict, population: s
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--json", type=Path, default=None)
+    # Defaulted rather than opt-in (D-35): a results path passed by hand is one that gets
+    # forgotten, which is why this file still held corpus v1 numbers after three rebuilds.
+    ap.add_argument("--json", type=Path,
+                    default=ROOT / "results" / "entity_overlap.json")
     ap.add_argument("--min-jaccard", type=float, default=MIN_JACCARD)
     args = ap.parse_args()
 
     atop = atop_membership()
     igo = igo_membership_long(full_only=True)
     igo = igo[(igo.year >= WINDOW[0]) & (igo.year <= WINDOW[1])]
+    # The corpus entity set on this side too, for the reason `atop_membership` documents. The raw file
+    # yields 491 organisations with at least one full member in the window against the corpus's 490:
+    # the extra one is the Regional Cooperation Council, which has a single coded member and no dyads,
+    # and which D-32 excluded. One organisation, and both numbers look right in isolation.
+    _ent = pd.read_parquet(ROOT / "data" / "ledger" / "entities.parquet")
+    igo = igo[igo.ionum.isin(set(_ent.loc[_ent.entity_type == "organisation", "source_id"]
+                                 .astype(int)))]
 
     a_sets = _sets_by_year(atop, "atopid")
     i_sets = _sets_by_year(igo, "ionum")
@@ -248,7 +268,7 @@ def main() -> None:
 
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
-        args.json.write_text(json.dumps({
+        write_result(args.json, {
             "window": list(WINDOW), "min_jaccard": args.min_jaccard,
             "min_shared_years": MIN_SHARED_YEARS,
             "n_atop_multilateral": len(a_ids), "n_igo": len(i_ids),
@@ -262,7 +282,7 @@ def main() -> None:
                 "families": fams,
             },
             "family_fate_correlation": fate,
-        }, indent=2))
+        }, indent=2)
         print(f"\nwritten to {args.json}")
 
 

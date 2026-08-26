@@ -30,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.crosswalk import IGO_META, IGO_YEAR  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 
 CODEBOOK = ROOT / "data" / "raw" / "cow_igo" / "codebook_v2.1.pdf"
 SECTION_IV_FROM_PAGE = 7          # 1-indexed; section IV opens on this page
@@ -195,7 +196,7 @@ def main() -> int:
                   f"{ys[0]}-{ys[-1]}")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
         "codebook": "COW IGO v2.1 section IV; the v3 short codebook omits it",
         "data": "igo_year_formatv3",
         "n_records_parsed": int(len(recs)),
@@ -212,7 +213,7 @@ def main() -> int:
             "materialised_not_declared_org_years": int(mnd.materialised_not_declared.map(len).sum()),
         },
         "records": recs.to_dict("records"),
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     print(f"\nwritten to {args.json}")
     return 0
 

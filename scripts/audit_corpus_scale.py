@@ -50,6 +50,7 @@ FULL_MEMBER, NO_MEMBER = 1, 0
 # quoted in DECISIONS.md D-03 before the corpus was built and caught only when LEDGER, using the
 # shared definition, disagreed. Two definitions of one thing is the defect, not the typo.
 from penumbra.crosswalk import IGO_META  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 
 
 # --------------------------------------------------------------------------------- ATOP
@@ -262,7 +263,10 @@ def audit_horizon_window() -> dict:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--json", type=Path, default=None)
+    # Defaulted rather than opt-in (D-35): a results path passed by hand is one that gets
+    # forgotten, which is why this file still held corpus v1 numbers after three rebuilds.
+    ap.add_argument("--json", type=Path,
+                    default=ROOT / "results" / "corpus_scale.json")
     ap.add_argument("--era-start", type=int, default=1965)
     args = ap.parse_args()
 
@@ -321,9 +325,9 @@ def main() -> None:
 
     if args.json:
         args.json.parent.mkdir(parents=True, exist_ok=True)
-        args.json.write_text(json.dumps({"atop": atop, "cow_igo": igo,
+        write_result(args.json, {"atop": atop, "cow_igo": igo,
                                          "cow_igo_causes": causes, "desta": desta,
-                                         "horizon_window": horizon}, indent=2))
+                                         "horizon_window": horizon}, indent=2)
         print(f"\nwritten to {args.json}")
 
 
