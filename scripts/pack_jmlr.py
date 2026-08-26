@@ -12,6 +12,7 @@ usual way an upload compiles locally and not on Overleaf.
 """
 from __future__ import annotations
 
+import hashlib
 import re
 import sys
 import zipfile
@@ -64,12 +65,23 @@ def main() -> int:
         for arc, path in sorted(members.items()):
             z.write(path, arc)
 
-    # Read the archive back. A listing built from the same dict that wrote it proves nothing.
+    # Read the archive back. A listing built from the same dict that wrote it proves nothing, and
+    # neither does a name, so each entry is compared with the file on disk byte for byte. This
+    # confirms the write landed; it cannot catch an archive that went stale, because this script
+    # rewrites it from disk every time it runs. What catches that is in build_jmlr.py, which knows
+    # when the .tex has just changed.
     with zipfile.ZipFile(OUT) as z:
         packed = set(z.namelist())
         bad = z.testzip()
         if bad:
             raise SystemExit(f"FAIL: {bad} is corrupt in the archive")
+        stale = []
+        for arc, path in sorted(members.items()):
+            if hashlib.sha256(z.read(arc)).hexdigest() != \
+                    hashlib.sha256(path.read_bytes()).hexdigest():
+                stale.append(arc)
+        if stale:
+            raise SystemExit(f"FAIL: the archive holds an older version of {stale}")
     missing = sorted(set(members) - packed)
     if missing:
         raise SystemExit(f"FAIL: written but not in the archive: {missing}")
