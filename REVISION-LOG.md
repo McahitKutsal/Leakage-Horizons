@@ -1120,3 +1120,21 @@ and sixth failed, and two entries DBLP knows perfectly well were reported as ver
 saying "checked" about something it had not asked. It now distinguishes "DBLP answered and has
 nothing" from "DBLP would not answer", retries with a backoff, waits three seconds between queries,
 counts unchecked entries separately, and exits non-zero if any remain.
+
+## R8.5 An archive that could go behind
+
+Asked whether the zip had been updated, the answer was yes, and checking it properly was worth more
+than the answer. Every one of its eleven entries was compared with the file on disk by sha256: all
+identical, and the deposit DOI, the corrected `cheney` DOI, `Mitchell, Sara McLaughlin`, `1815--1944`,
+`2011--2014` and the repository URL are all inside it.
+
+The failure worth guarding was a different one. `pack_jmlr.py` read the archive back and checked names
+and CRC, so it could not tell a current archive from one a version behind — and neither could a
+compile, because the archive is not what compiles. An archive that still holds every file under the
+right name and one of them stale is exactly what gets uploaded.
+
+The byte comparison is now in the packer, which confirms the write landed. The staleness guard is in
+`build_jmlr.py` instead, because the packer rewrites the archive from disk on every run and can never
+observe itself stale; the build is what knows the `.tex` has just changed. It reports either "the
+Overleaf archive matches this build" or which entries it is behind on. Tested by changing `TITLE`,
+building without packing, and reading the warning.

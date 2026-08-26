@@ -977,6 +977,25 @@ def main() -> int:
     print(f"  prose: {n_all} sentences, {n_long} of {LONG_SENTENCE_WORDS} words or more "
           f"({share*100:.1f} percent)")
     print(f"  wrote {TEX} ({len(tex):,} chars)")
+
+    # The Overleaf archive is written by pack_jmlr.py, which nobody remembers to run. An archive that
+    # still holds every file under the right name and one of them a version behind is what gets
+    # uploaded, and neither the archive's own checks nor a compile can see it.
+    zip_path = OUT / "penumbra-overleaf.zip"
+    if zip_path.exists():
+        import hashlib
+        import zipfile
+        behind = []
+        with zipfile.ZipFile(zip_path) as z:
+            for arc in z.namelist():
+                on_disk = OUT / arc
+                if not on_disk.exists() or hashlib.sha256(z.read(arc)).hexdigest() != \
+                        hashlib.sha256(on_disk.read_bytes()).hexdigest():
+                    behind.append(arc)
+        if behind:
+            print(f"  the Overleaf archive is now behind on {behind}; run scripts/pack_jmlr.py")
+        else:
+            print("  the Overleaf archive matches this build")
     # Who the authors are is not something this script can decide, but it can say when the paper
     # disagrees with itself about it. The byline and the contribution statement have to name the same
     # people: a name in one and not the other is a defect a reader sees on the first page.
