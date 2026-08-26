@@ -39,6 +39,12 @@ MD_ONLY = [
      "from, under the MIT licence.",
      "are released as one repository at <https://github.com/McahitKutsal/Leakage-Horizons>, "
      "under the MIT licence."),
+    # The .tex takes the DOI from declaration/MANIFEST.json, which the docx has a placeholder for and
+    # this file never did. Written out here rather than left to drift.
+    ("The artefact Section 5.1's protocol rests on is deposited separately, with a checksum for "
+     "each file,",
+     "The artefact Section 5.1's protocol rests on is deposited separately at "
+     "<https://doi.org/10.5281/zenodo.22110800>, with a checksum for each file,"),
 ]
 
 

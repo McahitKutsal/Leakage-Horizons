@@ -958,3 +958,40 @@ the paper correct, which is the hardest kind of defect to notice.
 now fixes its text and does not make it evidence about the order in which it and the statistic were
 produced, and we would rather say so than let a deposit date imply otherwise." Any archive's DOI is
 minted when the deposit is made, which is after the analysis. The sentence stays as it is.
+
+## R6.4 The deposit DOI, and what resolving it found
+
+`10.5281/zenodo.22110800`, recorded with `build_declaration.py --doi` and taken from the manifest by
+the build. The placeholder is gone and no placeholder is left in the manuscript.
+
+The DOI was resolved before it was printed, which is the point of the exercise. It goes to the right
+record: the title is the paper's, the four authors are the byline's, and the three files are the
+bundle's at 4.5 kB, 2.8 kB and 33.8 kB against the manifest's 4,543, 2,769 and 33,841 bytes.
+
+Recording the DOI did not disturb what was deposited. `build_declaration.py` rewrites the bundle, so
+the checksums were compared before and after: `pre-registration.md` at cfbef64b and
+`corpus-b-channel-declaration.md` at 3fc329c0 are byte-identical. Only `MANIFEST.json` changed, and it
+does not record its own checksum, so the deposit is still correctly described by the manifest that
+describes it.
+
+Three things about the Zenodo record are worth writing down.
+
+**Two author names are transposed.** Zenodo's field order is family name, then given name. The record
+reads "Kutsal, Mücahit" and "Erdağ, Alpaslan" correctly, and then "Uğur, Özbek" and "Doğa, Koçyiğit",
+which makes Uğur and Doğa the family names. DataCite indexes on that field, so a citation to the
+deposit would render "Uğur, Ö." and "Doğa, K." Zenodo metadata stays editable after publication,
+unlike the files, so this is a fix rather than a new version.
+
+**The record is CC BY 4.0 and the repository is MIT.** For documents rather than code that is the
+better licence, and the manuscript claims MIT only for the repository, so nothing in the text
+contradicts it. Noted because the two differ and the difference was not stated anywhere.
+
+**The deposited `MANIFEST.json` still reads "TO BE COMPLETED AT DEPOSIT".** A file cannot carry the
+DOI that names it unless the DOI is reserved before publishing. The local copy now carries it and the
+deposited one does not, which is the only difference between the two, and the two documents the
+manifest makes claims about are identical in both.
+
+`corpus-b-channel-declaration.md` now has a commit, made by this release, and
+`build_declaration.py` reported it the right way: "a commit exists but postdates the analysis, which is
+not evidence about the order." The manifest still records `timestamped: false` and the artefact is
+still marked not timestamped in its own text. Section 6.6's limitation is unchanged.
