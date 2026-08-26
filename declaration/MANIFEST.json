@@ -36,8 +36,14 @@
   "corpus_b": {
     "file": "corpus-b-channel-declaration.md",
     "timestamped": false,
-    "first_commit": null,
-    "commits": [],
+    "first_commit": "2026-08-26 13:51:18 +0300",
+    "commits": [
+      {
+        "commit": "5d877f289bfa886dba1af6a1d7d2e9a8256723d8",
+        "date": "2026-08-26 13:51:18 +0300",
+        "subject": "Release the paper, the figures, and the scripts that check both"
+      }
+    ],
     "declares": [
       "the target channel",
       "the two contaminated channels",
@@ -59,6 +65,6 @@
       "timestamped": false
     }
   },
-  "head_commit": "a5be346b0e8d764749ca9eab8768b9e15080cded",
-  "deposit_identifier": "TO BE COMPLETED AT DEPOSIT"
+  "head_commit": "7842132fb57902221bedc7eedace4e62eeac3ac6",
+  "deposit_identifier": "10.5281/zenodo.22110800"
 }
