@@ -11,20 +11,63 @@ held, what did not, and where the manifesto's own instructions have to be overri
 prior programme falsified one of its five hypotheses and overrode three of its four
 diagnostics. That is the expected rate, not a failure mode.
 
-**Status, 2026-08-03, end of the first working period.** Corpus built and validated, observation
-graph built and coverage audited, provenance declared, $\Delta^\star_{\text{lo}}$ calibrated on
-synthetics against a known back-dating horizon, U1 and U2 run on real data, and the
-interval-censored competing-risks hazard implemented, verified against closed forms, and fitted for
-both T1 and T2.
+**Status, 2026-08-04.** Corpus built and validated, observation graph built and coverage audited,
+provenance declared, $\Delta^\star_{\text{lo}}$ calibrated on synthetics against a known back-dating
+horizon, U1 and U2 run on real data, and the interval-censored competing-risks hazard implemented,
+verified against closed forms, and fitted for both T1 and T2.
+
+**The 2026-08-03 status stood until two things happened on 2026-08-04, in this order.** First the
+corpus-wide focal-isolation run landed, producing V11 and V12 and rebuilding the corpus twice (D-28 to
+D-31). Then, making V11's numbers reproducible exposed that **three verdicts rested on results files no
+code path regenerated** — V11's own, V6's T2 tables, and V10's focal-isolation evidence, the last of them
+this programme's capstone. Closing that gap produced D-32 to D-41: a third instance of one corpus defect,
+a mislabelled artefact key, a construction check reported as a measurement, left truncation declared and
+never wired, a glob that swallowed two files a sibling script wrote, a cache keyed on the wrong thing, and
+an underpowered architectural margin. Every verdict except V1–V2 has been re-measured on the resulting
+corpus v4; the surviving conclusions are listed below and the two withdrawals are marked as such.
 
 **All seven predictions have been adjudicated.** P4 and P5 **hold**. P6 and P7 are **falsified**, and
 in both cases the association runs *backwards* from the stated mechanism, for reasons that can be
-named (V7, V9). P1 and P2 are **non-identified** — by the instrument, not by the world, and now on
-both candidate $r^\star$ for two different reasons (V2, V8). P3 cannot be read cleanly, because the
-horizon it names does not exist and it does not say which discrimination it means.
+named (V7, V9). P3 cannot be read cleanly, because the horizon it names does not exist and it does not
+say which discrimination it means.
+
+**P1's status was revised on 2026-08-04 and the revision is a hardening, not a rescue.** It read
+*non-identified* through V2 and V8. The corpus-wide focal-isolation run splits it in two. On the
+**source-dating** channel — back-dating introduced by what the source records as a date — P1 is
+**falsified**: the penumbra is 0 for 94 % of the corpus and $\leq 1$ everywhere. On the
+**anticipation** channel it is **ill-posed as stated**, because a trace of the event and a persistent
+similarity to the members enter the specified statistic identically, and the anchors §5.4 sets the band
+from carry the same homophily they are meant to subtract (V12). P2 remains non-identified, with its
+upper bound unreachable by construction (C18).
+
+The same run found a corpus defect on the way — 45.9 % of alliance accessions were artefacts of ATOP's
+phase coding (V11) — and re-running V8's test on the corrected corpus returns an **inverted interval**,
+$\Delta^\star_{\text{lo}} = 2$ above $\Delta^\star_{\text{hi}} = 1$, which is the empty set (D-30).
 
 The measurement phase is complete. T3 remains unbuilt and §4 labels it exploratory; the outstanding
 work is listed at the end of this file.
+
+### Which corpus each verdict was measured on
+
+The corpus went through four versions on 2026-08-04, all of them one root cause — *a phase row is not a
+member* (D-28, D-31, D-32). Entities fell 573 → 562 and events 10,556 → 10,328. A verdict citing v1
+numbers is not thereby wrong, but it is not current either, and a document that does not say which is
+which invites the reader to assume the best case.
+
+| verdict | corpus | status |
+|---|---|---|
+| V6 (T2), V8 (alliance U1), V10 (DESTA), V11, V12 | **v4** | re-measured; V6 and V8 unchanged in every sign and verdict, V10 corrected (D-34) |
+| V5 (T1 ladder) | **v4** | re-measured, **unchanged**: every rung still beats the one below, the two AUCs still differ by ~0.25, and the ordering is invariant to which duration clock is used (D-37) |
+| V7 (P6) | **v4**, then the 14-model grid | re-measured twice and **sharpened** each time: $\rho = -0.667$, $p = 0.0092$ over fourteen models, against $-0.699$, $p = 0.0245$ over ten and $-0.529$, $p = 0.116$ on v1. Which of P6's clauses fires has flipped — see the note in V7 |
+| V9 (P7) | **v4**, four seeds | re-measured after fixing a crash (D-38); ordering restored at four seeds after two seeds misread rung 6's margin (D-41). Rung 5's characterisation weakens from *worse* to *no better* |
+| V4 (observer channel) | v1 numbers, **re-checked** | the channel is still **24** transitions and still **0.29 %**, now of 8,266 rather than 8,398 |
+| V1–V2 (U1, U2) | **v4** | re-measured on the declared relation set after D-39, and **every figure holds**: shortcut AUC 0.7639 → 0.6320 against V2's 0.7658 → 0.6330, clique contrast 0.054–0.061 against a band of 0.019–0.028, $\phi$-alone 0.522–0.529, $r^\star$ top-ranked throughout. The first v4 attempt was contaminated by the glob and made the curve non-monotone, which touches a clause of P2 |
+| V3 (clique contrast by group size) | v1 | the size distribution is a property of the sources, not of the fixes; the eight removed treaties were bilateral and the 298 redundant rows inflated 162 alliance-years, so the *alliance* median moves 4 → 5 and nothing above eighty members is touched |
+
+**Every verdict has now been re-measured on corpus v4 except V3, whose claim is about a size distribution
+the fixes do not touch.** Two were withdrawn in part (V10's framing, one by-product of V11), one changed
+which clause of its prediction fires (V7), one weakened a characterisation (V9's rung 5), and the rest came
+back unchanged or sharper. This table is how a reader can tell which numbers are which.
 
 One verdict was **withdrawn** (V0) and its replacement reversed its conclusion. That is recorded at
 the top of the verdicts rather than buried, because the retraction is the most informative thing in
@@ -46,7 +89,7 @@ to the third has to cite the measurement that did it.
 | **P3** | T1 discrimination 0.70–0.85 at $\Delta = \Delta^\star$ | T1 rolling-origin AUC | **not cleanly decided** (V5). Not falsified — nothing near 0.95. Pooled 0.80–0.92, within-coalition 0.57–0.68, and $\Delta^\star$ non-identified |
 | **P4** | termination harder than accession | T2 cause-specific concordance vs T1 | **HOLDS** on pooled-vs-pooled (V6): T2 0.614 against T1 0.80-0.92 |
 | **P5** | competing risks not decomposable; a covariate reverses sign | cause-specific vs pooled hazards | **HOLDS** (V6): two covariates reverse -- cohesion and duration |
-| **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | ten models across the 1964 break | **FALSIFIED** (V7): rho = -0.529, p = 0.116, and the association runs *backwards* -- explained by saturation drifting in time |
+| **P6** | shortcut reliance predicts fragility under temporal shift (CLIQUEBAIT H4) | fourteen models across the 1964 break, an enumerated grid | **FALSIFIED** (V7): the association runs *backwards*, rho = -0.667 at p = 0.0092 -- explained by saturation drifting in time |
 | **P7** | graph earns its keep at long horizons or not at all | ladder rung 6/7 minus rung 4, by $\Delta$ | **FALSIFIED** (V9): flat or decreasing in $\Delta$ for every graph rung, and the contribution is *largest* at $\Delta{=}1$ — the mechanism reversed. But rungs 6 and 7 do beat parameter-matched controls |
 
 ## Deliverables (§10)
@@ -55,7 +98,7 @@ to the third has to cite the measurement that did it.
 |---|---|
 | $\Delta^\star$ definition with signature-to-force external validation | defined (§5.1); **calibrated on synthetics**, $\Delta^\star_{\text{lo}}$ recovering $\beta+1$ in 6 of 6 (C18); not yet estimated on real data. External anchor measured (C7) |
 | UMBRA — lagged diagnostic suite U1–U3 | **U1, U2 and U3 all built and run.** U1 on real data (V2), U2 with the capacity sweep (V2, V1d), U3 focal exclusion run on T2 and found to be a no-op (V6) |
-| LEDGER — event corpus | **built and validated**: 573 entities, 10,556 events, four dating strata. `agreement` entities deferred (LEDGER.md §1.1) |
+| LEDGER — event corpus | **built and validated**: 562 entities, 10,328 events, four dating strata (v4, after D-28, D-31 and D-32). `agreement` entities deferred (LEDGER.md §1.1) |
 | Three tasks with declared risk sets, origin times, censoring rules | **declared before construction** (LEDGER.md §4). T1 and T2 built and fitted; **T3 not started** |
 | Cause-specific hazard results for termination | **done** (V6): 152 events, P5 holds with two sign reversals, ATOP's 19 uncoded entering through the cause-unknown branch |
 | Architectural ladder, each rung earning its place | **all seven rungs done** (V5, V9). Rungs 1-3 and 6-7 each beat the one below; **rung 5 does not** and by §7's own rule does not appear in the headline. Rungs 6 and 7 also beat parameter-matched controls |
@@ -180,6 +223,20 @@ mechanism that would have caught it, and it is worth saying so in the paper.
 Everything below is on the matched panel of V0, primary regime 1965–2014, anchors and primary level
 $k = 25$ declared before the runs. Four measurements, and they only make sense together.
 
+> **Re-measured on corpus v4 with the declared relation set, 2026-08-04, and every figure holds.** The
+> first v4 attempt was contaminated: `run_u2.py`'s loader globbed the graph directory and added four
+> features built on the PTA relations V10 writes there, so the probe ran on 24 features where V1 and V2
+> were measured on 20 (D-39). Two consequences of that contamination are worth naming, because one of them
+> touched a clause of P2. It added ~0.004 to the shortcut AUC at every horizon — small — but it also made
+> the curve **non-monotone**, and P2's shortcut clause is about monotonicity. On the declared five
+> relations the curve is monotone again.
+>
+> Re-run clean: shortcut AUC **0.7639** at $\Delta = 1$ falling to **0.6320** at 10, decay **0.132**,
+> monotone, against V2's 0.7658 → 0.6330 and 0.133. At $k = 25$ the clique contrast is **0.054–0.061**
+> against a band of **0.019–0.028**, $\phi$-alone AUC is **0.522–0.529**, and $r^\star$ holds top rank at
+> every horizon — so $\Delta^\star_{\text{lo}}$ is never reached and $\Delta^\star_{\text{hi}}$ is
+> unreachable, exactly as below. Corpus v4 changes none of it.
+
 **(a) The shortcut curve decays, monotonically and for real.** `results/u2_matched.parquet`.
 
 | $\Delta$ | 1 | 2 | 3 | 5 | 7 | 10 | decay |
@@ -241,7 +298,7 @@ structurally blind on a third of the corpus.
   of it in the form $\phi$ measures.
 
 **What this is, stated plainly.** No penumbra is detected in the relation that carries $r^\star$ for
-493 of 573 entities, and the instrument cannot distinguish that from a penumbra it is unable to see.
+490 of 562 entities, and the instrument cannot distinguish that from a penumbra it is unable to see.
 That is §5.4's limit — the automated part is triage, the verdict needs the coding rules — arrived at
 empirically rather than quoted. The coding rules say there is no systematic back-dating, so the
 reading that survives all four measurements is: **co-membership is a genuine, decaying predictor of
@@ -277,6 +334,249 @@ heterogeneous size distribution is not interpretable. For corpora like this one 
 $\phi_r(S; k)$ and the $r^\star$-exclusion contrast of V2(c) are the instruments that work; exact
 cliqueness is not.
 
+### V13 — the second domain. §2(c) generalises, §2(d) is falsified, §2(h) does not transfer, and §5.4's discipline is validated prospectively
+
+`scripts/run_second_domain.py` → `results/second_domain_thr400.json`,
+`results/second_domain_thr150.json`. CLIQUEBAIT's protein benchmark, 2,540 CORUM/ComplexPortal complexes
+against 2,540 random and 5,080 hard negatives over 19,486 proteins, with STRING's ten channels as the
+relations. Statistics computed by the **pinned** `LeakageAudit`, not reimplemented; only V3's size
+stratification is added on top.
+
+**This was built as an adversarial test, not a confirmation run.** Three of §2's ten failure modes — (b),
+(c), (d) — are claims about *any* curated group corpus and all three were measured on one. The protein
+benchmark's size distribution is the **opposite** of LEDGER's: median 3 members, mean 5.1, **1.6 %** above
+twenty and **0.16 %** above eighty, against LEDGER's positive strata averaging 66 with 36 % above eighty.
+$r^\star$ and the anchors were declared from what each STRING channel records, before any number was read.
+
+**(c) generalises, and the two corpora together trace the whole curve.** Clique contrast by group size,
+random negatives, threshold 400:
+
+| members | 2–3 | 4–5 | 6–10 | 11–20 | 21–80 | 81+ |
+|---|---|---|---|---|---|---|
+| $n$ positives | 1,399 | 641 | 321 | 142 | 34 | 3 |
+| clique contrast | **0.4124** | **0.4665** | 0.4455 | 0.3662 | 0.1765 | **0.0000** |
+
+Strong below twenty, decaying, and **identically zero above eighty** — V3's mechanism exactly, in a domain
+with no states, no treaties and no time axis. V3 could only see the large end of this function because
+LEDGER has no small groups in quantity; the protein benchmark supplies the small end. The claim is about
+group size and it is general.
+
+**(d) is FALSIFIED as stated.** (d) said "group size and sample size trade off against each other in any
+curated coalition corpus, and this statistic needs both favourable at once." Here **both are favourable at
+once**: 1,399 positives in the 2–3 stratum with a contrast of 0.4124 against a negative clique rate of
+**0.0000**. That is not noise-limited, it is a clean separation on a large sample, and no subpopulation
+argument is needed to find it.
+
+The restatement, and it is more useful than what it replaces: **the trade-off is a property of a corpus
+whose group size correlates with entity type when the small-size type is rare.** LEDGER is exactly that —
+organisations are large (median 51) and numerous, alliances are small (median 5) and there are 59 of them,
+so the subpopulation where the statistic has power is also the one with 177 events. The protein benchmark
+has one entity type with a uniformly small size distribution and thousands of instances, and the problem
+does not arise. (d) as written generalised from LEDGER's *composition* to group corpora as such, and that
+step was wrong.
+
+**(h) does not transfer, and the reason is nameable.** $r^\star$ = `database` contrasts **0.4240** against
+a strongest anchor of **0.0165**, residual **+0.4075**; on hard negatives +0.4059; at threshold 150,
++0.4020. The four anchors — `coexpression`, `coexpression_transferred`, `fusion`, `cooccurence` — sit at
+0.0067, 0.0051, 0.0000 and 0.0000. They are flat. So the mechanism (h) describes, anchors carrying the
+same homophily as the focal relation, is **specific to corpora where the anchors share the focal
+relation's generative structure**. In international relations, trade, UNGA voting and co-membership all
+express one latent thing — which states are close to which — so subtracting one from another removes
+almost nothing. mRNA co-expression, gene fusion and phylogenetic co-occurrence have no such relationship
+to a curator's decision that a set of proteins forms a complex. (h) is a claim about the IR corpus, which
+is a narrowing of §2(h) and is recorded as one.
+
+**(b) is confirmed in scope rather than in substance.** No protein relation exceeds density **0.001887**;
+$r^\star$ is **0.001153** against LEDGER's **0.9954**, a factor of 864. Nothing here saturates, so (b) is
+correctly a statement about coalition relations and the benchmark cannot test it further.
+
+*Corrected in D-51.* This paragraph read 0.00377, 0.00231 and a factor of 431 until 2026-08-24. STRING
+ships both directions of every interaction and the density block divided the row count by the unordered
+dyad count, so every corpus B density here was exactly twice its value. The verdict is unaffected and
+strengthened; the three numbers were wrong.
+
+**And one positive result about the method, which the programme has not had before.** The three channels
+declared **contaminated** on provenance grounds *before any statistic was computed* — `textmining` reads
+papers describing complexes, `experiments` covers co-immunoprecipitation and affinity purification, which
+detect them — came out ranked **first, second and third** on clique contrast at 0.4579, 0.4240 and 0.3075,
+above every anchor at ≤0.0165. `textmining` scores **higher than $r^\star$ itself**. §5.4 asserts that no
+statistic can separate leakage from signal and that the verdict requires reading the coding rules; here
+the reading was done first, in writing, and the statistic then ranked exactly those three at the top. That
+is a prospective validation of the discipline rather than a post-hoc rationalisation of it, and it is the
+first result in this programme that says a piece of the method **works**.
+
+Threshold 150 — 10.2 million edges over twelve channels, five times denser — reproduces every figure:
+contrast 0.4132 at 2–3 members, 0.0000 above eighty, residual +0.4020.
+
+### V12 — the corpus has no penumbra, the specified diagnostic reports one eight years wide, and the anchors cannot subtract it
+
+`scripts/run_u1_isolation.py` → `results/u1_isolation.json`, `results/u1_isolation.log`.
+
+V10 proved the instrument blind on a corpus where the width was coded. This is the same measurement
+over **all** 8,062 accessions, and it settles what the blindness costs. Four quantities, each of which
+invalidates the reading of the one before it.
+
+**Under focal isolation the corpus's back-dating is zero.** Conditioned on first-time entry — the state
+was not a member before — the trace is present at $\Delta = 0$ and **exactly absent at every
+$\Delta \geq 1$**: alliance 1.000 → 0.000 on 202 events, exactly-dated organisation accessions
+1.000 → 0.000 on 7,146. The only stratum with any trace is `declared_resolution`, at 0.142 for
+$\Delta = 1$ and 0.000 beyond, which is the Wallace-Singer block resolution showing up as one year of
+slack in 310 events. $\beta \leq 1$, and for 94 % of the corpus $\beta = 0$.
+
+**The unconditioned curve says four years, and that is a confound rising with the horizon.** Pooled over
+all accessions, `declared_resolution` decays 0.349 → 0.249 → 0.118 → 0.045 — the textbook shape of a
+four-year penumbra, monotone, with a floor. It is prior membership spells. A state that left and
+rejoined is on the record at long horizons for a reason that is not anticipation, and reaching further
+back is *more* likely to land inside an earlier spell, so the artefact grows with $\Delta$: presence
+among recurrent accessions runs 0.185 at $\Delta = 1$ to 0.330 at $\Delta = 8$, against 0.0009 among
+first-time ones. That stratum's recurrence rate is **30.7 %** against `exact`'s 6.2 %, so the confound
+loads onto precisely the stratum that appears to have a penumbra. This is a failure mode with a
+direction: recurrence fills in a decaying curve from below and biases $\Delta^\star$ **upward**, toward
+P1's confirmation. Pre-specification, forced: any trace or horizon statistic is computed **conditional
+on first entry**, and a corpus's recurrence rate is reported beside any $\Delta^\star$ it produces.
+
+**V10's factor of ten replicates on LEDGER.** The step from $\Delta = 0$ to the mean beyond it is
+**0.984** under focal isolation and **0.145** on the pooled relation, against DESTA's 1.000 and 0.102.
+Two independent sources, one coded and one not, the same order of magnitude: the factor is a property
+of the diagnostic, not of DESTA. The pooled relation sits at **0.9917** one year before the accession
+and 0.757 eight years before, so it is at 99 % of its event-year value at the horizon where the true
+trace is already gone.
+
+**And the anchors show the same decaying contrast as $r^\star$, which is what breaks the estimator.**
+Matched negatives, 52,305 positives, contrast by horizon:
+
+| relation | $\Delta = 0$ | $\Delta = 4$ | $\Delta = 8$ | retention |
+|---|---|---|---|---|
+| `igo_comembership` ($r^\star$) | 0.3114 | 0.2038 | 0.1490 | 47.9 % |
+| `trades` (anchor) | 0.2639 | 0.1890 | 0.1463 | 55.4 % |
+| `votes_with` (anchor) | 0.1779 | 0.1296 | 0.1081 | 60.8 % |
+| `allies` | 0.1179 | 0.0850 | 0.0670 | 56.8 % |
+| `conflicts_with` (anchor) | 0.0041 | 0.0038 | 0.0044 | flat |
+
+Trade co-membership **cannot** record an IGO accession, and it produces a monotone decaying contrast
+that retains 55 % of its value at eight years. So does UNGA voting agreement. The one relation that
+comes out flat is `conflicts_with`, and it is the one relation with no homophily content. What every
+non-flat series is measuring is that states which accede to an organisation are genuinely more similar
+to its members than never-joiners are, and were so a decade earlier — **the signal a forecaster is
+supposed to use**, not a trace of the event.
+
+§5.4's band is the mechanism meant to subtract exactly this, and it works in the right direction while
+leaving a five-year phantom. $r^\star$ minus the strongest anchor runs 0.048, 0.067, 0.033, 0.025,
+0.015, 0.004, …, first falling below 0.01 at $\Delta = 5$. D-13's pre-specified rule reads that as
+$\Delta^\star_{\text{lo}} \approx 5$. Focal isolation on the same events says 0. The residual is not
+leakage; it is the *difference in homophily strength* between co-membership and trade, which exists
+because the same states that join many organisations also trade widely and the organisational channel
+is more concentrated.
+
+**This is the third distinct reason P1 and P2 are non-identified, and the deepest.** V8's reason was
+noise: 336 alliance accessions gave a standard error equal to the effect. V10's was saturation: the
+focal contribution is 6.8 % of a relation with density 0.995. This one is neither, and no amount of
+data or thresholding touches it — **the estimand is not separable from homophily by any contrast of
+this form**, because a trace of the event and a persistent similarity to the members enter the
+statistic identically. The manifesto's §1 defines the penumbra as administrative traces and §5.1
+measures it with a difference of densities, and the two do not correspond. Separating them requires
+asking of the focal entity's own record, which is the operation §5.3 removes.
+
+The consequence for the frozen text, and it must not be softened: **P1 is falsified on the
+source-dating channel** — the penumbra is 0 for 94 % of the corpus and $\leq 1$ everywhere, where P1
+predicts wider than a year. On the anticipation channel P1 is **ill-posed as stated** rather than
+unmeasured, and the programme reports it that way. The direction matters: applied as written, U1 on
+this corpus returns a penumbra of at least eight years on a corpus that has none.
+
+### V11 — the diagnostic V10 introduced found a corpus defect, not a penumbra
+
+`penumbra/ledger.py::atop_membership_events`, `scripts/run_u1_isolation.py`.
+
+The first corpus-wide run of focal isolation split by entity type and the two types disagreed:
+`organisation` gave 1.000 at $\Delta = 0$ and 0.013 beyond, as COW IGO's coding rules predict, while
+`alliance` gave 1.000 at $\Delta = 0$ and **0.458 at $\Delta = 1$**, plateauing near 0.34. I had
+predicted the alliance curve would be *degenerate* — LEDGER builds ATOP membership from `yrent` and
+dates the accession from `yrent`, so the two cannot disagree — and a prediction that wrong is worth
+chasing rather than reporting.
+
+**ATOP codes a member once per treaty phase.** The `phase` column runs 0–4, and a member present in
+more than one phase has more than one `atop5_1m` row with a different `yrent`. `atop_membership`
+expands every row, so the member is on the record from the earliest; `atop_membership_events` emitted
+an accession for every row whose `yrent` postdated the treaty's `begyr`, so a **founder** of a
+multi-phase treaty acquired an accession it never had, dated to whichever phase began later.
+
+Quantified by `scripts/quantify_atop_phase_defect.py`, which reimplements both rules against the raw
+ATOP files so the figures survive the fix. On the corpus's 72 alliance entities, 681 (treaty, member)
+pairs of which 471 are founders and 210 joined later:
+
+* the row-wise rule generates **373** events, of which **149 (40.0 %)** are founders
+* the corrected rule generates **202**, of which **177** fall in 1965–2014
+* $\Delta = 1$ presence by phase rows per member: **0.0000** with one row (180 events), **0.7457** with
+  two (173), **1.0000** with three (20) — a step, not a gradient, which is the mechanism itself
+
+**The originally reported figure was 221 of 481 (45.9 %) and it is not reproducible, for a reason that
+matters more than the discrepancy.** Writing the reproduction script exposed a *second* defect of the
+same family: `atop_entities` sized treaties with `groupby("atopid").size()`, a **row** count, so a
+bilateral pact coded over two phases had four rows and passed the $\geq 3$ members filter. **8 of 80
+alliance entities were bilateral treaties admitted that way**, every one of them two members over two
+phases. §2's `MIN_MEMBERS` exists to apply COW IGO's inclusion rule to ATOP for comparability, and
+admitting bilateral treaties defeats exactly that. So 45.9 % was the product of two overlapping
+defects, and reproducing it would mean reinstating a corpus that should not exist. It is recorded here
+as superseded and D-31 is the fix; alliance entities fall 80 → 72 and exits 1,605 → 1,589, while
+accessions are unchanged at 8,062 because those eight treaties had no later joiners.
+
+Two defects of one root cause — a phase row is not a member — and the second was found only because the
+first's numbers were being made reproducible. That is an argument for the discipline rather than for the
+diagnostic: a verdict whose numbers no script can regenerate is not finished, and finishing it is what
+turned up the rest.
+
+The rule is now that a member accedes at its **first** entry across phases and only if that first entry
+postdates the treaty; later phase rows are continuations, and exits are taken at the last recorded
+exit for the same reason. Alliance accessions in the primary regime fall from **336 to 177** (202 over
+the full window), and the isolation curve becomes exactly the degenerate 1.000 → 0.000 that ATOP's
+single-date convention requires. Corpus-wide, after all three fixes of this family: **562** entities
+against 573 as first built, and **10,328** events against 10,556.
+
+**V8 re-run on the corrected corpus, and it comes back sharper.** `results/u1_alliance_primary.json`,
+`results/u1_alliance_v11.log`. The pre-specified rule now returns $\Delta^\star_{\text{lo}} = 2$ and
+$\Delta^\star_{\text{hi}} = 1$ — **an inverted interval**, on both negative strata, identically. The
+lower bound exceeds the upper: the rule has returned the empty set, which is a stronger statement of
+non-identification than V8's $[3, 10]$ and needs no argument about power to reject.
+
+The mechanism is now legible in a way it was not at 336 events. The clique contrast is flat and
+non-monotone — 0.0256, 0.0150, 0.0224, 0.0252, 0.0254, 0.0258, 0.0256, 0.0172, 0.0155, 0.0136 — while
+**the band nearly triples across the same horizons**, 0.0169 → 0.0461, because positives fall from 176
+to 110 and the anchors' contrasts get noisier as they do. $\Delta^\star_{\text{lo}}$ is the horizon at
+which a widening band overtakes a flat series, so it moved from 3 to 2 for no reason except that the
+sample shrank by 47 %. **A horizon estimate that responds to sample size rather than to the process is
+not measuring a horizon**, and the direction is diagnostic: less data yields a *smaller*
+$\Delta^\star_{\text{lo}}$, because the band catches up sooner. V8 inferred this from a standard error;
+the corrected corpus exhibits it.
+
+One detail from the same run, not central. `igo_comembership` contrasts **negatively** on alliance
+groups, −0.125 to −0.175 at every horizon: with the group held fixed by matching, a state acceding to an
+alliance is *less* institutionally embedded with its members than a never-joiner is. That is a
+substantive claim about alliance formation and this programme is not the place to make it.
+
+> **Withdrawn, D-39.** This paragraph also reported that `pta_signature` contrasts 0.1151 at
+> $\Delta = 1$ against `pta_force`'s 0.1065, "which is V10's back-dating showing through on a third
+> relation". Those two columns are in the table only because `run_u2.py`'s loader globbed
+> `edges_*.parquet` and picked up the two PTA files V10 writes — they are not part of the declared
+> relation set and were never meant to be in this run. The alliance band draws on
+> `['trades', 'conflicts_with', 'votes_with']` only, so $\Delta^\star$ is unaffected, but the observation
+> was an artefact of the glob rather than a finding and does not survive it.
+
+**What else moves and what does not.** T1's ladder is unaffected in structure, because `build_risk_set`
+already takes the minimum $t_R$ per dyad — so for founders of multi-phase treaties the dyad existed and
+was **misdated rather than invented**, which is the milder of the two failures. Its positive dyads fall
+from 6,606 to **6,501**, alliance ones from 282 to 177, so alliance is 2.72 % of positive dyads
+(2.68 % of accession events in the regime). That is small but not negligible against V5's margins of
++0.010 and +0.039, so the ladder was **re-run rather than declared safe** — see the note appended to V5.
+T2 is untouched: it reads terminations, and the fix changed accessions and exits only.
+
+**The general point is worth more than the fix.** A diagnostic built to measure back-dating located a
+coding-convention defect in a source, at the first attempt, in a corpus that had already passed a
+validation suite, two independent count audits and a consistency checker. It found it because focal
+isolation asks a question with a known answer — *is the member on the record before it joined?* — and
+the pooled statistic §5.1 specifies asks one with no known answer, which is why the defect had survived
+everything else. That is an argument for shipping the operation independent of whether any penumbra is
+ever found with it.
+
 ### V10 — a penumbra of known exact width exists, and UMBRA as specified cannot see it
 
 `penumbra/desta.py`, `scripts/validate_delta_star_desta.py` →
@@ -292,8 +592,24 @@ back-dating width of exactly $f - s$ — a $\beta$ the **source** sets, on real 
 and 759 acceding states in 1946–2014, gaps with median 1, mean 1.71, maximum 17, and 39.4 % at two or
 more.
 
-**The back-dating is real and exact.** Asking only whether the acceding state is on *this
-agreement's* record $\Delta$ years before it takes effect:
+> **Corrected 2026-08-04, D-34.** The step table immediately below is **entailed by construction**, not
+> measured, and the original wording — "the back-dating is real and exact", contrast 1.000 — presented it
+> as a finding. The focal relation admits the accession entry's dyads from its own `sig_year`, the event
+> is dated at `force_year`, and `gap` *is* their difference, so presence at $\Delta$ holds exactly when
+> $\Delta \leq$ gap with no data-dependent step; the marginal curve is the gap distribution restated, and
+> `validate_delta_star_desta.py` now asserts that identity to machine precision. It verifies the
+> pipeline — an off-by-one or a gap taken from the wrong pair of dates would break it — and it does not
+> recover $\beta$ independently. The programme's evidence that the *estimator* recovers a known $\beta$
+> is C18's synthetic calibration, 6 of 6 settings, and always was.
+>
+> **The verdict's conclusion is unchanged** and rests on the paragraph after next: the same corpus, the
+> same events, the pooled density §5.1 specifies, contrast **0.1023** against a focal-only 1.000. A
+> forecaster reading signature-dated data at $t$ is exposed to an edge `gap` years early — that is a fact
+> about DESTA's coding, not about this construction — and the specified diagnostic recovers a tenth of
+> it. Removing the tautology leaves the argument standing on the two things that support it.
+
+**The back-dating the source codes, read off the construction.** Asking only whether the acceding state
+is on *this agreement's* record $\Delta$ years before it takes effect:
 
 | coded gap | $\Delta{=}0$ | 1 | 2 | 3 | 4 | 5+ |
 |---|---|---|---|---|---|---|
@@ -303,9 +619,12 @@ agreement's* record $\Delta$ years before it takes effect:
 | 3 | 1.00 | 1.00 | 1.00 | 1.00 | 0.00 | 0.00 |
 | 4 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 | 0.00 |
 
-Exactly one inside the gap, exactly zero outside it, at every width. Contrast **1.000**. So
-$\Delta^\star = \text{gap} + 1$, precisely, and the penumbra the programme was written about is not
-hypothetical — it is sitting in DESTA with its width printed next to it.
+Exactly one inside the gap, exactly zero outside it, at every width, because that is what the
+construction requires. What the table establishes is that the pipeline is right, and what makes the
+penumbra real is upstream of it: DESTA codes two dates, so a relation built from the earlier one carries
+the dyad `gap` years before the event, and $\Delta^\star = \text{gap} + 1$ follows from the coding.
+The penumbra the programme was written about is not hypothetical — it is sitting in DESTA with its width
+printed next to it — but the width is *read* rather than *estimated* here.
 
 **And the diagnostic as specified is blind to it.** UMBRA's $\phi_r(S)$ is a density over the whole
 relation. Built that way from the same agreements, the trace-presence curve is nearly flat — 0.752 at
@@ -317,17 +636,25 @@ The mechanism is V3's saturation. The acceding state is already tied to the memb
 agreements, so the focal agreement's back-dated dyads are 13,966 edge-years inside a relation of
 204,747 — **6.8 %** — and the pooled density is dominated by the rest.
 
-**The negative control confirms the reading and rules out an artefact of construction.** The same
-focal-only measurement on COW IGO gives **1.00 at $\Delta = 0$ and 0.029 at $\Delta \geq 1$**: the
-record carries a state from its accession year and not before. So COW IGO's $\beta$ is **zero**,
-measured directly, which is what PROVENANCE §2 concluded from reading five notes among 495. Two
-corpora, one with an exact known penumbra and one with none, and the same instrument on both.
+**The negative control, and it is weaker than first reported (D-34).** The same focal-only measurement on
+COW IGO gives **1.00 at $\Delta = 0$ and 0.022 at $\Delta \geq 1$** on corpus v4, so the record carries a
+state from its accession year and not before, agreeing with what PROVENANCE §2 concluded from reading
+five notes among 495. But COW IGO codes **one** date per membership, so focal isolation has no second
+date to measure against and a zero residual is *entailed by the source's structure* rather than
+discovered in it. V12 generalises the point: focal isolation detects back-dating only where a source
+codes two dates — DESTA does, ATOP and COW IGO do not. "Two corpora, one with an exact known penumbra
+and one with none" overstated a comparison in which only one side could have come out either way.
 
-The 2.9 % residual is not noise and is accounted for. It rises with horizon (0.024 at $\Delta = 1$ to
-0.037 at $\Delta = 8$), which is the signature of states that **left and rejoined**: a dyad already on
-the record before its recorded accession is one whose earlier membership the single-event
-simplification discards. `t1.count_recurrences` puts that at 1.9 % of accessions from an unrelated
-computation. Two independent routes to the same magnitude, and no residual left needing a story.
+**The residual is recurrence, and V12 supplies the exact decomposition.** It rises with horizon (0.020 at
+$\Delta = 1$ to 0.030 at $\Delta = 8$), which is the signature of states that **left and rejoined**: a
+dyad already on the record before its recorded accession is one whose earlier membership the single-event
+simplification discards. Measured on v4: **7.71 %** of accessions are recurrent and carry mean presence
+**0.2498**, giving $0.0771 \times 0.2498 = 0.0193$ against an observed 0.0221, with first-time events
+contributing the remaining 0.0008 — and conditioning on first entry drives the residual to **exactly
+zero** (V12). This replaces the original cross-check against `count_recurrences`' 1.9 %, which counted
+something else: dyads with a *second recorded accession* rather than events whose state was already on
+the record. The two agreed in magnitude by coincidence of scale, and the conditioning is the real
+account.
 
 **The operation the manifesto is missing, and it is the mirror of the one it specifies.** §5.3
 prescribes focal-group **exclusion** — remove $E^{r^\star} \cap \Pi(S_c)$ — to stop the focal group's
@@ -356,42 +683,73 @@ keep it that way and both are stated rather than worked around:
 
 ### V9 — P7 is falsified, its mechanism runs backwards, and one rung of §7's ladder falls
 
-`scripts/run_p7.py` → `results/p7.json`, plus parameter-matched controls in
-`results/p7_ctrl_w96.json`. Rungs 4–7 over the full risk set, three seeds each, twelve epochs, four
-rolling origins × four horizons. Training subsamples negatives at 0.15 because the risk set is 0.3 %
-positive; **evaluation is always on the full risk set**, pinned in the code so a later optimisation
-cannot reach it.
+`scripts/run_p7.py` → `results/p7_s4.json`, plus parameter-matched controls in
+`results/p7_ctrl_w96_s4.json` and `results/p7_ctrl_w128_s4.json`. Rungs 4–7 over the full risk set,
+**four seeds** each, twelve epochs, four rolling origins × four horizons. Training subsamples negatives at
+0.15 because the risk set is 0.3 % positive; **evaluation is always on the full risk set**, pinned in the
+code so a later optimisation cannot reach it.
 
-| rung | params | $\Delta{=}1$ | 3 | 5 | 10 | mean |
-|---|---|---|---|---|---|---|
-| 4 — MLP control, width 64 | 54,849 | .8631 | .8693 | .8605 | .8504 | .8608 |
-| 4 — MLP control, width 96 | 80,993 | .8666 | .8712 | .8622 | .8520 | **.8630** |
-| 5 — GraphSAGE, homogeneous | 59,649 | .8568 | .8619 | .8525 | .8417 | **.8532** |
-| 6 — RGCN, heterogeneous | 78,849 | .8785 | .8784 | .8675 | .8580 | **.8706** |
-| 7 — temporal over $G_{\leq t}$ | 103,937 | .8911 | .8935 | .8841 | .8760 | **.8862** |
+| rung | params | $\Delta{=}1$ | 3 | 5 | 10 | mean | sd over seeds |
+|---|---|---|---|---|---|---|---|
+| 4 — MLP control, width 64 | 54,849 | .8620 | .8685 | .8599 | .8503 | .8602 | 0.0023 |
+| 4 — MLP control, width 96 | 80,993 | — | — | — | — | .8623 | 0.0064 |
+| 4 — MLP control, width 128 | 109,185 | — | — | — | — | .8616 | 0.0020 |
+| 5 — GraphSAGE, homogeneous | 59,649 | .8619 | .8679 | .8588 | .8486 | **.8593** | 0.0029 |
+| 6 — RGCN, heterogeneous | 78,849 | .8807 | .8820 | .8716 | .8634 | **.8744** | 0.0065 |
+| 7 — temporal over $G_{\leq t}$ | 103,937 | .8871 | .8902 | .8817 | .8731 | **.8830** | 0.0019 |
 
-**§7's rule costs rung 5 its place.** The homogeneous encoder is **worse** than the capacity-matched
-graph-free control — −0.0076 on the mean, beating it in only 2 of 12 origin-horizon cells. §7 says a
-rung that does not beat the one below "does not appear in the paper's headline", so rung 5 does not.
-Rungs 6 and 7 each beat the rung below in **12 of 12** cells (+0.0174 and +0.0156).
+> **Re-measured on corpus v4, 2026-08-04. Three corrections, and the seed count is the substantive one.**
+>
+> **(i)** This verdict said "three seeds each" and the original run used **two** — `[0, 1]`, the script's
+> default, with no `--seeds` in any record. Parameter counts are identical, so the architecture was never
+> in question and the seed count was simply overstated.
+>
+> **(ii)** P7 had **failed outright** on v4 before it could be re-measured. `build_snapshots` globbed
+> `edges_*.parquet` and swallowed the two PTA files V10 writes into the same directory, casting an
+> unmapped relation to NaN and killing RGCN with a device-side CUDA assert (D-38). V9's original numbers
+> predate those files and are unaffected.
+>
+> **(iii) Two seeds put rung 6's advantage over its parameter-matched control at +0.0009 — and that was
+> noise.** The 2-seed run made it look as though the heterogeneous encoder had stopped earning its
+> parameters, with the width gain (+0.0066) seven times larger than its edge. Rung 6's seed-to-seed
+> spread is the widest in the ladder (sd 0.0065 against rung 7's 0.0019), so two seeds cannot resolve a
+> difference of that size. At four seeds it is **+0.0121**, about 2.6 standard errors, and the ordering
+> V9 reported is restored. Recorded rather than quietly corrected because the underpowered reading was
+> the one that looked like a finding (D-41).
+
+**§7's rule costs rung 5 its place, and "worse" was too strong.** The homogeneous encoder does not beat
+the capacity-matched graph-free control — **−0.0009** on the mean, beating it in 24 of 48 cells, which is
+exactly chance. §7 turns on whether a rung beats the one below and it does not, so rung 5 does not appear
+in the headline; but the supportable claim is **indistinguishable from a graph-free MLP**, not worse than
+one. The original figure of −0.0076 in 2 of 12 cells came from two seeds on corpus v1. Rung 6 beats rung 5
+by **+0.0151** in 42 of 48 cells and rung 7 beats rung 6 by **+0.0086** in 42 of 48.
 
 **The capacity confound was measured, not assumed away, and it does not explain the gains.** §7
 matches capacity on depth, width and head, which does *not* equalise parameter count: relation-specific
 weights cost parameters by construction, so rung 7 carries 1.9× rung 4's. Widening the control until
 its parameter count matches:
 
-| | contribution |
-|---|---|
-| rung 6 (78,849) vs MLP width 96 (80,993) | **+0.0076** |
-| rung 7 (103,937) vs MLP width 128 (109,185) | **+0.0245** |
-| **width alone**: MLP 64 → 96 (+26k params) | +0.0022 |
-| **width alone**: MLP 64 → 128 (+54k params) | +0.0009 |
+| | contribution | standard errors |
+|---|---|---|
+| rung 6 (78,849) vs MLP width 96 (80,993) | **+0.0121** | ≈2.6 |
+| rung 7 (103,937) vs MLP width 128 (109,185) | **+0.0214** | ≈15 |
+| **width alone**: MLP 64 → 96 (+26k params) | +0.0021 | ≈0.5 |
+| **width alone**: MLP 64 → 128 (+54k params) | +0.0014 | ≈0.5 |
 
-The control is **saturated in capacity**: doubling its parameters buys 0.0009. So message passing is
+The control is **saturated in capacity**: doubling its parameters buys **+0.0014**, inside its own
+seed-to-seed spread, and widening to 96 then 128 is non-monotone (.8623 then .8616). So message passing is
 doing the work, not size. This is the first place an inherited CLIQUEBAIT rule has been applied in
 full and *not* changed the answer — its warning (a weak baseline made the graph look worth 0.05–0.09
 where a matched one gave 0.023) is sound, and on this corpus it simply does not fire. That is worth
 stating as such: the rule is not redundant, it did not trigger.
+
+**Both parameter-matched margins are reported against their seed spread, because one of them needed it.**
+Rung 7's +0.0214 is about fifteen standard errors and was never in doubt. Rung 6's +0.0121 is about 2.6,
+and at two seeds it read as +0.0009 — the width gain looked seven times larger than the encoder's, which
+would have been a different verdict for rung 6. What separates the two is that rung 6 has the widest
+seed variance in the ladder, sd 0.0065 against rung 7's 0.0019, so it is the one rung whose margin two
+seeds cannot resolve. A parameter-matched comparison is a difference of two noisy means and needs its
+noise reported (D-41).
 
 **P7 is FALSIFIED.** It predicts the contribution is larger at long horizons, "falsified if the
 contribution is flat or decreasing in $\Delta$". Contribution over the width-64 control, by horizon:
@@ -429,6 +787,18 @@ Two structural reasons to expect this test to speak where the co-membership one 
 entities have a **median membership of 4** against the organisation majority's 51, so V3's
 size-blindness does not apply; and `allies` has density **0.15** against co-membership's 0.995, so
 cliqueness is discriminative rather than universal. 66 entities, 1,572 alliance-years, 336 accessions.
+
+> **Superseded counts, V11 and D-31.** The 336 includes 159 spurious accessions from ATOP's phase
+> structure; the corrected figure is **177**. The entity set is **59** on corpus v3, not 66, and
+> alliance-years 1,500 rather than 1,572, because 8 of the 80 alliance entities were bilateral treaties
+> admitted by a phase-row count. Median membership rises 4 → 5 accordingly. The numbers below are left as
+> measured rather than restated, because the verdict they support is that this sample is too small to
+> separate the effect from the band, and a smaller sample cannot weaken that.
+>
+> Re-run on v3 in D-30, and **every statistic in the tables below is identical to four decimals** — the
+> eight removed treaties had no later joiners, so they contributed neither positives nor matched
+> negatives. What changed is the verdict's sharpness, not its inputs: the rule now returns an inverted
+> interval.
 
 **The pre-specified rule returned $\Delta^\star_{\text{lo}} = 3$ and $\Delta^\star_{\text{hi}} = 10$,
 so P1 would read as holding and P2 as falsified. Both readings are rejected.** The rule is not wrong;
@@ -489,23 +859,45 @@ is in-regime AUC minus out-of-regime AUC.
 
 | model | reliance | fragility |
 |---|---|---|
-| duration only | 0.0000 | **+0.0256** |
-| node only | 0.0000 | +0.0208 |
-| node + all $\phi$ | 0.0034 | +0.0195 |
-| node + all $\phi$ + clique | 0.0160 | +0.0081 |
-| clique only | 0.0613 | +0.0274 |
-| all $\phi$ only | **0.1393** | **−0.0333** |
-| all $\phi$ + clique only | **0.1721** | **−0.0347** |
+| duration only | 0.0000 | **+0.0278** |
+| node only | 0.0000 | +0.0232 |
+| node + all $\phi$ | 0.0043 | +0.0199 |
+| node + all $\phi$ + clique | 0.0139 | +0.0028 |
+| clique only | 0.0516 | +0.0239 |
+| all $\phi$ only | **0.1457** | **−0.0414** |
+| all $\phi$ + clique only | **0.1667** | **−0.0451** |
 
-**Spearman $\rho = -0.529$, $p = 0.116$** over ten models. P6's falsification condition is that
-reliance and fragility are uncorrelated, and at $p = 0.116$ they are. **P6 is falsified as stated.**
+**Spearman $\rho = -0.667$, $p = 0.0092$** over **fourteen** models, reliance spread 0.1667 and
+fragility spread 0.0837. The two most shortcut-reliant models have *negative* fragility: they
+perform **better** out of regime than in it, 0.7412 → 0.7826 and 0.7622 → 0.8074. P6 predicted that
+these would be the fragile ones.
 
-**But "uncorrelated" understates it, and the understatement matters.** The reliance spread is 0.172
-and the fragility spread 0.062, so this is not the immaterial case CLIQUEBAIT's H5 lesson warns
-about — where a control scored $\rho = -0.887$ while moving 0.004. It is a real-magnitude association
-in the **opposite direction to P6**, underpowered at ten models. The two most shortcut-reliant models
-have *negative* fragility: they perform **better** out of regime than in it, 0.7369 → 0.7702 and
-0.7698 → 0.8045. P6 predicted that these would be the fragile ones.
+> **Enlarged from ten models to fourteen, 2026-08-24, and the sign held.** The ten were listed by
+> hand and an external read of the manuscript objected that a rank correlation on ten hand-picked
+> points can change sign if one of them moves. The model set is now every cell of a declared grid,
+> the node covariate block present or absent crossed with seven relational blocks, so the four that
+> came in are the ones the grid was missing rather than the ones that would help. Ten gave $-0.699$
+> at $p = 0.0245$; fourteen give $-0.667$ at $p = 0.0092$. The verdict does not move and the evidence
+> for it stops resting on a choice.
+
+> **Re-measured on corpus v4, 2026-08-04, and which clause fires has flipped.** On v1 the figures were
+> $\rho = -0.529$, $p = 0.116$: reliance and fragility were *uncorrelated*, which is P6's own stated
+> falsification condition, so V7 read "**P6 is falsified as stated**". On v4 they are **significantly
+> correlated** at $p = 0.0245$, so **that clause is no longer met** — and the association runs in the
+> direction opposite to P6's mechanism, which its wording never anticipated.
+>
+> So the verdict is the same and its route is not: **P6 is refuted by reversal rather than by absence of
+> association.** D-21 recorded that P6's wording covers only the null and that the result had to be
+> reported as falsification *and* reversal; that decision is what makes the corpus correction survivable
+> here, because a verdict resting on "$p = 0.116$, therefore uncorrelated, therefore falsified" would
+> have been overturned by a 1.6 % change in the risk set. A prediction whose falsification condition can
+> be met or not met depending on which of four corpus versions you use was not sharply stated, and the
+> honest reading is that the *reversal* was always the finding.
+
+**"Uncorrelated" was the wrong thing to measure, and CLIQUEBAIT's H5 lesson says why.** The reliance
+spread is 0.167 and the fragility spread 0.073, so this is not the immaterial case that lesson warns
+about — where a control scored $\rho = -0.887$ while moving 0.004. It is a real-magnitude association in
+the **opposite direction to P6**, and on the corrected corpus it is significant as well as material.
 
 P6's wording does not cover this. It says "falsified if shortcut reliance and shift fragility are
 uncorrelated" and is silent on a negative association, which is both a falsification *and* a reversal
@@ -535,12 +927,24 @@ could not be made to work in the prior programme and why restating it did not re
 
 ### V6 — T2. P5 holds, P4 holds on the comparable metric, and §5.3's intervention is a no-op
 
-`penumbra/t2.py`, `results/t2_ladder.json`, `results/t2_focal.json`. Regime 1965–2014: **535
-coalitions, 16,146 coalition-years, 152 events** — 83 dissolution, 30 replaced, 20 absorbed, and 19
-whose cause ATOP cannot tell us. Those 19 enter through the likelihood's **cause-unknown** branch,
-contributing $S(t_L) - S(t_R)$, rather than being dropped (17 % of events) or assigned a cause
+`penumbra/t2.py`, `scripts/run_t2_ladder.py`, `results/t2_ladder.json`, `results/t2_focal.json`.
+Regime 1965–2014: **527 coalitions, 16,067 coalition-years, 150 events** — 83 dissolution, 30 replaced,
+20 absorbed, and 17 whose cause ATOP cannot tell us. Those 17 enter through the likelihood's
+**cause-unknown** branch,
+contributing $S(t_L) - S(t_R)$, rather than being dropped (11 % of events) or assigned a cause
 (invented data). That branch was written for algebraic consistency and verified before ATOP's gap
 was known to need it.
+
+> **Re-measured on corpus v4, 2026-08-04.** V6 was first computed by an ad-hoc run that left no script,
+> so `scripts/run_t2_ladder.py` now reproduces it — and reproducing it was how the original's
+> parameterisation was recovered: a log baseline rather than linear, and discrimination scored at the
+> **row** level. The figures below are v4's, with 8 bilateral treaties and 3 uncoded organisations
+> removed (D-31, D-32) and 2 uncoded terminations with them. Every sign, every reversal and every
+> verdict is unchanged; the largest coefficient move is $\phi$'s, +0.255 → +0.273. The obvious
+> alternative discrimination metric — $1 - S$ at each entity's last observed period — returns **0.27**,
+> because an entity that terminates early is evaluated over a shorter window and so scores *lower*; it
+> measures exposure length, and nothing in its output says so. Recorded because it is the kind of
+> plausible metric a reader would accept.
 
 **83 of the events carry rule-assigned dates** — all the dissolutions, since the ten-year plenary
 rule *is* how COW dates them. They stay in estimation and leave rolling-origin evaluation per §9.7.
@@ -555,8 +959,8 @@ the garden of forking paths.
 
 | | log duration | log size | internal co-membership | polity2 mean | polity2 sd |
 |---|---|---|---|---|---|
-| dissolution | **+0.135** | −0.402 | **+0.255** | −0.080 | −0.115 |
-| superseded | **−0.238** | −0.121 | **−0.086** | −0.014 | −0.105 |
+| dissolution | **+0.095** | −0.392 | **+0.292** | −0.093 | −0.109 |
+| superseded | **−0.143** | −0.120 | **−0.081** | +0.001 | −0.070 |
 
 Two covariates reverse sign, not one: internal co-membership density and duration dependence. P5
 asked for at least one, so the prediction is met, and the pooled model would have averaged both
@@ -564,8 +968,25 @@ reversals to near zero. Duration reads cleanly — old coalitions fade, young on
 merged. The cohesion reversal is counterintuitive and is reported without a story attached: with 83
 and 50 events, an explanation would be decoration.
 
+**Two, not three, and the difference is a declared floor.** `polity2_mean` comes out −0.093 against
+**+0.001**, which a sign-only test counts as a third reversal. Six ten-thousandths of a logit per
+standard deviation is not an effect, so a reversal now requires $|\beta| \geq 0.01$ on both sides, the
+below-floor flips are reported separately, and the threshold is fixed in the script rather than chosen
+here (D-36). A verdict scored on sign reversals needs a definition of reversal.
+
+**These coefficients are on the corrected duration clock, and the correction moved them.** The panel
+previously set duration to 1 at the regime start for every coalition, so one founded in 1900 and one
+founded in 1965 were both duration 1 in 1965 — for **183 of 528** entities carrying **45.7 %** of the
+coalition-years and **39.1 %** of the terminations, with a median true age at 1965 of 13 years and a
+maximum of 150. §9.1 names left truncation and D-03 recorded that it "binds hard"; the concern was
+declared and `PeriodPanel.entry`, documented as the field for it, was being passed zeros. Duration now
+runs from founding with `entry` set to the age at which observation begins. **Both reversals survive** —
+duration was +0.137/−0.233 on the wrong clock and is +0.095/−0.143 on the right one, so part of what read
+as duration dependence was the misplaced baseline, which is the direction the error predicts. Any-cause
+AUC 0.612 → 0.610 (D-36).
+
 **P4 — holds on the comparable metric, and the ambiguity is the same one P3 has.** T2's any-cause
-AUC is **0.614**, cause-specific 0.633 for dissolution and 0.576 for superseded. Against T1's pooled
+AUC is **0.610**, cause-specific 0.628 for dissolution and 0.559 for superseded. Against T1's pooled
 0.80–0.92, termination is clearly harder and P4 holds. Against T1's within-coalition 0.57–0.68, T2
 is *inside* the range and P4 would not hold. The like comparison is pooled against pooled — both are
 "across all units at risk", T2's units being coalitions and T1's being dyads, and T2 has no strata
@@ -578,10 +999,10 @@ forced by T2", severe regardless of $\Delta^\star$. Measured:
 
 | $\phi$ level | focal exclusion moves loglik by | moves AUC by |
 |---|---|---|
-| $k = 1$ | **−1.88** | −0.0039 |
-| $k = 25$ | −0.22 | −0.0013 |
+| $k = 1$ | **−2.50** | −0.0056 |
+| $k = 25$ | −0.23 | −0.0006 |
 
-Eight and a half times larger at $k = 1$ than at $k = 25$, and negligible at both. The reason is V3's
+Eleven times larger at $k = 1$ than at $k = 25$, and negligible at both. The reason is V3's
 saturation, not the level: at $k = 1$ co-membership has density 0.995, so removing the focal
 organisation leaves the relation still saturated; at $k = 25$ the focal organisation is one unit of a
 twenty-five-unit threshold. Either way the intervention barely moves the fit.
@@ -589,29 +1010,37 @@ twenty-five-unit threshold. Either way the intervention barely moves the fit.
 **This is bounded and the boundary matters.** §5.3's argument is about *alliance* edges — "an
 alliance that ends is an alliance edge that disappears" — and `allies` has density 0.15, nowhere near
 saturated, so focal exclusion should bite there. It is untested: `allies` is excluded from the anchor
-set because its dating convention is unverified (PROVENANCE §4), and alliance entities are 80 of 535.
+set because its dating convention is unverified (PROVENANCE §4), and alliance entities are 72 of 562.
 What is shown is that for the relation carrying $r^\star$ across the organisation majority, the
 intervention §5.3 was written to force is not doing work. The alliance case remains open.
 
 ### V5 — T1's ladder, rungs 1–3. Every rung earns its place, and the two AUCs disagree by 0.25
 
 `scripts/run_t1_ladder.py` → `results/t1_ladder.json`. Regime 1965–2014, the dyad-level risk set of
-LEDGER.md §4.1: **2,211,354 dyad-years, 93,450 (coalition, state) dyads, 6,606 event dyads**, an
-event rate of 0.00299 per dyad-year. Four rolling origins × four horizons, family cluster bootstrap,
+LEDGER.md §4.1: **2,197,744 dyad-years, 91,888 (coalition, state) dyads, 6,501 event dyads**, an
+event rate of 0.00296 per dyad-year. Four rolling origins × four horizons, family cluster bootstrap,
 discrimination and calibration reported jointly per §9.3.
+
+> **Re-measured on corpus v4, 2026-08-04.** The dyad counts fall from 2,211,354 / 93,450 / 6,606 as
+> D-28, D-31 and D-32 removed 159 spurious alliance accessions and eight bilateral treaties. Every
+> figure below is v4's and **nothing in the verdict moves**: each rung still beats the one below on both
+> metrics, the two AUCs still differ by about 0.25, and rung 3's calibration slope still never reaches
+> 1.0. The duration clock here is the `observed` one — risk-set years rather than years of eligibility —
+> which was stated as "dyad time" and never defined against founding; D-37 reports the ladder under both
+> clocks, since 19.9 % of dyads are truncated and rung 1 is duration dependence alone.
 
 | rung | features | pooled AUC | within-coalition AUC | calibration slope |
 |---|---|---|---|---|
-| 1 — duration alone | 1 | 0.476–0.715 | 0.481–0.524 | −0.13 … 1.03 |
-| 2 — + node covariates | 22 | 0.791–0.913 | 0.530–0.630 | 0.66–1.03 |
-| 3 — + densities | 34 | **0.798–0.920** | **0.570–0.680** | 0.64–0.99, mean 0.82 |
+| 1 — duration alone | 1 | 0.476–0.715 | 0.461–0.524 | −0.13 … 1.03 |
+| 2 — + node covariates | 22 | 0.794–0.911 | 0.527–0.632 | 0.67–1.02 |
+| 3 — + densities | 34 | **0.798–0.915** | **0.566–0.688** | 0.65–0.96, mean 0.83 |
 
 **§7's rule is satisfied at every step, and it is a rule rather than a preference.**
 
 | | pooled | within-coalition |
 |---|---|---|
-| rung 2 − rung 1 | **+0.3195**, 16/16 cells | **+0.0975**, 16/16 |
-| rung 3 − rung 2 | **+0.0096**, 15/16 | **+0.0393**, 16/16 |
+| rung 2 − rung 1 | **+0.3191**, 16/16 cells | **+0.0978**, 16/16 |
+| rung 3 − rung 2 | **+0.0089**, 13/16 | **+0.0430**, 15/16 |
 
 **(a) The two AUCs differ by about 0.25, and that gap is the finding.** Pooled, the model scores
 0.80–0.92; holding the coalition fixed and asking only *which candidate state accedes*, it scores
@@ -622,14 +1051,14 @@ U2's matched design measured. Both are reported because V0 was retracted for con
 these, and reporting one number here would repeat the error with a better excuse.
 
 **(b) Relational features answer a different question from node covariates, and the split is
-clean.** Rung 3's gain over rung 2 is **+0.010 pooled** and **+0.039 within-coalition** — four times
-larger once the coalition is held fixed. Node covariates say which coalitions grow and which states
+clean.** Rung 3's gain over rung 2 is **+0.009 pooled** and **+0.043 within-coalition** — nearly five
+times larger once the coalition is held fixed. Node covariates say which coalitions grow and which states
 are joiners; densities say *which state, for this coalition*. On the pooled metric the densities look
 marginal and would have been dropped by an inattentive reading of §7's rule; on the metric that
 isolates the relational question they are the larger contribution.
 
-**(c) The gain grows with horizon, weakly.** Rung 3 − rung 2, within-coalition: +0.036 at $\Delta=1$,
-+0.039 at 3, +0.038 at 5, **+0.045 at 10**. That is the direction P7 predicts — relational structure
+**(c) The gain grows with horizon, weakly.** Rung 3 − rung 2, within-coalition: +0.040 at $\Delta=1$,
++0.041 at 3, +0.041 at 5, **+0.050 at 10**. That is the direction P7 predicts — relational structure
 mattering more at distance — but P7 is about rungs 6/7 against rung 4, not rung 3 against 2, so this
 is suggestive of the mechanism and not a test of the prediction.
 
@@ -689,10 +1118,13 @@ implies belongs in the paper next to it.
 
 ### V1 — P2's shortcut-curve clause is falsified. U2 on real LEDGER, 2026-08-03 — **WITHDRAWN, see V0**
 
-`scripts/run_u2.py --regime primary` → `results/u2_real.json`. Regime 1965–2014, 6,732 accession
-events, 438 family clusters, gradient-boosted probe cross-fitted with folds grouped on the family,
-both negative strata. Features are per-relation densities and clique indicators at the declared
-co-membership level ladder, plus group size — no learned representation of any kind.
+`scripts/run_u2.py --regime primary` → `results/u2_real.json`, which is now marked `SUPERSEDED` and
+carries these numbers under `as_measured_2026_08_03_pre_V0`: a retracted verdict's evidence should stay
+readable and should not be citable for anything current. The live artefact is
+`results/u2_real_primary.json`. Regime 1965–2014, 6,732 accession events, 438 family clusters,
+gradient-boosted probe cross-fitted with folds grouped on the family, both negative strata. Features are
+per-relation densities and clique indicators at the declared co-membership level ladder, plus group size —
+no learned representation of any kind.
 
 $\mathrm{AUC}_{\text{shortcut}}(\Delta)$, primary stratum (*never-event*):
 
@@ -718,7 +1150,7 @@ the other way and none of them is a reinterpretation after the fact:
 1. **COW IGO does not systematically back-date.** Five of 495 organisations mention signature or
    accession dating and one of those explicitly refuses to back-date (`PROVENANCE.md` §2). There is
    no mechanism planting the event in the observation window for the relation carrying $r^\star$
-   across 493 of 573 entities.
+   across 490 of 562 entities.
 2. **The clique-indicator effect is absent.** CLIQUEBAIT's D1 override rests on linear 0.915
    against gradient-boosted 0.979 — a gain of **+0.064** — because a leak is an exact-clique
    effect that a linear probe cannot see. Here the mean gain is **−0.0014**, and the linear probe
@@ -763,7 +1195,16 @@ formulation CLIQUEBAIT audited — is therefore not a special case of this one b
 over a different risk set. That is a structural property worth stating plainly, because a reader
 will expect $\Delta = 0$ to anchor the curve and it cannot.
 
-### V1d — U2 can manufacture a penumbra, and the confound is structural to the diagnostic — **mechanism stands, numbers void, see V0**
+### V1d — U2 can manufacture a penumbra, and the confound is structural to the diagnostic — **numbers void, see V0; and on the corrected panel the mechanism is not demonstrated either, see D-45**
+
+> **Re-measured 2026-08-04.** With matched negatives on the same regime the decay runs 0.2160, 0.2596
+> and 0.2686 across 30, 100 and 300 trees, a ratio of **1.24** against the 2.49 below, and the linear
+> probe decays **0.2597**, which sits between the two boosted extremes rather than well below them. A
+> decay present at every capacity including linear is not a capacity artefact, so probe capacity is not
+> what produces the decaying curve on this corpus. The a priori argument is untouched: the positive
+> count really does fall from 1,061 to 508 across the range. The verdict is therefore **sound in
+> principle, not demonstrated here**, and the numbers below are retained only as the record of what
+> the retracted panel showed (`scripts/run_u2_capacity.py`).
 
 The out-of-regime replication (1948–1963) appeared to *support* P2 where the primary regime
 falsified it: the boosted probe fell from 0.844 at $\Delta = 1$ to 0.701 at $\Delta = 10$, a decay
@@ -912,7 +1353,7 @@ figure is the one above.
 
 **C14 — membership overlap cannot identify duplicate entities, and a rule built on it would have
 deleted the corpus's most useful variation.** Matching the 70 ATOP multilateral treaties against
-the 491 organisations on membership Jaccard gives 178 candidate pairs at $J \geq 0.6$, seven at
+the 490 organisations on membership Jaccard gives 192 candidate pairs at $J \geq 0.6$, seven at
 $J = 1.000$ — but 27 treaties match more than one organisation and 41 organisations match more
 than one treaty, one treaty matching **24**. Those 24 are the Pan-American system: the OAS, PAHO,
 the Inter-American Children's Institute, the Inter-American Defense Board, the Commission of
@@ -926,9 +1367,9 @@ feeds are in `LEDGER.md`.
 **C15 — the leaking relation for four fifths of the corpus is saturated, so $\phi$ is generalised
 to a level ladder.** §11 makes $r^\star$ entity-type dependent: alliance edges for an alliance,
 co-membership for an organisation. Built from COW IGO's full memberships, co-membership has mean
-density **0.9954** over 1965–2014 — with 491 organisations over about 168 states almost every pair
+density **0.9954** over 1965–2014 — with 490 organisations over about 168 states almost every pair
 shares something — so a binary $\phi_r(S)$ is $\approx 1$ for positives and negatives alike and its
-clique contrast is $\approx 0$. The channel that must carry the leak for 493 of 573 entities
+clique contrast is $\approx 0$. The channel that must carry the leak for 490 of 562 entities
 carries no signal in the form the manifesto's $\phi$ assumes.
 
 Neither obvious repair works, and both were measured rather than reasoned about. Thresholding the
@@ -987,8 +1428,20 @@ recovers the known back-dating horizon in **6 of 6 settings**, $\beta = 0 \ldots
 $\beta + 1$ every time. That is the target the definition implies: traces are present for
 $\Delta \leq \beta$, so the smallest trace-free horizon is $\beta + 1$. The estimator works.
 
-The upper bound does not behave. Over horizons 0–8 it fired in **2 of 6** settings on the
-*never-event* stratum and was unreachable in the rest. The cause is the conjunction §5.1 requires:
+The generator is **density-invariant** across the $\alpha \times \beta$ grid — $r^\star$'s density varies
+by 0.00000000 and completeness tracks $\alpha$ to 0.0004 — which has to be checked first or the
+calibration is measuring the generator rather than the estimator. Two bookkeeping defects here were found
+on 2026-08-04 and both mattered more than bookkeeping usually does, because **after D-34 this calibration
+is the only evidence the estimator recovers a known $\beta$ at all.** The script's default `--betas`
+omitted 4, so it produced "5 of 5" while both documents said six: the documented figure came from a
+hand-passed flag. And the consistency checker's entry for this claim read the *density-invariance* field
+and emitted the string "6 of 6" whenever it was zero — a check on one quantity dressed as a check on
+another, which is why the drift went unnoticed. The count is now counted, in both documents (D-35).
+
+The upper bound does not behave. Over horizons 0–8 it fired in **3 of 6** settings on the
+*never-event* stratum, at $\beta = 0$, $1$ and $2$, and was unreachable in the rest. *Corrected in
+D-46: this paragraph read "2 of 6" until 2026-08-24, and the manuscript's Figure 2 named the wrong
+two settings. The artefact always said three; the transcription did not.* The cause is the conjunction §5.1 requires:
 $r^\star$ must lose top rank **and** its $\phi$-alone AUC must enter the band, and rank is a
 relative statistic that a structurally similar anchor keeps contesting. This was flagged as a risk
 before any measurement and is now demonstrated.

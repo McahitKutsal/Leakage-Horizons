@@ -1,0 +1,97 @@
+# Round four of the external reading. Two complaints, and the second is the one that stings: a paper
+# about auditing that does not agree with itself about its own counts.
+#
+#   the title page lists four authors and the contribution statement six
+#   Section 9 says thirteen defects, Section 10 calls the same thing four
+#   the abstract says ten ways with one undemonstrated, Section 7 says eleven listed and ten shown
+#   Appendix B says thirteen of twenty came from outside; its table shows eleven
+#
+# Same format as round three: `### reason`, `--- find`, `--- replace`, each matching exactly once
+# across the abstract, the body and the acknowledgements. These edits run before the accents are
+# written as commands, so an edit is written against the .tex as a reader sees it: accents and
+# punctuation appear here as LaTeX commands, not as the characters they stand for.
+
+# ------------------------------------------------------------------ the counts, made to agree
+### the abstract said ten ways with one undemonstrated; Section 7 lists eleven and demonstrates ten
+--- find
+Ten ways such a diagnostic misreports follow, one undemonstrated and four tested on a protein complex benchmark.
+--- replace
+Eleven ways such a diagnostic misreports are listed and ten demonstrated, four of them on a protein complex benchmark.
+
+### Section 9's own breakdown is three plus three plus six, and the thirteenth is the one chasing found
+--- find
+Two external reads of this manuscript produced thirteen defects between them, of a class none of the five reaches.
+--- replace
+Two external reads of this manuscript produced twelve defects between them, of a class none of the five reaches.
+
+### the same count, where the section states its case
+--- find
+the case for it is now quantitative: two outside reads produced thirteen defects of this class, and the internal checks that found the other nine found none of them.
+--- replace
+the case for it is now quantitative: two outside reads produced twelve defects of this class and led us to a thirteenth, and the internal checks that found the other nine found none of them.
+
+### Section 10 called the same set four, and Section 9 says all of them are of that class
+--- find
+The one exception is the four claim-to-artefact mismatches Section 9 reports last
+--- replace
+The one exception is the twelve claim-to-artefact mismatches Section 9 reports last
+
+### Appendix B borrowed Section 9's count of defects for a count of its own rows, which is eleven
+--- find
+Thirteen of the twenty were found by readers outside the author group, and Section 10 records that no one outside that group has run the pipeline or rebuilt either corpus
+--- replace
+Eleven of the twenty rows record an outside read, ten where the read came first and one where it named what our own test had found, and Section 10 records that no one outside that group has run the pipeline or rebuilt either corpus
+### and the rate it states, which is the defect count and not the row count
+--- find
+two readings of one manuscript produced thirteen defects that a validation suite agreeing with itself
+--- replace
+two readings of one manuscript produced twelve defects, and led us to a thirteenth, that a validation suite agreeing with itself
+
+# ------------------------------------------------------------------ the byline and the statement
+### the byline lists four authors and the statement listed six; the byline is the authors' own decision
+--- find
+\textbf{\"Om\"ur Ko\c{c}yi\u{g}it:} Investigation, Validation, Writing (review and editing).
+
+\textbf{Ay\c{s}e Gizem Erg\"or:} Investigation, Validation, Writing (review and editing).
+
+--- replace
+
+### so the two are thanked where a contributor who is not an author belongs
+--- find
+This work received no external funding and no grant supported it.
+--- replace
+This work received no external funding and no grant supported it.
+
+We thank \"Om\"ur Ko\c{c}yi\u{g}it and Ay\c{s}e Gizem Erg\"or, who contributed investigation and validation and read the manuscript.
+
+### three of the four authors list the Ministry, not two
+--- find
+\emph{Disclaimer.} Two of the authors are affiliated with the Republic of T\"urkiye Ministry of Foreign Affairs.
+--- replace
+\emph{Disclaimer.} Three of the four authors are affiliated with the Republic of T\"urkiye Ministry of Foreign Affairs.
+
+# ------------------------------------------------------------------ one sentence that broke in two
+### a full stop mid-sentence, and the clause after it starting in lower case
+--- find
+and Section 5.5's flow separates the two. and one figure from it belongs here because the diagnostic argument uses it:
+--- replace
+and Section 5.5's flow separates the two. One figure from it belongs here because the diagnostic argument uses it:
+
+# ------------------------------------------------------------------ the list told five times
+### the conclusion narrated all eight changes that Appendix B tabulates, in the sentence after pointing at it
+--- find
+The eight substantive ones were these. A general claim was falsified by the second domain and restated with a condition. One was narrowed to a single corpus. One explanation was reversed by the controlled generator. The bracketed interval was withdrawn. A lower bound was measured above the quantity it bounds and renamed. The claim that a group's own record is the only place back-dating can live was qualified, which added a mechanism and changed the first instruction above. An encoder reported as indistinguishable from a graph-free control was found significantly worse than it at ten seeds. And the reading of ten channels was withdrawn as a prospective test, because nothing outside our own account fixes the order in which it and the statistic were written. We regard all eight as the tests working.
+--- replace
+We regard all eight as the tests working.
+
+### the declaration protocol named the three amendments that Appendix B marks
+--- find
+Three of the changes reported in this paper are revisions \emph{to} the protocol rather than results produced under it: the withdrawal of the interval in Section 6.1, the restatement of mechanism (h) in Section 7, and the qualification of the claim about where back-dating lives, which mechanism (k) records.
+--- replace
+Three of the changes reported in this paper are revisions \emph{to} the protocol rather than results produced under it, and Appendix B marks which three.
+
+### the acknowledgements counted the corrections the way Appendix B used to, before its rows were counted
+--- find
+produced thirteen of the corrections we report, including the objection that became Section 6.3
+--- replace
+produced eleven of the corrections we report, including the objection that became Section 6.3

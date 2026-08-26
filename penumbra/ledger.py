@@ -206,7 +206,13 @@ def igo_membership_events(term_year: dict[str, int] | None = None) -> tuple[pd.D
 def atop_entities() -> pd.DataFrame:
     a = pd.read_csv(ATOP_DIR / "atop5_1a.csv", low_memory=False)
     m = pd.read_csv(ATOP_DIR / "atop5_1m.csv", low_memory=False)
-    size = m.groupby("atopid").size().rename("n_members")
+    # **Distinct members, not rows.** ATOP codes a member once per treaty phase, so a bilateral pact
+    # with two phases has four rows and a row count admits it under a >= 3 members rule. Measured: 8 of
+    # 80 alliance entities were bilateral treaties admitted this way, every one of them 2 members over
+    # 2 phases. `MIN_MEMBERS` exists to apply COW IGO's inclusion rule to ATOP for comparability
+    # (LEDGER.md section 2), and admitting bilateral treaties breaks precisely that. Same root cause as
+    # D-28 -- a phase row is not a member -- found while making V11's numbers reproducible.
+    size = m.groupby("atopid").member.nunique().rename("n_members")
     a = a.merge(size, left_on="atopid", right_index=True, how="left")
 
     # yrexit == 0 and endyr == 0 mean "never ended" in ATOP, not year zero. Treating them as
@@ -236,6 +242,21 @@ def atop_entities() -> pd.DataFrame:
 
 
 def atop_membership(entity_ids: set[str]) -> pd.DataFrame:
+    """Long (entity_id, ccode, year, status), one row per member-year.
+
+    **The union of phase spans, deduplicated.** ATOP codes a member once per treaty phase and phases
+    overlap in time, so expanding each row and concatenating gives a member two rows for the same year.
+    Measured before the fix: 298 redundant rows over 298 (entity, ccode, year) keys, 596 rows standing in
+    duplicate pairs, all alliance, and
+    162 of 17,582 (entity, year) cells whose row count exceeded their distinct-member count by a mean
+    factor of 1.36 and a maximum of 2.00. Any consumer taking group size as `.size()` -- `t1.py` and
+    `t2.py` both did -- read those cells as coalitions up to twice their real size, so `log_size`
+    entered T1's ladder and T2's hazard inflated for the multi-phase alliances.
+
+    Third instance of one root cause: a phase row is not a member (D-28, D-31, D-32). Deduplicating
+    here rather than in each consumer is deliberate -- the invariant belongs to the corpus, and
+    `validate_ledger` now asserts it so a fourth consumer cannot reintroduce the assumption.
+    """
     m = pd.read_csv(ATOP_DIR / "atop5_1m.csv", low_memory=False)
     m["entity_id"] = "atop:" + m.atopid.astype(int).astype(str)
     m = m[m.entity_id.isin(entity_ids)].copy()
@@ -248,26 +269,52 @@ def atop_membership(entity_ids: set[str]) -> pd.DataFrame:
         lo, hi = max(int(r.yr_in), WINDOW_START), min(int(r.yr_out), WINDOW_END)
         for y in range(lo, hi + 1):
             rows.append((r.entity_id, int(r.member), y, 1))
-    return pd.DataFrame(rows, columns=["entity_id", "ccode", "year", "status"])
+    out = pd.DataFrame(rows, columns=["entity_id", "ccode", "year", "status"])
+    return out.drop_duplicates(subset=["entity_id", "ccode", "year"]).reset_index(drop=True)
 
 
 def atop_membership_events(entity_ids: set[str]) -> pd.DataFrame:
+    """Accession and exit events from ATOP, one per (treaty, member) rather than one per row.
+
+    **ATOP codes a member once per treaty PHASE.** A member present in phase 1 and phase 2 has two
+    rows with different `yrent`, and the first version of this function emitted an accession for
+    every row whose `yrent` postdated the treaty -- so a founder of a multi-phase treaty acquired an
+    accession it never had, dated to the phase that began later.
+
+    Measured: of 481 events the row-wise rule produced, **221 (45.9 %)** belonged to members whose
+    first entry was at or before the treaty's own start, i.e. founders. In 1965-2014 the corpus
+    carried 336 alliance accessions where 177 are correct.
+
+    It was found by `umbra.trace_presence`: focal isolation showed 45.8 % of alliance accessions with
+    the member already on the treaty's record a year earlier, and 0.0 % for members with a single
+    ATOP row. The diagnostic built to measure back-dating located a defect in the corpus instead,
+    which is the more useful thing it could have done.
+
+    The rule now: a member accedes at its **first** entry across phases, and only if that first entry
+    postdates the treaty. Later phase rows are continuations. Exits are taken at the last recorded
+    exit for the same reason.
+    """
     a = pd.read_csv(ATOP_DIR / "atop5_1a.csv", low_memory=False,
                     usecols=["atopid", "begyr"]).set_index("atopid")
     m = pd.read_csv(ATOP_DIR / "atop5_1m.csv", low_memory=False)
+    m = m[["atopid", "member", "yrent", "yrexit"]].copy()
     m["entity_id"] = "atop:" + m.atopid.astype(int).astype(str)
-    m = m[m.entity_id.isin(entity_ids)].copy()
-    m["begyr"] = m.atopid.map(a.begyr)
+    m = m[m.entity_id.isin(entity_ids)]
+    m["yrent_c"] = pd.to_numeric(m.yrent, errors="coerce").replace(0, np.nan)
+    m["yrexit_c"] = pd.to_numeric(m.yrexit, errors="coerce").replace(0, np.nan)
+
+    g = (m.groupby(["entity_id", "atopid", "member"], as_index=False)
+         .agg(first_ent=("yrent_c", "min"), last_exit=("yrexit_c", "max")))
+    g["begyr"] = g.atopid.map(a.begyr)
 
     rows = []
-    for r in m.itertuples():
-        ent = pd.to_numeric(pd.Series([r.yrent]), errors="coerce").iloc[0]
-        ext = pd.to_numeric(pd.Series([r.yrexit]), errors="coerce").iloc[0]
-        # Entry in the treaty's own founding year is founding membership, not accession.
-        if pd.notna(ent) and ent > 0 and ent > r.begyr and WINDOW_START <= ent <= WINDOW_END:
+    for r in g.itertuples():
+        ent, ext, beg = r.first_ent, r.last_exit, r.begyr
+        # Founders are not accessors. Only an entry that postdates the treaty is an accession.
+        if pd.notna(ent) and pd.notna(beg) and ent > beg and WINDOW_START <= ent <= WINDOW_END:
             rows.append((r.entity_id, "accession", int(r.member),
                          int(ent) - 1, int(ent), EXACT, int(ent)))
-        if pd.notna(ext) and ext > 0 and WINDOW_START <= ext <= WINDOW_END:
+        if pd.notna(ext) and WINDOW_START <= ext <= WINDOW_END:
             rows.append((r.entity_id, "exit", int(r.member),
                          int(ext) - 1, int(ext), EXACT, int(ext)))
     return pd.DataFrame(rows, columns=["entity_id", "event_type", "ccode",
@@ -315,6 +362,20 @@ def build() -> dict[str, pd.DataFrame]:
     mem = pd.concat([igo_membership(), atop_membership(set(ent.entity_id))], ignore_index=True)
     mem = mem[(mem.year >= WINDOW_START) & (mem.year <= WINDOW_END)].reset_index(drop=True)
 
+    # **The >= 3 members rule enforced against the data, not taken from the source's claim.** COW IGO
+    # states that it lists only organisations with at least three members, and three of its entities do
+    # not satisfy that in the observed window: the Regional Cooperation Council carries exactly one
+    # coded full member across 2008-2014 with 868 cells at -9, and two pre-window bodies carry none at
+    # all. That is C5's failure mode -- a coverage gap in the source presenting as structure -- and an
+    # entity with fewer than three members yields no dyads, so no clique statistic, group density or
+    # co-membership edge can be computed for it. Section 5.4 is the reason this is checked rather than
+    # trusted: what a source records and what it advertises are different facts.
+    kept = mem[mem.status == 1].groupby("entity_id").ccode.nunique()
+    ok = set(kept[kept >= MIN_MEMBERS].index)
+    under = ent[~ent.entity_id.isin(ok)]
+    ent = ent[ent.entity_id.isin(ok)].reset_index(drop=True)
+    mem = mem[mem.entity_id.isin(ok)].reset_index(drop=True)
+
     # Families are computed on FULL membership only: an observer does not make two bodies the
     # same coalition, and including observers would merge families through shared observers.
     full = mem[mem.status == 1]
@@ -350,6 +411,12 @@ def build() -> dict[str, pd.DataFrame]:
     before = len(mem)
     mem = mem[mem.year <= mem.entity_id.map(exit_map)].reset_index(drop=True)
     dropped["membership_rows_after_exit"] = before - len(mem)
+
+    # Named rather than counted: three is few enough that the names are the more useful record, and a
+    # coverage gap that removes an entity should be attributable to the entity.
+    dropped["entities_under_min_members"] = int(len(under))
+    dropped["entities_under_min_members_named"] = sorted(
+        f"{r.entity_id} ({r['name']})" for _, r in under.iterrows())
 
     return {
         "entities": ent.drop(columns=["declared_resolution_flag"]),

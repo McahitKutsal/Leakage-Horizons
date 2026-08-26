@@ -48,7 +48,7 @@ accession dating, and reading all five is the whole verdict:
 So the page-5 caveat describes a handful of cases, one organisation back-dates membership, and one
 explicitly declines to. **Signature back-dating is not the mechanism by which the penumbra would
 appear in this corpus.** That is a substantive finding and it bears directly on P1: if the relation
-carrying $r^\star$ for 493 of 573 entities does not anticipate, the penumbra for organisation
+carrying $r^\star$ for 490 of 562 entities does not anticipate, the penumbra for organisation
 entities has to come from somewhere else or be narrow.
 
 Two other mechanisms displace dates in this source and neither is signature back-dating:

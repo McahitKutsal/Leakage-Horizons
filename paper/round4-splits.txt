@@ -1,0 +1,188 @@
+# Round four, second half: the sentences. The reading said they run to forty words and more with
+# nested subordinate clauses, and it was right — 157 of 967 prose sentences were forty words or over,
+# 43 of them fifty or over.
+#
+# Only nested sentences are split here. An enumeration is long but not hard: a list of six data
+# sources reads straight through, and breaking it would make it worse. What gets split is a sentence
+# that suspends its main clause while two or three subordinate ones resolve. Every split keeps the
+# words; it moves a comma to a full stop and names the subject the second half had been borrowing.
+
+### a colon list followed by two more clauses hanging off it
+--- find
+Both counts are the estimated panel's rather than the corpus's, and Section 5.5's flow gives the filters: 528 groups have an observation interval overlapping the window and 527 contribute a period to the likelihood, the one difference being a group with no active membership row inside it, and that same group carries one of the 151 coded terminations inside the window, which is why the panel scores 150.
+--- replace
+Both counts are the estimated panel's rather than the corpus's, and Section 5.5's flow gives the filters: 528 groups have an observation interval overlapping the window and 527 contribute a period to the likelihood. The one difference is a group with no active membership row inside it, and that same group carries one of the 151 coded terminations inside the window, which is why the panel scores 150.
+
+### three papers in one sentence
+--- find
+\citet{benson} give the simplicial closure formulation and show that higher-order structure predicts higher-order events better than its pairwise projection does, \citet{do_hyper} characterise the structural regularities real hypergraphs have that random ones do not, and \citet{yoon} quantify how much of the predictive gain survives when the comparison is made carefully, which is the same question our capacity-matched controls ask of message passing.
+--- replace
+\citet{benson} give the simplicial closure formulation and show that higher-order structure predicts higher-order events better than its pairwise projection does. \citet{do_hyper} characterise the structural regularities real hypergraphs have that random ones do not, and \citet{yoon} quantify how much of the predictive gain survives when the comparison is made carefully, which is the same question our capacity-matched controls ask of message passing.
+
+### two findings announced and then run together, the first of them a fragment
+--- find
+It is retained in full because two of its findings are methodological: the interval formulation is mandatory rather than optional, the register's own coding rule declaring an organisation defunct after ten consecutive years without a plenary session, and thirty events whose cause the source does not state enter through the likelihood's cause-unknown branch rather than being dropped or assigned a cause.
+--- replace
+It is retained in full because two of its findings are methodological. The interval formulation is mandatory rather than optional, because the register's own coding rule declares an organisation defunct after ten consecutive years without a plenary session. And thirty events whose cause the source does not state enter through the likelihood's cause-unknown branch rather than being dropped or assigned a cause.
+
+### a claim, an objection, and two relative clauses, in one breath
+--- find
+Section 3.3 states the claim this section tests, and the exact objection an outside reading raised against it: administrative back-dating of the focal event can reach \(r^{\star}\) through a neighbouring group's record, which no reading of the focal register opens, and it correlates with the label when the two entries fall near each other, which is what an accession wave is.
+--- replace
+Section 3.3 states the claim this section tests, and the exact objection an outside reading raised against it. Administrative back-dating of the focal event can reach \(r^{\star}\) through a neighbouring group's record, which no reading of the focal register opens. It correlates with the label when the two entries fall near each other, which is what an accession wave is.
+
+### three findings under one verb
+--- find
+\citet{poursafaei} show that a large share of the edges in standard dynamic link prediction benchmarks are repetitions of edges seen earlier, that a memorisation baseline which predicts previously observed edges is competitive with trained models on many of them, and that the negative sampling strategy decides much of the reported performance.
+--- replace
+\citet{poursafaei} show that a large share of the edges in standard dynamic link prediction benchmarks are repetitions of edges seen earlier, and that a memorisation baseline which predicts previously observed edges is competitive with trained models on many of them. They also show that the negative sampling strategy decides much of the reported performance.
+
+### two kernels described inside one colon list with a relative clause on each
+--- find
+We therefore reran the entire grid under two further kernels that are not reparametrisations of the first: a bounded logistic kernel, which saturates instead of diverging as distance goes to zero, and a \textbf{block} kernel that discards latent distance altogether for discrete latent communities, where two entities are similar if they share a community and not otherwise.
+--- replace
+We therefore reran the entire grid under two further kernels that are not reparametrisations of the first. One is a bounded logistic kernel, which saturates instead of diverging as distance goes to zero. The other is a \textbf{block} kernel that discards latent distance altogether for discrete latent communities, where two entities are similar if they share a community and not otherwise.
+
+### a pattern, an apposition and an observation, then a relative clause about our own work
+--- find
+\citet{geirhos} set out the pattern, a model that solves a benchmark through a feature correlated with the label but not with the construct, together with the observation that shortcut reliance is a property of the training distribution as much as of the architecture, which is what mechanism (g) reports in a form we did not expect.
+--- replace
+\citet{geirhos} set out the pattern: a model that solves a benchmark through a feature correlated with the label but not with the construct. They add that shortcut reliance is a property of the training distribution as much as of the architecture, which is what mechanism (g) reports in a form we did not expect.
+
+### two statistics, each with its own consequence, in one sentence
+--- find
+On corpus A at the declared primary level the two statistics disagree in the wrong direction at every lead time examined: the clique contrast sits outside its band throughout, so the specific statistic calls the relation distinguishable everywhere, while the single-feature discrimination sits inside its band throughout, so the sensitive statistic calls it indistinguishable everywhere.
+--- replace
+On corpus A at the declared primary level the two statistics disagree in the wrong direction at every lead time examined. The clique contrast sits outside its band throughout, so the specific statistic calls the relation distinguishable everywhere. The single-feature discrimination sits inside its band throughout, so the sensitive statistic calls it indistinguishable everywhere.
+
+### a definition and its justification
+--- find
+An administrative dyad that positives and negatives carry alike is not a trace of the event and a diagnostic that read it as one would be reporting exactly the artefact this paper is about, which is why the caused part is separated and the ambient part is reported beside it rather than added to it.
+--- replace
+An administrative dyad that positives and negatives carry alike is not a trace of the event, and a diagnostic that read it as one would be reporting exactly the artefact this paper is about. That is why the caused part is separated and the ambient part reported beside it rather than added to it.
+
+### a scope claim with the reason for it attached
+--- find
+Those two are where the pooled reading is falsified against a width that is known, and they are the only two: Section 6.5 shows that no stratum of the coalition corpus supports both instruments as measurements at once, so what that corpus establishes is a different and weaker thing, set out where it is reported.
+--- replace
+Those two are where the pooled reading is falsified against a width that is known, and they are the only two. Section 6.5 shows that no stratum of the coalition corpus supports both instruments as measurements at once, so what that corpus establishes is a different and weaker thing, set out where it is reported.
+
+### a method and its result
+--- find
+Section 6.3 puts that claim on the same generator with a curatorial wave as a controlled parameter, and it holds under one dating convention and fails under mixed ones: where a neighbouring group's register is coarser than the focal group's, the trace reaches into the target relation from a record the focal reading never opens.
+--- replace
+Section 6.3 puts that claim on the same generator with a curatorial wave as a controlled parameter. It holds under one dating convention and fails under mixed ones: where a neighbouring group's register is coarser than the focal group's, the trace reaches into the target relation from a record the focal reading never opens.
+
+### the testbed's sources and the reason for one design choice
+--- find
+The protein complex testbed uses CORUM \citep{corum} and Complex Portal \citep{complexportal} complexes against the STRING interaction network \citep{string}, a standard pairing in complex prediction, and the community assessment of module identification on such networks \citep{choobdar} is the reason we treat the curated-register channel as the label source rather than as one predictor among ten.
+--- replace
+The protein complex testbed uses CORUM \citep{corum} and Complex Portal \citep{complexportal} complexes against the STRING interaction network \citep{string}, a standard pairing in complex prediction. The community assessment of module identification on such networks \citep{choobdar} is the reason we treat the curated-register channel as the label source rather than as one predictor among ten.
+
+### a premise and the arithmetic that follows from it
+--- find
+A clique on \(n\) members needs all \(\binom{n}{2}\) dyads and the curated-register channel has density 0.00115, so summing \(d^{\binom{n_{i}}{2}}\) over the realised sizes of the smallest bin's 1,399 negatives gives an expected count of two millionths of a group against an observed zero.
+--- replace
+A clique on \(n\) members needs all \(\binom{n}{2}\) dyads, and the curated-register channel has density 0.00115. Summing \(d^{\binom{n_{i}}{2}}\) over the realised sizes of the smallest bin's 1,399 negatives therefore gives an expected count of two millionths of a group against an observed zero.
+
+### a warning, an instance of it, and the remedy
+--- find
+That matters because a rank correlation over hand-picked points can change sign if one of them moves: the same statistic over ten chosen models read \(- 0.699\) at \(p = 0.0245\), and enumerating the grid rather than adding points that help brought in the four it was missing, after which the sign held and the \(p\) value halved.
+--- replace
+That matters because a rank correlation over hand-picked points can change sign if one of them moves: the same statistic over ten chosen models read \(- 0.699\) at \(p = 0.0245\). Enumerating the grid rather than adding points that help brought in the four it was missing, after which the sign held and the \(p\) value halved.
+
+### two literatures and then our own gap
+--- find
+The leakage literature supplies checklists and taxonomies rather than estimators \citep{kaufman,kapoor_leakage,reforms}, the temporal-graph evaluation literature supplies protocols and negative samplers rather than horizon estimates \citep{ogb,tgb,poursafaei}, and we are aware of no published statistic that takes a relation and a lead time and returns how far a register's dating reaches.
+--- replace
+The leakage literature supplies checklists and taxonomies rather than estimators \citep{kaufman,kapoor_leakage,reforms}, and the temporal-graph evaluation literature supplies protocols and negative samplers rather than horizon estimates \citep{ogb,tgb,poursafaei}. We are aware of no published statistic that takes a relation and a lead time and returns how far a register's dating reaches.
+
+### a list of three, and then a conclusion about them
+--- find
+The nine defects of Section 9's main audit, the density double count, and the second implementation of this section's first paragraph were all produced by the authors working on their own code, and the boundary noted in Section 9 is an instance of the resulting ceiling.
+--- replace
+The nine defects of Section 9's main audit, the density double count and the second implementation of this section's first paragraph were all produced by the authors working on their own code. The boundary noted in Section 9 is an instance of the resulting ceiling.
+
+### one history standing as evidence for two different things
+--- find
+The version-control history of the released repository records a single committer for the corpus construction, the diagnostic suite, the survival estimators, the synthetic generators and the analysis scripts, which is the evidence for the software, formal analysis and data curation roles, and the same history is the evidence for the pre-registration dates Section 5.1 reports.
+--- replace
+The version-control history of the released repository records a single committer for the corpus construction, the diagnostic suite, the survival estimators, the synthetic generators and the analysis scripts, which is the evidence for the software, formal analysis and data curation roles. The same history is the evidence for the pre-registration dates Section 5.1 reports.
+
+### two additions to the literature under one "that"
+--- find
+What we add is that in a \emph{leakage diagnostic} the confound does not merely inflate a score, it manufactures a decaying curve with the shape of a horizon, and that it loads onto whichever stratum has the higher recurrence rate, which in our corpus is also the stratum whose dates are least precise.
+--- replace
+What we add is that in a \emph{leakage diagnostic} the confound does not merely inflate a score: it manufactures a decaying curve with the shape of a horizon. It also loads onto whichever stratum has the higher recurrence rate, which in our corpus is also the stratum whose dates are least precise.
+
+### a definition of construct validity, and where that leaves us
+--- find
+The vocabulary is \citet{cronbach}'s, who introduced construct validity as the case where a test has no criterion to be checked against and its meaning has to be established by the pattern of relations it enters, which is the position a leakage diagnostic is in: there is no gold-standard horizon to correlate with.
+--- replace
+The vocabulary is \citet{cronbach}'s, who introduced construct validity as the case where a test has no criterion to be checked against and its meaning has to be established by the pattern of relations it enters. That is the position a leakage diagnostic is in: there is no gold-standard horizon to correlate with.
+
+### the taxonomy's two remaining leaves, each with its own reason for not applying
+--- find
+The two remaining leaves are equally not it: L3.2 is dependence between training and test samples, which our resampling unit addresses separately and which would not create a decaying horizon curve, and L3.3 is a test distribution sampled unrepresentatively, which is a question about the comparison stratum rather than about dating.
+--- replace
+The two remaining leaves are equally not it. L3.2 is dependence between training and test samples, which our resampling unit addresses separately and which would not create a decaying horizon curve. L3.3 is a test distribution sampled unrepresentatively, which is a question about the comparison stratum rather than about dating.
+
+### six numbers, three filters and a fourth pair, in one sentence
+--- find
+Every one of those six numbers is right, the filters that separate them are an active membership row inside the window, the lead time the count is taken at, and one accession per dyad, and none was stated; chasing them found a fourth pair, 151 coded terminations against the 150 the panel scores.
+--- replace
+Every one of those six numbers is right. The filters that separate them are an active membership row inside the window, the lead time the count is taken at, and one accession per dyad, and none of the three was stated. Chasing them found a fourth pair, 151 coded terminations against the 150 the panel scores.
+
+### a discovery, what it was, and what it cost
+--- find
+It was the discovery that one convention had never been written down clearly enough to be re-implemented: the second implementation read ``level 1'' literally, as weight at least one, which empties the voting-agreement relation and discards half of trade flows, and it disagreed with the original by exactly 1.0 on those two stars.
+--- replace
+It was the discovery that one convention had never been written down clearly enough to be re-implemented. The second implementation read ``level 1'' literally, as weight at least one, which empties the voting-agreement relation and discards half of trade flows, and it disagreed with the original by exactly 1.0 on those two stars.
+
+### two consequences of one coding decision
+--- find
+Corpus A codes one date for 94 percent of its events, so focal isolation is silent there by construction, and the one stratum where it measures lies entirely before the analysis window, so the pooled statistic cannot be read on those events at any positive lead time without reintroducing a coverage break.
+--- replace
+Corpus A codes one date for 94 percent of its events, so focal isolation is silent there by construction. The one stratum where it does measure lies entirely before the analysis window, so the pooled statistic cannot be read on those events at any positive lead time without reintroducing a coverage break.
+
+### what rests on one corpus, and what the other one gives instead
+--- find
+The consequence is that the falsification of the pooled reading against a known width rests on the trade register alone, with 759 agreements in a domain that is not the paper's primary one, and that the coalition corpus contributes a magnitude, an indistinguishability result and a non-identification result rather than a refutation.
+--- replace
+The consequence is that the falsification of the pooled reading against a known width rests on the trade register alone, with 759 agreements in a domain that is not the paper's primary one. The coalition corpus contributes a magnitude, an indistinguishability result and a non-identification result rather than a refutation.
+
+### a requirement, a practice and the reason for it
+--- find
+Section 5.1 requires that an amendment to a declared protocol be visible rather than silent, and the body marks each one with a tag rather than narrating it, because a reader meeting a result for the first time should not have to sort what is true from what we used to think.
+--- replace
+Section 5.1 requires that an amendment to a declared protocol be visible rather than silent, and the body marks each one with a tag rather than narrating it. A reader meeting a result for the first time should not have to sort what is true from what we used to think.
+
+### where the channels were written, and what that does not establish
+--- find
+The ten STRING channels were assigned to target, contaminated and anchor in the docstring of the analysis script, which is where we wrote them and is our account of the order, and that file was not committed before it was run; the pre-registration does not name the channels at all.
+--- replace
+The ten STRING channels were assigned to target, contaminated and anchor in the docstring of the analysis script, which is where we wrote them and is our account of the order. That file was not committed before it was run, and the pre-registration does not name the channels at all.
+
+### two illegitimacies contrasted, with the reason for the second attached
+--- find
+In their examples the illegitimacy is the analyst's, a feature chosen that stands proxy for the target; here the analyst's choice is defensible and the illegitimacy is the register's, because a feature computed from today's register at a historical origin is not a feature that existed at that origin.
+--- replace
+In their examples the illegitimacy is the analyst's: a feature chosen that stands proxy for the target. Here the analyst's choice is defensible and the illegitimacy is the register's, because a feature computed from today's register at a historical origin is not a feature that existed at that origin.
+
+### a mechanism stated, then explained
+--- find
+Our mechanism (i) is the group-membership form of the first of those observations: an entity that left a group and rejoined is on the register at long lead times for a reason that is not anticipation, and reaching further back is more likely to land inside an earlier spell.
+--- replace
+Our mechanism (i) is the group-membership form of the first of those observations. An entity that left a group and rejoined is on the register at long lead times for a reason that is not anticipation, and reaching further back is more likely to land inside an earlier spell.
+
+### the finding and the qualification of it
+--- find
+It is that \textbf{the focal group's own record carries nothing past one period while the pooled statistic reports a contrast still at 0.1490 after eight}, and that gap is the diagnostic's blind spot measured on a corpus of realistic size rather than a demonstration that the pooled number is false.
+--- replace
+It is that \textbf{the focal group's own record carries nothing past one period while the pooled statistic reports a contrast still at 0.1490 after eight}. That gap is the diagnostic's blind spot measured on a corpus of realistic size, rather than a demonstration that the pooled number is false.
+
+### a cost claim and the mapping that supports it
+--- find
+This is expensive per event and cheap in total: even \(k = 50\) bounds the share of events whose coded date is displaced, and Section 6.2 gives the mapping from that share to the width focal isolation would read, a displaced share of a tenth producing a presence of 0.0667 at one period.
+--- replace
+This is expensive per event and cheap in total: even \(k = 50\) bounds the share of events whose coded date is displaced. Section 6.2 gives the mapping from that share to the width focal isolation would read, a displaced share of a tenth producing a presence of 0.0667 at one period.

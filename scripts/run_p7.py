@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT))
 
 from penumbra.neural import DEVICE, build_snapshots, make_model, n_parameters  # noqa: E402
 from penumbra.t1 import build_risk_set  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_u2 import REGIMES  # noqa: E402
 
 ORIGINS = [1990, 2000, 2005]
@@ -297,13 +298,18 @@ def main() -> int:
                              "mean_contribution": float(by_h.mean())}
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({"regime": list(regime), "origins": ORIGINS,
+    # The invocation, recorded in the artefact. A results file whose flags differ from the script's
+    # defaults is otherwise unattributable: `p7_ctrl_w96.json` had to be reconstructed from its own
+    # width and rung fields to learn it came from `--rungs 4 --width 96 --seeds 0` (D-35).
+    write_result(args.json, {"invocation": " ".join(sys.argv),
+                                     "regime": list(regime), "origins": ORIGINS,
                                      "horizons": HORIZONS, "epochs": args.epochs,
-                                     "width": args.width,
+                                     "width": args.width, "rungs": list(args.rungs),
+                                     "seeds": list(args.seeds), "lag": args.lag,
                                      "train_neg_rate": args.neg_rate,
                                      "eval_on_full_risk_set": True,
                                      "n_parameters": params, "p7": verdict,
-                                     "rows": rows}, indent=2, default=str))
+                                     "rows": rows}, indent=2, default=str)
     d.to_parquet(ROOT / "results" / "p7.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0

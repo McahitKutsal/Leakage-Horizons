@@ -36,6 +36,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.umbra import NEVER_EVENT, NOT_AT_HORIZON, HorizonAudit, delta_star  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_u2 import REGIMES, load  # noqa: E402
 
 RSTAR = "allies"
@@ -115,13 +116,13 @@ def main() -> int:
           "cannot attribute the result to signature, ratification or entry into force.")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
         "regime_name": args.regime, "regime": list(regime), "rstar": RSTAR, "anchors": ANCHORS,
         "n_alliance_entities": int(mem_a.entity_id.nunique()), "n_accessions": n_acc,
         "median_membership": int(sizes.median()),
         "atop_dating_unverified": True,
         "verdicts": verdicts, "curves": curves.to_dict("records"),
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     curves.to_parquet(ROOT / "results" / f"u1_alliance_{args.regime}.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0

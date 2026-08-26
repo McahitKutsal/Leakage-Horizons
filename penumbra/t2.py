@@ -75,7 +75,7 @@ def build_panel(regime=(1965, 2014), collapse: bool = True, focal_excluded: bool
 
     mapping = COLLAPSED if collapse else CAUSE_CODE
     rows_ent, rows_year, rows_dur = [], [], []
-    tL, tR, cause, strat, eid_list = [], [], [], [], []
+    tL, tR, cause, strat, eid_list, entry = [], [], [], [], [], []
     for i, r in enumerate(ent.itertuples()):
         origin = max(int(r.origin), lo)
         last = min(int(r.exit_year), hi)
@@ -83,21 +83,38 @@ def build_panel(regime=(1965, 2014), collapse: bool = True, focal_excluded: bool
             continue
         eid_list.append(r.entity_id)
         j = len(eid_list) - 1
+
+        # **Duration runs from founding, and observation begins later.** The first version set the
+        # clock to zero at the regime start, so a coalition founded in 1900 and one founded in 1965 were
+        # both duration 1 in 1965. Measured: 183 of 528 entities in the regime panel predate it, with a
+        # median true age of 13 and a maximum of 150, and they carry 45.7 % of the coalition-years and
+        # 39.1 % of the terminations. That misplaces the baseline for a third of the panel, and
+        # `log_duration` is one of the two cross-cause sign reversals P5 is scored on -- section 9.1 names
+        # left truncation and D-03 recorded that it "binds hard", so the concern was declared and the
+        # implementation did not honour it (D-36).
+        #
+        # `PeriodPanel.entry` is the field for exactly this and was being passed zeros. Setting it to the
+        # age at which observation starts makes the entity contribute only the periods it was observed
+        # in, while the baseline is estimated on the true clock. For an entity founded at or after the
+        # regime start the two clocks coincide and `entry` is 0, so the change is a no-op there.
+        founded = int(r.founded) if pd.notna(r.founded) else origin
+        founded = min(founded, origin)          # a founding after the origin would be a data error
+        entry.append(origin - founded)          # last period BEFORE observation begins
         for y in range(origin, last + 1):
             rows_ent.append(j)
             rows_year.append(y)
-            rows_dur.append(y - origin + 1)
+            rows_dur.append(y - founded + 1)
         if r.entity_id in term.index and r.terminated and lo <= r.exit_year <= hi:
             t = term.loc[r.entity_id]
             c = mapping.get(str(t.cause), CAUSE_UNKNOWN)
-            d = int(r.exit_year) - origin + 1
-            tL.append(max(d - 1, 0))
+            d = int(r.exit_year) - founded + 1
+            tL.append(max(d - 1, origin - founded))
             tR.append(d)
             cause.append(c)
             strat.append(str(t.dating_stratum))
         else:
-            tL.append(0)
-            tR.append(last - origin + 1)
+            tL.append(origin - founded)
+            tR.append(last - founded + 1)
             cause.append(CENSORED)
             strat.append("censored")
 
@@ -118,8 +135,15 @@ def build_panel(regime=(1965, 2014), collapse: bool = True, focal_excluded: bool
     # internal cohesion: the coalition's own members' density in each relation. For T2 this is the
     # group-level phi the manifesto's §5 statistics are about, computed on the coalition itself.
     from penumbra.graph import focal_excluded_weight
-    edges = pd.concat([pd.read_parquet(p).assign(relation=p.stem.replace("edges_", ""))
-                       for p in sorted(GRAPH.glob("edges_*.parquet"))], ignore_index=True)
+    # By name, not by glob. T2 was the least exposed of the three call sites -- its features are built by
+    # looping over `RELATIONS`, so the PTA files a glob picked up were loaded and then ignored -- but
+    # "harmless because something downstream filters it" is the property that stopped being true in
+    # `run_u2.py`, where the same glob added four features to a shortcut probe (D-38, D-39).
+    missing = [r for r in RELATIONS if not (GRAPH / f"edges_{r}.parquet").exists()]
+    if missing:
+        raise FileNotFoundError(f"declared relations with no edge file: {missing}")
+    edges = pd.concat([pd.read_parquet(GRAPH / f"edges_{r}.parquet").assign(relation=r)
+                       for r in RELATIONS], ignore_index=True)
     edges = edges[edges.year.between(lo, hi)]
     if focal_excluded:
         co = edges[edges.relation == "igo_comembership"]
@@ -158,7 +182,7 @@ def build_panel(regime=(1965, 2014), collapse: bool = True, focal_excluded: bool
 
     n_causes = 2 if collapse else 3
     panel = PeriodPanel(entity=df.ent.to_numpy(), period=df.dur.to_numpy(), X=X,
-                        entry=np.zeros(len(eid_list), dtype=int),
+                        entry=np.array(entry, dtype=int),
                         t_L=np.array(tL), t_R=np.array(tR), cause=np.array(cause))
     meta = {"entity_ids": eid_list, "year": df.year.to_numpy(), "feature_names": names,
             "dating_stratum": strat, "n_causes": n_causes, "collapse": collapse,

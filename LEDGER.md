@@ -17,13 +17,13 @@ three of four, which buys nothing here because the events stop first.
 
 | type | source | population in window | what an entity is | built |
 |---|---|---|---|---|
-| `alliance` | ATOP 5.1 | 70 multilateral (≥3 members), 564 including bilateral | a treaty, identified by `atopid` | v1 |
+| `alliance` | ATOP 5.1 | 72 multilateral (≥3 **distinct** members, D-31), 564 including bilateral | a treaty, identified by `atopid` | v1 |
 | `organisation` | COW IGO v3 | 491 active | a body, identified by `ionum` | v1 |
 | `agreement` | DESTA v02.03 | 903 base treaties | a preferential or economic agreement, identified by `base_treaty` | **deferred** |
 
 **Why `agreement` is deferred rather than dropped.** DESTA contributes no entity terminations at
 all (§2.2), so T2 is unaffected by its absence, and its 208 accession events are 3 % of COW IGO's
-6,115. What it does contribute is unique — the whole of dating stratum 2 and the
+6,138. What it does contribute is unique — the whole of dating stratum 2 and the
 signed-but-never-in-force negatives — and both are consumed by U1 validation, which cannot run
 until the corpus exists. It also needs its own crosswalk with its own validation: DESTA keys
 states by ISO numeric code, of 204 distinct parties 179 match COW by name and 25 do not, and nine
@@ -44,7 +44,7 @@ entity with accession events, and its composition is a function of time rather t
 
 The obvious deduplication rule — same members, same coalition — fails, and it fails in the
 direction that would have destroyed the corpus. Matching ATOP multilateral treaties against COW
-IGO organisations on mean Jaccard of member sets over shared years gives 178 candidate pairs at
+IGO organisations on mean Jaccard of member sets over shared years gives 192 candidate pairs at
 $J \geq 0.6$, seven of them at $J = 1.000$. But the structure is many-to-many: **27 treaties
 match more than one organisation and 41 organisations match more than one treaty**, and the
 extremes are not marginal — one ATOP treaty matches **24** organisations, another 20, another 16.
@@ -74,7 +74,7 @@ alongside it.
 
 Membership-equivalence is the wrong tool for identity and the right tool for dependence.
 Clustering organisations at $J \geq 0.90$ over at least five shared years gives **31 families
-covering 107 of 491 organisations** — a fifth of the corpus. Within a family, pairs of deaths
+covering 107 of 490 organisations** — a fifth of the corpus. Within a family, pairs of deaths
 fall within two years of each other **26.9 %** of the time (7 of 26) against **10.1 %** for
 random pairs from the same population: an enrichment of **2.66×**, nominal one-sided
 $p = 0.013$. The nominal $p$ is anti-conservative because pairs inside a family share entities,
@@ -95,10 +95,23 @@ conservative one on discovering an inconvenient interval. Recorded as C13.
 
 | event | entity type | source field | count in window |
 |---|---|---|---|
-| founding | both | `sdate` / `begyr` | 304 organisations (1965+), 564 treaties |
-| accession | both | `0 → 1` in membership / `yrent > begyr` | 6,115 (1966+) / 335 multilateral |
-| exit | both | `1 → 0` / `yrexit` | 901 (1966+) / 756 |
+| founding | both | `sdate` / `begyr` | 304 organisations (1965+), 72 multilateral treaties |
+| accession | both | `0 → 1` in membership / **first** `yrent > begyr` | 6,138 (1966+) / 177 multilateral |
+| exit | both | `1 → 0` / **last** `yrexit` | 905 (1966+) / 344 multilateral |
 | termination | both | `dead`/`integrated`/`replaced` / `endyr` | **157** organisations / 26 multilateral treaties |
+
+**The `1966+` on the accession row is load-bearing and not a rounding of the regime.** 1966 is the first
+year whose accessions are *entirely* dating-stratum `exact`: t_R = 1965 carries 282 organisation
+accessions of which 71 are `declared_resolution`, because a 1964 → 1965 transition compares an imputed
+Wallace-Singer value against the first observed one. Counting from 1965 gives 6,420 and silently mixes
+the seam into a figure the table presents as exact.
+
+**The accession rule says `first` because it did not, and the difference was 46 % of the alliance
+events.** ATOP codes a member once per treaty *phase*, so a founder present in a later phase has a
+membership row whose `yrent` postdates `begyr` and the row-wise rule turned that into an accession it
+never had. 221 of 481 alliance events were the artefact; the multilateral count above falls from 335 to
+177. Found by the focal-isolation diagnostic rather than by any validation, which is V11's point, and
+fixed in D-28.
 
 ### 2.2 Termination causes, and why they come from one source
 
@@ -203,21 +216,27 @@ no event. They are U1's specificity control (C9).
 
 ---
 
-## 5. Built — v1, 2026-08-03
+## 5. Built — v4, 2026-08-04
 
 `scripts/build_ledger.py`, which validates before it writes and writes nothing on a failure.
-Summary in `results/ledger_summary.json`.
+Summary in `results/ledger_summary.json`. v1 was 2026-08-03. **v2** applied D-28 (one accession per
+(treaty, member) at its first phase entry), **v3** applied D-31 (treaty size counted in distinct members
+rather than phase rows) and **v4** applied D-32 (membership deduplicated across overlapping phase spans,
+and the `MIN_MEMBERS` rule enforced against the data rather than taken from the source's claim). All
+three are one root cause: a phase row is not a member. Together they removed 159 spurious alliance
+accessions, 8 bilateral treaties admitted as multilateral, 596 duplicate membership rows, and 3 COW IGO
+entities whose membership the source leaves uncoded.
 
 | | |
 |---|---|
-| entities | **573** — 493 organisations, 80 alliances |
-| left-truncated | 75 (founded before 1946) |
-| terminated / censored | 190 / 383 |
-| families | 475, of which **43** hold more than one entity |
-| events | **10,556** — 8,243 accession, 1,625 exit, 498 founding, 190 termination |
-| dating strata | 9,779 exact, 646 declared-resolution, **103 rule-assigned** |
-| termination causes | 103 dissolution, 32 replaced, 22 absorbed, 33 uncoded (ATOP) |
-| membership rows | 505,951 — 502,634 full, 1,082 associate, 2,235 observer |
+| entities | **562** — 490 organisations, 72 alliances |
+| left-truncated | 70 (founded before 1946) |
+| terminated / censored | 185 / 377 |
+| families | 464, of which **43** hold more than one entity |
+| events | **10,328** — 8,062 accession, 1,589 exit, 492 founding, 185 termination |
+| dating strata | 9,581 exact, 646 declared-resolution, **101 rule-assigned** |
+| termination causes | 101 dissolution, 32 replaced, 22 absorbed, 30 uncoded (ATOP) |
+| membership rows | 505,400 — 502,083 full, 1,082 associate, 2,235 observer |
 | risk-set exclusions | 190,750 missing cells over 19,335 organisation-years |
 
 Rule-assigned dates are **54.2 %** of all terminations. More than half of T2's event supply is
@@ -298,7 +317,7 @@ available as an out-of-regime replication.
 ### 6.2 Co-membership is saturated, so $\phi$ is generalised to a level ladder
 
 At weight $\geq 1$ the relation has density **0.9954** — very nearly a complete graph, because
-with 491 organisations over about 168 states almost every pair shares something. A binary
+with 490 organisations over about 168 states almost every pair shares something. A binary
 $\phi_{r}(S)$ is therefore $\approx 1$ for positives *and* negatives, its clique contrast is
 $\approx 0$, and the relation carries no discriminative power at all despite being the channel
 that must carry the leak for four fifths of the corpus.
@@ -331,10 +350,19 @@ Observed weight quantiles over 1965–2014, for choosing the ladder's range: med
 
 1. **ATOP `termmode`/`termcaus` crosswalk.** Blocked on a codebook this network cannot reach.
    Until then ATOP terminations are causeless and no pooled cause-specific number is reported.
-2. **`same_instrument` list**, hand-verified from the 178 candidates. Membership overlap is the
+2. **`same_instrument` list**, hand-verified from the 192 candidates. Membership overlap is the
    shortlist, not the answer.
-3. **Left-truncation audit** — how many entities in each type enter under truncation, and what
-   fraction of T2's risk-set exposure they carry.
+3. ~~**Left-truncation audit**~~ — **done 2026-08-04, and it found the concern unimplemented.**
+   T2: **183 of 528** entities in the regime panel predate it, median true age at 1965 of 13 years
+   and a maximum of 150, carrying **45.7 %** of coalition-years and **39.1 %** of terminations —
+   and the panel had been assigning all of them duration 1 at the regime start, with
+   `PeriodPanel.entry` passed zeros. T1: **19.9 %** of risk-set dyads are truncated, **41.2 %** of
+   rows and **58.4 %** of positive dyads belong to coalitions founded before the regime. Fixed for
+   T2 (D-36) and made an explicit, reported choice for T1, where "dyad time" was stated and never
+   defined against founding (D-37). The two tasks use different clocks on purpose: T2's is the
+   coalition's *age*, known exactly from `founded`; T1's is the state's *eligibility duration*,
+   which needs a system-entry date and so is floored at the 1946 window, bounding the correction at
+   19 years. Both are stated rather than reconciled by force.
 4. **Observer-status coverage** — associate and observer codes exist, but their coverage across
    years has not been verified against the materialised file, and PROTOCOL §1 says documentation
    is not evidence.

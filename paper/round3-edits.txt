@@ -1,0 +1,164 @@
+# Round three of the external reading. The complaint was the writing: an abstract that is a rain of
+# context-free numbers, forward pointers dense enough to keep a reader turning pages, and revision
+# tags in the body that belong to Appendix B.
+#
+# The tags go by pattern, in scripts/build_jmlr.py. Everything here is prose, so it lives where it can
+# be read against the text it replaces. Each block is one edit. `find` must appear exactly once across
+# the abstract and the body, or the build fails: an edit that matches nothing means the docx moved
+# under it, and one that matches twice would change a sentence nobody looked at.
+#
+#   ### why the edit was made
+#   --- find
+#   <the text as the docx has it>
+#   --- replace
+#   <what goes in its place; empty deletes>
+
+### the abstract carried ten numeric tokens, and 6.8 meant a percentage in one sentence and a factor in another
+--- find
+Group membership forecasters draw relational features from the registers that produced the labels, so a register dating an event early encodes the label before it exists. A correct temporal split does not remove it: the contamination is inside the register, not across the split. We formalise its reach as a \textbf{leakage horizon}: the smallest lead time at which the target relation carries no administrative trace. Against a width a generator sets, our estimate recovers it in 6 of 6 settings and never undershoots, so it is a conservative estimate, not the lower bound we specified. In a trade register coding two dates per agreement, the back-dated dyads are 6.8 percent of the relation, which the pooled statistic cannot see. On a generator, concentrating latent similarity drives the pooled estimate's slope on the true width from 1.00 to 0.00, and a wider range takes it below zero, not back. The group's own record stays unbiased at every setting, and holds the whole trace under one dating convention but not under mixed ones. Two of the three kernels swept share no functional form and break the statistic at anchor clique contrasts of 0.0152 and 0.0186, against our coalition corpus's 0.0259. On that corpus of 562 entities they disagree by a factor of 6.8 on the same events, and at eight years the target relation is indistinguishable from one that cannot record it. An upper bound we specified is not identified. Ten mechanisms follow, one we could not demonstrate, four tested on a protein complex benchmark of inverse size distribution.
+--- replace
+Group membership forecasters draw relational features from the registers that produced their labels, so a register dating an event early encodes the label before it exists. A correct temporal split does not remove this: the contamination sits inside the register, not across it. We formalise its reach as a \textbf{leakage horizon}, the smallest lead time at which the target relation carries no administrative trace of the event, and build diagnostics to estimate it. Against a width a generator sets, and therefore knows, the estimate lands on it in all six settings and never short of it: a conservative estimate, not the lower bound we specified, whose upper end is not identified. The suite also misreports. A statistic pooled over the whole target relation cannot tell a trace of the event from a standing similarity between the joining entity and the members: concentrating that similarity drives its slope on the true width from 1.00 to 0.00, and widening the range does not bring it back. A statistic read on the group's own record stays unbiased throughout. In a trade register that codes both a signature and an entry-into-force date, the back-dated dyads are 6.8 percent of the relation, invisible to the pooled statistic. On a coalition register the pooled reading still shows a contrast after eight years, where the group's own record carries nothing past one year. Ten ways such a diagnostic misreports follow, one undemonstrated and four tested on a protein complex benchmark.
+
+### Related Work sent the reader forward three times in two sentences
+--- find
+Section 5.1's declaration protocol is that idea pushed one step further: what is documented in advance is not only the split but what each relation records, which is what would make Section 6.6 a prospective test rather than a description. Section 6.6 reports how far short of that we fell for one of the two corpora, which is worth stating here because the failure is in the documenting rather than in the idea.
+--- replace
+Our declaration protocol is that idea pushed one step further: what is documented in advance is not only the split but what each relation records, which is what would make it a prospective test rather than a description. We report below how far short of that we fell for one of the two corpora, because the failure is in the documenting rather than in the idea.
+
+### two pointers where the claim is ours either way
+--- find
+which is why Section 5.5 states corpus B's negative construction in full and Section 3.2 makes the comparison stratum part of the estimand.
+--- replace
+which is why we state corpus B's negative construction in full and make the comparison stratum part of the estimand.
+
+### the corpus can be named instead of the section that describes it
+--- find
+Their negative sampling discussion also bears directly on Section 5.5, where the strata of corpus B decide the level of every contrast we report.
+--- replace
+Their negative sampling discussion bears directly on corpus B, whose strata decide the level of every contrast we report.
+
+### a section number used as the subject of a sentence
+--- find
+Section 3.4's separation of what is measured from what is entailed is that distinction applied to one estimand.
+--- replace
+Our separation of what is measured from what is entailed is that distinction applied to one estimand.
+
+### the claim can be named by what it is about
+--- find
+Their vocabulary is also what makes Section 6.5's central claim statable
+--- replace
+Their vocabulary is also what makes our central field claim statable
+
+### the declaration is ours; which section reports it can wait
+--- find
+which is the gap Section 5.1's declaration is meant to close for relations rather than for labels.
+--- replace
+which is the gap our declaration is meant to close for relations rather than for labels.
+
+### a pointer with nothing in it
+--- find
+The convergent-validity literature also has a standard move we borrow in Section 6.5.
+--- replace
+The convergent-validity literature also has a standard move we borrow.
+
+### the register can be described rather than located
+--- find
+Ours is the register of Section 5.3, which codes the width twice.
+--- replace
+Ours is a trade register that codes the width twice.
+
+### the component has a name of its own
+--- find
+Both are the move Section 4's U2 makes and both are instructive about its limit
+--- replace
+Both are the move our U2 unit test makes, and both are instructive about its limit
+
+### the stamping is ours, and Section 9 is where it is audited, not where it lives
+--- find
+the why, how and where distinction that Section 9's stamping implements in its crudest form
+--- replace
+the why, how and where distinction that our provenance stamping implements in its crudest form
+
+### the defects are the audit's, and the audit is named in the sentence before
+--- find
+which is the shape of every defect Section 9 reports.
+--- replace
+which is the shape of every defect our own audit reports.
+
+### a forward pointer at the end of a paragraph that is about the literature
+--- find
+and Section 6.6 reports the test and its limit.
+--- replace
+and we report the test and its limit below.
+
+### the comparison is ours
+--- find
+Section 6.7's architectural comparison turns on a point that is well established and still routinely skipped
+--- replace
+Our architectural comparison turns on a point that is well established and still routinely skipped
+
+### one of two pointers in the sentence is enough
+--- find
+Our Table 10 is an instance of their argument arriving at a different field, and Section 9's fourth question is the same argument turned into an audit step.
+--- replace
+Our Table 10 is an instance of their argument arriving at a different field, and the fourth of our audit questions is the same argument turned into an audit step.
+
+### the controls are ours
+--- find
+which is the same question Section 6.7's capacity-matched controls ask of message passing.
+--- replace
+which is the same question our capacity-matched controls ask of message passing.
+
+### a trailing clause whose whole content is a pointer
+--- find
+It \emph{grows} with lead time and is removed by conditioning on first entry, which Section 6.5 does.
+--- replace
+It \emph{grows} with lead time and is removed by conditioning on first entry.
+
+### the same, in the list of what the protocol revised
+--- find
+the qualification of Section 3.3's claim about where back-dating lives, which Section 6.3 measures and mechanism (k) records.
+--- replace
+the qualification of the claim about where back-dating lives, which mechanism (k) records.
+
+### the reason is given where the reader already is
+--- find
+Table 8 reports the resulting clique counts as integers rather than as rates, for the reason Section 6.6 gives.
+--- replace
+Table 8 reports the resulting clique counts as integers rather than as rates.
+
+### a pointer inside a sentence that has already made its point
+--- find
+It is not a clique rate, and the two are different objects here, as Section 6.6 shows at length
+--- replace
+It is not a clique rate, and the two are different objects here
+
+### the finding was stated a paragraph earlier under its own name
+--- find
+which is Section 6.2's finding arriving from the other side.
+--- replace
+which is the same finding arriving from the other side.
+
+### a plural verb agreeing with nothing: one section and one table
+--- find
+That much Sections 3.4 and Table 1 already state.
+--- replace
+That much Section 3.4 and Table 1 already state.
+
+### three pointers in one sentence, and the first says what the second shows
+--- find
+which is the condition Section 3.4 states and Table 1 records row by row; Section 8 sets out what is available instead.
+--- replace
+as Table 1 records row by row; Section 8 sets out what is available instead.
+
+### two sections in one clause chain, which is the shape the reading complained of
+--- find
+and Section 6.5 argues it is not separable from homophily by any contrast of this form, an argument Section 6.2 now supports with a measured bias rather than with reasoning alone.
+--- replace
+and no contrast of this form separates it from homophily, which Section 6.2 supports with a measured bias rather than with reasoning alone.
+
+### the acknowledgements do not need to say which section reports the corrections
+--- find
+produced thirteen of the corrections Section 9 reports, including the objection that became Section 6.3 and the terminology in Section 3.2.
+--- replace
+produced thirteen of the corrections we report, including the objection that became Section 6.3 and the terminology of the horizon itself.

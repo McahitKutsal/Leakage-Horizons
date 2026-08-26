@@ -32,7 +32,8 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import roc_auc_score
 
-__all__ = ["HorizonAudit", "delta_star", "NEVER_EVENT", "NOT_AT_HORIZON"]
+__all__ = ["HorizonAudit", "delta_star", "NEVER_EVENT", "NOT_AT_HORIZON",
+           "RANK_AND_BAND", "BAND_ONLY"]
 
 NEVER_EVENT = "never_event"
 NOT_AT_HORIZON = "not_at_this_horizon"
@@ -494,9 +495,13 @@ def _auc_null_sd(n_pos: int, n_neg: int) -> float:
     return float(np.sqrt((n_pos + n_neg + 1) / (12.0 * n_pos * n_neg)))
 
 
+RANK_AND_BAND = "rank_and_band"
+BAND_ONLY = "band_only"
+
+
 def delta_star(curve: pd.DataFrame, rstar: str, anchors: list[str],
                level: int | None = None, conf: float = 0.95, z: float = 1.645,
-               anchor_level: int = 1) -> dict:
+               anchor_level: int = 1, upper_rule: str = RANK_AND_BAND) -> dict:
     """Bracket $\\Delta^\\star$ between two statistics with opposite error profiles.
 
     `anchors` are the relations declared not to leak. No statistic can identify them -- section 5.4 --
@@ -511,7 +516,24 @@ def delta_star(curve: pd.DataFrame, rstar: str, anchors: list[str],
     Returns None for a bound never reached inside the horizons supplied, which is itself a
     result: an unreachable `hi` falsifies P2 for an instrumental reason and must be reported as
     that rather than as a wide penumbra.
+
+    `upper_rule` selects between two definitions of the upper bound, and the reason there are two is
+    that the first one does not fire. On synthetic data where the truth is known it fired in 2 of 6
+    settings, because it requires r* to lose top rank on clique contrast and a structurally similar
+    anchor keeps contesting the top position -- so the bracket is in practice open on the right.
+
+    * `"rank_and_band"` -- the pre-specified rule. r* must both lose top rank **and** have its
+      single-feature discrimination inside the band. Kept as the default because it is what was
+      declared, and a rule is not improved by being changed after seeing that it failed.
+    * `"band_only"` -- the rank condition dropped, leaving the band crossing alone. This is the
+      repair revision item 2.4 proposes, and whether it is an improvement is an empirical question
+      answered by how often it fires on the synthetic grid, reported beside the original.
+
+    Both are computed from the same curve, so the comparison costs nothing and neither rule gets to
+    be evaluated on data the other was not.
     """
+    if upper_rule not in (RANK_AND_BAND, BAND_ONLY):
+        raise ValueError(f"unknown upper_rule {upper_rule!r}")
     # r* is read at `level`; the anchors are presence relations and are read at `anchor_level`.
     # Comparing a level-25 clique rate against a level-25 anchor would compare r* to nothing,
     # since the anchors carry no weights above 1.
@@ -542,14 +564,17 @@ def delta_star(curve: pd.DataFrame, rstar: str, anchors: list[str],
         auc = float(sub.loc[rstar, "auc_phi_alone"])
         top = sub["clique_contrast"].idxmax() == rstar
         in_lo = cc <= band_cc
-        in_hi = (not top) and auc <= band_auc
+        in_band_auc = auc <= band_auc
+        in_hi = in_band_auc if upper_rule == BAND_ONLY else ((not top) and in_band_auc)
         if lo is None and in_lo:
             lo = int(h)
         if hi is None and in_hi:
             hi = int(h)
         detail.append({"horizon": int(h), "clique_contrast": cc, "band_clique_contrast": band_cc,
                        "auc_phi_alone": auc, "band_auc": band_auc, "rstar_is_top": bool(top),
+                       "in_band_auc": bool(in_band_auc),
                        "in_band_lo": bool(in_lo), "in_band_hi": bool(in_hi)})
     return {"delta_star_lo": lo, "delta_star_hi": hi,
             "width": (hi - lo) if (lo is not None and hi is not None) else None,
-            "rstar": rstar, "anchors": anchors, "level": level, "detail": detail}
+            "rstar": rstar, "anchors": anchors, "level": level,
+            "upper_rule": upper_rule, "detail": detail}

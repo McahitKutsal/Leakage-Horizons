@@ -1,0 +1,146 @@
+# Round four, sentences: second pass, over the forty-to-fifty band. Same rule as the first pass —
+# only nested sentences, and every split keeps the words.
+
+### a row count and a scope limit in one sentence
+--- find
+Eleven of the twenty rows record an outside read, ten where the read came first and one where it named what our own test had found, and Section 10 records that no one outside that group has run the pipeline or rebuilt either corpus, so the class of defect an external \emph{replication} would find is untouched by any of this.
+--- replace
+Eleven of the twenty rows record an outside read, ten where the read came first and one where it named what our own test had found. Section 10 records that no one outside that group has run the pipeline or rebuilt either corpus, so the class of defect an external \emph{replication} would find is untouched by any of this.
+
+### three clauses before the colon that carries the point
+--- find
+That is the sixth question, it is the only one on the list with no cheap version, and the case for it is now quantitative: two outside reads produced twelve defects of this class and led us to a thirteenth, and the internal checks that found the other nine found none of them.
+--- replace
+That is the sixth question, and it is the only one on the list with no cheap version. The case for it is now quantitative: two outside reads produced twelve defects of this class and led us to a thirteenth, and the internal checks that found the other nine found none of them.
+
+### a point about the literature and then what we do about it
+--- find
+\citet{yang_lp} make the same point one level down, for link prediction specifically: the class imbalance and the sampling of the negative set decide the reported metric more than the method does, which is why we state corpus B's negative construction in full and make the comparison stratum part of the estimand.
+--- replace
+\citet{yang_lp} make the same point one level down, for link prediction specifically: the class imbalance and the sampling of the negative set decide the reported metric more than the method does. That is why we state corpus B's negative construction in full and make the comparison stratum part of the estimand.
+
+### two statistics contrasted, then the consequence drawn
+--- find
+The pairing was meant to be forced by a property of the two statistics: the clique contrast raises no false flags but only fires above a high threshold, while rank position and single-feature discrimination fire earlier and are not specific, so one should declare the horizon closed early and the other late.
+--- replace
+The pairing was meant to be forced by a property of the two statistics. The clique contrast raises no false flags but only fires above a high threshold, while rank position and single-feature discrimination fire earlier and are not specific, so one should declare the horizon closed early and the other late.
+
+### a rule and its edge case
+--- find
+This is the fifth item and it applies to the four above rather than competing with them: a second date, an audited sample or a declared reading covers only the register it was taken on, and if the corpus contains more than one dating convention the widest one governs the target relation.
+--- replace
+This is the fifth item and it applies to the four above rather than competing with them. A second date, an audited sample or a declared reading covers only the register it was taken on, and if the corpus contains more than one dating convention the widest one governs the target relation.
+
+### the paper's closing sentence, which suspended four items before its verb
+--- find
+A set of claims about curated group corpora that survives an adversarial second domain, a generator built to reproduce its own failure mode, a seed count large enough to see its own noise, and a reader whose job is to disbelieve it, is a set that was not adequately tested.
+--- replace
+Take a set of claims about curated group corpora and put it through four things: an adversarial second domain, a generator built to reproduce its own failure mode, a seed count large enough to see its own noise, and a reader whose job is to disbelieve it. A set that survives all four is a set that was not adequately tested.
+
+### two prescriptions and where each was catalogued
+--- find
+Their prescription is a separation between the data available at prediction time and the data used to build features, and the concrete failures of that separation were already being catalogued in the cross-validation literature, where \citet{rao} show how a resampling scheme that looks correct can leak through preprocessing.
+--- replace
+Their prescription is a separation between the data available at prediction time and the data used to build features. The concrete failures of that separation were already being catalogued in the cross-validation literature, where \citet{rao} show how a resampling scheme that looks correct can leak through preprocessing.
+
+### a manipulation and its two results
+--- find
+Displacing a share of coded dates one period late, so the register is wrong rather than early, puts focal isolation's presence at exactly that share at one period and at zero beyond: 0.0667 at a displaced share of a tenth, 0.3000 at three tenths.
+--- replace
+Displacing a share of coded dates one period late makes the register wrong rather than early. That puts focal isolation's presence at exactly that share at one period and at zero beyond: 0.0667 at a displaced share of a tenth, 0.3000 at three tenths.
+
+### a budget, its worst case and the choice that followed
+--- find
+The edge budget is sized from the measured worst case over the whole sweep, which a wave enlarges: the widest setting peaks at 2,427 eligible dyads of 19,900 pairs, so the density is 0.14 against Table 4's 0.12, chosen as the first covering value of a declared ladder rather than by hand.
+--- replace
+The edge budget is sized from the measured worst case over the whole sweep, which a wave enlarges: the widest setting peaks at 2,427 eligible dyads of 19,900 pairs. The density is therefore 0.14 against Table 4's 0.12, chosen as the first covering value of a declared ladder rather than by hand.
+
+### a claim, and the two directions it holds in
+--- find
+So on corpus A the two instruments cannot both be measurements on the same events, anywhere, and no subsetting repairs it: where focal isolation measures, the pooled statistic is not computable without the confound the design removed, and where the pooled statistic is computable, focal isolation is entailed.
+--- replace
+So on corpus A the two instruments cannot both be measurements on the same events, anywhere, and no subsetting repairs it. Where focal isolation measures, the pooled statistic is not computable without the confound the design removed; where the pooled statistic is computable, focal isolation is entailed.
+
+### a finding, a comparison and a consequence
+--- find
+\textbf{The phantom is real in most samples and its width is not identified}, which is a more useful statement than ``about five periods'' and a more damaging one for the instrument: a diagnostic whose output ranges over the whole examined interval under resampling is not measuring a width.
+--- replace
+\textbf{The phantom is real in most samples and its width is not identified.} That is a more useful statement than ``about five periods'' and a more damaging one for the instrument: a diagnostic whose output ranges over the whole examined interval under resampling is not measuring a width.
+
+### three facts about the same file, then what they cost
+--- find
+The channel assignment lives in the analysis script's docstring, that file was not committed before it was run, and corpus A's timestamped pre-registration does not name the channels, so the strong form of this result rests on our account of when two parts of one file were written.
+--- replace
+The channel assignment lives in the analysis script's docstring, that file was not committed before it was run, and corpus A's timestamped pre-registration does not name the channels. The strong form of this result therefore rests on our account of when two parts of one file were written.
+
+### two numbers and then what follows from them
+--- find
+One figure from it belongs here because the diagnostic argument uses it: cause-specific discrimination is 0.628 and 0.559 against the accession task's pooled 0.798 to 0.915, so termination is the harder problem on the comparable metric and the tractability question a reader asks about the accession task does not transfer to it.
+--- replace
+One figure from it belongs here because the diagnostic argument uses it: cause-specific discrimination is 0.628 and 0.559 against the accession task's pooled 0.798 to 0.915. Termination is therefore the harder problem on the comparable metric, and the tractability question a reader asks about the accession task does not transfer to it.
+
+### two regimes, each with its own outcome
+--- find
+Section 6.2 produces both regimes at a known width: with anchors from the same latent space the band subtracts the homophily and the rule is exact at every homophily setting, and with anchors from an independent space the rule degrades to a slope of zero on the true width.
+--- replace
+Section 6.2 produces both regimes at a known width. With anchors from the same latent space the band subtracts the homophily and the rule is exact at every homophily setting. With anchors from an independent space the rule degrades to a slope of zero on the true width.
+
+### the question, then two things about it
+--- find
+It is the argument Section 10 makes for the independent implementation of the density code, arriving from a defect rather than from a threat, and it is the one question here that requires writing something twice.
+--- replace
+It is the argument Section 10 makes for the independent implementation of the density code, arriving from a defect rather than from a threat. It is also the one question here that requires writing something twice.
+
+### an exception, its provenance and what it establishes
+--- find
+The one exception is the twelve claim-to-artefact mismatches Section 9 reports last, which came from an external read of the manuscript; those establish that an outside reader finds a class of defect we cannot, and they are a read of the paper rather than a replication of the work.
+--- replace
+The one exception is the twelve claim-to-artefact mismatches Section 9 reports last, which came from an external read of the manuscript. Those establish that an outside reader finds a class of defect we cannot, and they are a read of the paper rather than a replication of the work.
+
+### what the checker does, and why it ships with the paper
+--- find
+A consistency checker requires that stamp and compares every registered number, every unit-anchored quantity and every section and table reference in the manuscript against the artefacts, and it is released with the rest so that a reader can run the check rather than take its output on trust.
+--- replace
+A consistency checker requires that stamp and compares every registered number, every unit-anchored quantity and every section and table reference in the manuscript against the artefacts. It is released with the rest, so that a reader can run the check rather than take its output on trust.
+
+### a hypothetical and its consequence
+--- find
+If the acceding entity and a sitting member are co-members of some other group, the dyad they carry in \(r^{\star}\) belongs to that group's record, and if that record is back-dated the dyad is an administrative trace that no reading of the focal group's register can reach.
+--- replace
+If the acceding entity and a sitting member are co-members of some other group, the dyad they carry in \(r^{\star}\) belongs to that group's record. If that record is back-dated, the dyad is an administrative trace that no reading of the focal group's register can reach.
+
+### a condition, then what dropping it does
+--- find
+On synthetic data the rank condition blocks the upper end in half the settings, because a structurally similar anchor keeps contesting the top position; dropping the rank condition makes it fire everywhere but land on \({\widehat{\Delta}}^{\star}\) in every single setting, so the interval it forms has width zero.
+--- replace
+On synthetic data the rank condition blocks the upper end in half the settings, because a structurally similar anchor keeps contesting the top position. Dropping the rank condition makes it fire everywhere but land on \({\widehat{\Delta}}^{\star}\) in every single setting, so the interval it forms has width zero.
+
+### a measurement, its interval and the curve beside it
+--- find
+Measured the way the suite specifies, as a density over the whole relation, the contrast between inside and outside the coded gap is \textbf{0.1023}, with a 95 percent interval of 0.0905 to 0.1139 over 758 agreements, and the curve is nearly flat: 0.7519 at zero lead time falling only to 0.6206 at eight periods.
+--- replace
+Measured the way the suite specifies, as a density over the whole relation, the contrast between inside and outside the coded gap is \textbf{0.1023}, with a 95 percent interval of 0.0905 to 0.1139 over 758 agreements. The curve is nearly flat: 0.7519 at zero lead time falling only to 0.6206 at eight periods.
+
+### an item set apart, and why it is not counted
+--- find
+Item (e) is a concern that is sound a priori, that we tested, and that we could not demonstrate; it is set apart in Section 7.1 rather than counted, because a tally of the ways an instrument fails should not be padded by a way it did not.
+--- replace
+Item (e) is a concern that is sound a priori, that we tested, and that we could not demonstrate. It is set apart in Section 7.1 rather than counted, because a tally of the ways an instrument fails should not be padded by a way it did not.
+
+### an artefact, its marking and the two reasons for it
+--- find
+\texttt{corpus-b-channel-declaration.md} is the assignment of the ten interaction channels to target, contaminated and anchor, and it is marked in the artefact itself as \textbf{not timestamped}, because the file that carried it was not committed before it was run and the pre-registration does not name the channels.
+--- replace
+\texttt{corpus-b-channel-declaration.md} is the assignment of the ten interaction channels to target, contaminated and anchor, and it is marked in the artefact itself as \textbf{not timestamped}. The file that carried it was not committed before it was run, and the pre-registration does not name the channels.
+
+### two statistics on one generator
+--- find
+On a generator whose homophily strength is a controlled parameter and whose back-dating width is set, the pooled statistic's estimate loses all dependence on the true width as homophily rises, while the statistic computed on the focal group's own record stays exactly unbiased at every setting.
+--- replace
+On a generator whose homophily strength is a controlled parameter and whose back-dating width is set, the pooled statistic's estimate loses all dependence on the true width as homophily rises. The statistic computed on the focal group's own record stays exactly unbiased at every setting.
+
+### an axis named, then what it does in each regime
+--- find
+This is the axis Section 6.3 needs and the generator had no way to express: with one convention the wave puts nothing into \(r^{\star}\) that the focal record does not carry, and with two it puts in a trace no reading of the focal record can reach.
+--- replace
+This is the axis Section 6.3 needs and the generator had no way to express. With one convention the wave puts nothing into \(r^{\star}\) that the focal record does not carry; with two it puts in a trace no reading of the focal record can reach.

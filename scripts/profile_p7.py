@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.neural import DEVICE, build_snapshots, make_model  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_p7 import ORIGINS, prepare, run_epoch, year_tensors  # noqa: E402
 from scripts.run_u2 import REGIMES  # noqa: E402
 
@@ -87,14 +88,14 @@ def main() -> int:
                   flush=True)
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(json.dumps({
+    write_result(args.out, {
         "device": DEVICE, "chunk": args.chunk, "neg_rate": args.neg_rate,
         "n_rows": int(len(rs)), "n_years": len(years), "n_fit_years": len(fit),
         "seconds": t,
         "budget_minutes": {f"epochs{e}_seeds{s}":
                            round(((3 * static + temporal) * e * s + 4 * ev * s) / 60, 1)
                            for e in (4, 8, 12) for s in (1, 2)},
-    }, indent=2))
+    }, indent=2)
     print(f"\nwritten to {args.out}", flush=True)
     return 0
 

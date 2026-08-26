@@ -37,6 +37,7 @@ sys.path.insert(0, str(ROOT))
 from penumbra.hazard import DiscreteHazard  # noqa: E402
 from penumbra.t1 import build_panel, build_risk_set, count_recurrences  # noqa: E402
 from penumbra.umbra import HorizonAudit  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_u2 import REGIMES, load  # noqa: E402
 
 # Co-membership at the primary level of D-13 plus its binary form, and the four presence relations.
@@ -165,9 +166,17 @@ def main() -> int:
     ap.add_argument("--regime", choices=sorted(REGIMES), default="primary")
     ap.add_argument("--rungs", type=int, nargs="+", default=[1, 2, 3])
     ap.add_argument("--n-boot", type=int, default=200)
-    ap.add_argument("--json", type=Path, default=ROOT / "results" / "t1_ladder.json")
+    # What "dyad time" means. `observed` counts risk-set years, which starts every dyad at 1 in the
+    # year it enters the panel; `eligibility` counts years since the state could have joined. 19.9 % of
+    # dyads are truncated under the second and rung 1 is duration dependence alone, so the ladder is
+    # reported under both and the rung ordering checked for invariance rather than assumed (D-37).
+    ap.add_argument("--clock", choices=["observed", "eligibility"], default="observed")
+    ap.add_argument("--json", type=Path, default=None)
     args = ap.parse_args()
     regime = REGIMES[args.regime]
+    args.json = args.json or (ROOT / "results" /
+                              (f"t1_ladder_{args.clock}.json" if args.clock != "observed"
+                               else "t1_ladder.json"))
 
     ev = pd.read_parquet(ROOT / "data" / "ledger" / "events.parquet")
     rec = count_recurrences(ev)
@@ -181,7 +190,7 @@ def main() -> int:
     rows, fits = [], {}
     for rung in args.rungs:
         t0 = time.time()
-        panel, meta = build_panel(regime, rung=rung, phi_features=phi)
+        panel, meta = build_panel(regime, rung=rung, phi_features=phi, clock=args.clock)
         m = DiscreteHazard(n_causes=1, baseline="log", l2=1e-3).fit(panel)
         fits[rung] = {"loglik": m.loglik_, "n_features": panel.X.shape[1],
                       "n_rows": meta["n_rows"], "n_events": meta["n_events"]}
@@ -213,9 +222,10 @@ def main() -> int:
     print("\nU2's density-only probe scored 0.766 at horizon 1 (V2). That is rung 3's baseline.")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({"regime": list(regime), "recurrence_cost": rec,
-                                     "fits": fits, "rows": rows}, indent=2, default=str))
-    df.to_parquet(ROOT / "results" / "t1_ladder.parquet", index=False)
+    write_result(args.json, {"regime": list(regime), "clock": args.clock,
+                             "recurrence_cost": rec, "fits": fits, "rows": rows},
+                 indent=2, default=str)
+    df.to_parquet(ROOT / "results" / f"t1_ladder_{args.clock}.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0
 

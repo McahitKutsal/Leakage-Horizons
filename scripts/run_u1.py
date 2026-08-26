@@ -29,6 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.umbra import NEVER_EVENT, NOT_AT_HORIZON, HorizonAudit, delta_star  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_u2 import LEVELS, REGIMES, load  # noqa: E402
 
 RSTAR = "igo_comembership"
@@ -101,13 +102,13 @@ def main() -> int:
             print(f"    P2 requires delta*_hi <= 6 : {'HOLDS' if hi <= 6 else 'FALSIFIED'}")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
         "regime_name": args.regime, "regime": list(regime),
         "rstar": RSTAR, "anchors": ANCHORS, "primary_level": PRIMARY_LEVEL,
         "levels": {k: list(v) for k, v in LEVELS.items()},
         "verdicts": verdicts,
         "curves": curves.to_dict("records"),
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     curves.to_parquet(ROOT / "results" / f"u1_real_{args.regime}.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0

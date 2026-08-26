@@ -18,7 +18,15 @@ Two quantities per model, both defined before running:
   1964, which is a genuine coverage break (`votes_with` carries zero edges, LEDGER.md §6.1), so the
   shift is structural rather than cosmetic.
 
-Ten models span the reliance gradient by feature block, from duration alone to densities alone.
+**Fourteen models span the reliance gradient, and the set is an enumeration rather than a choice.**
+The first version used ten, hand-listed, and an outside read of the manuscript objected that a rank
+correlation on ten points can change sign if one model's position moves. The objection is right and the
+fix is not to add points that help. The models are therefore every cell of a declared grid: the node
+covariate block present or absent, crossed with seven relational blocks -- none, co-membership at the
+declared primary level, co-membership at level 1, both levels, every density, every density with the
+clique indicators, and the clique indicators alone. Two by seven is fourteen, the empty cell is the
+duration-only model, and the original ten are a subset of it, so the four added models are the ones the
+grid was missing rather than the ones we wanted.
 
 **CLIQUEBAIT's H5 lesson is binding here.** A non-leaking control relation in that programme scored
 $\\rho = -0.887$, $p = 3\\mathrm{e}{-4}$ while moving by 0.004 against the target's 0.775, so rank
@@ -43,6 +51,7 @@ sys.path.insert(0, str(ROOT))
 
 from penumbra.hazard import CENSORED, DiscreteHazard, PeriodPanel  # noqa: E402
 from penumbra.t1 import build_panel  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 from scripts.run_t1_ladder import phi_features  # noqa: E402
 from scripts.run_u2 import REGIMES  # noqa: E402
 
@@ -51,19 +60,38 @@ NODE_PREFIX = ("cand_", "coalition_size", "log_coalition_size", "missing_cand_")
 PHI_PREFIX = ("phi_",)
 CLIQUE_PREFIX = ("clique_",)
 
-MODELS = [
-    ("duration only", set()),
-    ("node only", {"node"}),
-    ("node + comembership k25", {"node", "phi:igo_comembership_k25"}),
-    ("node + comembership k1", {"node", "phi:igo_comembership_k1"}),
-    ("node + comembership both", {"node", "phi:igo_comembership_k1",
-                                  "phi:igo_comembership_k25"}),
-    ("node + all phi", {"node", "phi:*"}),
-    ("node + all phi + clique", {"node", "phi:*", "clique:*"}),
-    ("all phi only", {"phi:*"}),
-    ("all phi + clique only", {"phi:*", "clique:*"}),
-    ("clique only", {"clique:*"}),
+# The relational blocks, in order of how much density a model can lean on. `None` is the empty block,
+# which with the node covariates gives "node only" and without them gives "duration only".
+RELATIONAL_BLOCKS = [
+    ("", set()),
+    ("comembership k25", {"phi:igo_comembership_k25"}),
+    ("comembership k1", {"phi:igo_comembership_k1"}),
+    ("comembership both", {"phi:igo_comembership_k1", "phi:igo_comembership_k25"}),
+    ("all phi", {"phi:*"}),
+    ("all phi + clique", {"phi:*", "clique:*"}),
+    ("clique", {"clique:*"}),
 ]
+
+
+def _enumerate_models() -> list:
+    """Every cell of the two-by-seven grid, named so a reader can find each in the table."""
+    out = []
+    for with_node in (True, False):
+        for label, blocks in RELATIONAL_BLOCKS:
+            b = set(blocks) | ({"node"} if with_node else set())
+            if with_node and not label:
+                name = "node only"
+            elif not with_node and not label:
+                name = "duration only"
+            elif with_node:
+                name = f"node + {label}"
+            else:
+                name = f"{label} only"
+            out.append((name, b))
+    return out
+
+
+MODELS = _enumerate_models()
 
 
 def select(names: list[str], blocks: set[str]) -> list[int]:
@@ -180,13 +208,13 @@ def main() -> int:
     print(f"  verdict: {verdict}")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
         "train_regime": args.train, "shift_regime": other,
         "regimes": {k: list(v) for k, v in REGIMES.items()}, "horizon": args.horizon,
         "spearman_rho": float(rho), "p_value": float(p),
         "reliance_spread": rel_range, "fragility_spread": frag_range,
         "verdict": verdict, "models": rows,
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     d.to_parquet(ROOT / "results" / "p6.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0

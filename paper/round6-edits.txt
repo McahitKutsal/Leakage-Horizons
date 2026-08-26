@@ -1,0 +1,27 @@
+# Round six: the disclaimer and the repository address, both given by the authors.
+#
+# Two notes on what was changed and what was not.
+#
+# The supplied disclaimer read "...the Republic of Türkiye Ministry of Foreign Affairs which the
+# authors are affiliated". A preposition is missing; it reads "with which the authors are affiliated"
+# here, which is the form the sentence it replaces used. Nothing else in the wording was touched.
+#
+# The supplied wording also drops the count the sentence before it carried. The title page shows three
+# of the four authors with a Ministry affiliation and the fourth with only Darmstadt, so "the authors
+# are affiliated" is broader than the affiliation block. Left as supplied, because a disclaimer is the
+# authors' own statement about their own institution; "with which three of the four authors are
+# affiliated" is the change to make if the broader reading was not intended.
+#
+# Written against the .tex as a reader sees it.
+
+### the disclaimer, as supplied
+--- find
+\emph{Disclaimer.} Three of the four authors are affiliated with the Republic of T\"urkiye Ministry of Foreign Affairs. The views expressed in this paper are the authors' own and do not represent the position of the Ministry or of any other institution with which the authors are affiliated. No institution reviewed or approved the content.
+--- replace
+\emph{Disclaimer.} The views expressed in this paper are the authors' own and do not represent the position of the Republic of T\"urkiye Ministry of Foreign Affairs with which the authors are affiliated.
+
+### the repository is public, and there is no release tag to name
+--- find
+are released as one repository at {[}REPOSITORY-URL{]}, at the tagged release {[}RELEASE-TAG{]} the reported numbers were computed from, under the MIT licence.
+--- replace
+are released as one repository at \url{https://github.com/McahitKutsal/Leakage-Horizons}, under the MIT licence.

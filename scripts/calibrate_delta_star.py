@@ -27,6 +27,7 @@ sys.path.insert(0, str(ROOT))
 
 from penumbra.synthetic import SyntheticConfig, generate, verify_invariance  # noqa: E402
 from penumbra.umbra import NEVER_EVENT, NOT_AT_HORIZON, HorizonAudit, delta_star  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 
 RSTAR = "r_star"
 # Declared not to leak, by construction. On real data this list has to come from reading the
@@ -39,7 +40,11 @@ ANCHORS = ["r_current", "r_latent_1", "r_latent_2", "r_noise"]
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--betas", type=int, nargs="+", default=[0, 1, 2, 3, 5])
+    # 0 through 5 inclusive. The default omitted 4, so the script produced "5 of 5" while C18 and
+    # SYNTHESIS both quote "6 of 6" -- the documented figure came from a hand-passed flag, which is
+    # D-35's lesson in the one place it does the most damage: after D-34 this calibration is the only
+    # evidence the estimator recovers a known beta.
+    ap.add_argument("--betas", type=int, nargs="+", default=[0, 1, 2, 3, 4, 5])
     ap.add_argument("--alpha", type=float, default=1.0)
     ap.add_argument("--max-horizon", type=int, default=8)
     ap.add_argument("--json", type=Path, default=ROOT / "results" / "delta_star_calibration.json")
@@ -96,13 +101,13 @@ def main() -> int:
               "Delta* on real data is quoted.")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
         "target": "delta_star_lo <= beta + 1 <= delta_star_hi",
         "alpha": args.alpha, "betas": args.betas, "horizons": list(horizons),
         "rstar": RSTAR, "anchors": ANCHORS,
         "invariance": {"density_range": dens_range, "completeness_error": comp_err},
         "results": results,
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     if curves:
         pd.concat(curves, ignore_index=True).to_parquet(
             ROOT / "results" / "u1_curves_synthetic.parquet", index=False)

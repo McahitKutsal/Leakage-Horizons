@@ -32,6 +32,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from penumbra.umbra import NEVER_EVENT, NOT_AT_HORIZON, HorizonAudit  # noqa: E402
+from penumbra.provenance import write_result  # noqa: E402
 
 LEDGER = ROOT / "data" / "ledger"
 GRAPH = ROOT / "data" / "graph"
@@ -54,9 +55,26 @@ LEVELS = {
 
 
 def load(regime=REGIME):
+    """Edges for the **declared** relations, membership, events and families.
+
+    This globbed `edges_*.parquet` and so silently absorbed `edges_pta_signature.parquet` and
+    `edges_pta_force.parquet` the moment V10's DESTA validation wrote them into the same directory.
+    The consequence here is worse than the crash the same glob caused in `neural.py` (D-38): U2's probe
+    gained **four** features -- `phi_pta_force_k1`, `clique_pta_force_k1`, `phi_pta_signature_k1`,
+    `clique_pta_signature_k1` -- so a re-run reports 24 features where V1 and V2 were measured on 20, and
+    it produces plausible numbers rather than an error. `pta_signature` is *deliberately* back-dated: it
+    exists to carry a known penumbra, which makes it the single worst feature to add to a shortcut probe
+    by accident (D-39).
+
+    `LEVELS` is the declaration -- the relations U2 computes $\\phi_r(S; k)$ for -- so it is also the
+    right source for which edge files to read.
+    """
+    missing = [r for r in LEVELS if not (GRAPH / f"edges_{r}.parquet").exists()]
+    if missing:
+        raise FileNotFoundError(f"declared relations with no edge file: {missing}")
     edges = pd.concat(
-        [pd.read_parquet(p).assign(relation=p.stem.replace("edges_", ""))
-         for p in sorted(GRAPH.glob("edges_*.parquet"))], ignore_index=True)
+        [pd.read_parquet(GRAPH / f"edges_{r}.parquet").assign(relation=r) for r in LEVELS],
+        ignore_index=True)
     edges = edges[edges.year.between(*regime)]
     mem = pd.read_parquet(LEDGER / "membership.parquet")
     mem = mem[mem.year.between(*regime)]
@@ -118,13 +136,16 @@ def main() -> int:
               f"{prim.nonlinear_gain.mean():+.4f}")
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps({
+    write_result(args.json, {
+        # D-35: the invocation belongs in the artefact, since a `--json` override otherwise leaves the
+        # file unattributable to the flags that produced it.
+        "invocation": " ".join(sys.argv),
         "regime_name": args.regime, "regime": list(regime), "levels": {k: list(v) for k, v in LEVELS.items()},
         "max_neg_per_pos": args.max_neg_per_pos,
         "probe": "gradient boosting, 300 trees, depth 3, cross-fitted with GroupKFold on family",
         "curves": all_curves.drop(columns=["features"]).to_dict("records"),
         "features": all_curves.features.iloc[0].split(","),
-    }, indent=2, default=str))
+    }, indent=2, default=str)
     all_curves.to_parquet(ROOT / "results" / f"u2_real_{args.regime}.parquet", index=False)
     print(f"\nwritten to {args.json}")
     return 0

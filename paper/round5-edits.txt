@@ -1,0 +1,19 @@
+# Round five: one phrase, at the author's request.
+#
+# "Knowledge-based system" opened the paper. It is a leftover from when the manuscript was written for
+# Knowledge-Based Systems — the markdown source is still called penumbra-kbs.md — and it names a
+# research tradition this paper is not in. The abstract already calls the thing a group membership
+# forecaster, so the opening sentence now uses the same term, which also ties the first line of the
+# introduction to the first line of the abstract.
+#
+# It was the only occurrence. The three "Knowledge" strings left in the document are journal names in
+# the bibliography and stay: Knowledge and Information Systems, ACM Transactions on Knowledge
+# Discovery from Data, and the SIGKDD proceedings.
+#
+# Same format as the earlier rounds. Written against the .tex as a reader sees it.
+
+### "knowledge-based system" names a tradition this paper is not in, and the abstract has a term already
+--- find
+A knowledge-based system that predicts group membership takes a set of candidate entities, a group, and a body of relational data, and asks whether the candidate will join.
+--- replace
+A group membership forecaster takes a set of candidate entities, a group, and a body of relational data, and asks whether the candidate will join.
