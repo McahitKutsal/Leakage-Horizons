@@ -1,0 +1,27 @@
+{
+  "invocation": "scripts/validate_delta_star_desta.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "library_by_horizon": {
+    "0": 0.9991094147582698,
+    "1": 0.02000256443133735,
+    "2": 0.02064896755162242,
+    "3": 0.017790132036136205,
+    "4": 0.016117322491650935,
+    "5": 0.019112114371708053,
+    "6": 0.024984384759525295,
+    "7": 0.028345949428249317,
+    "8": 0.02987846049966239
+  },
+  "horizon_ge1_mean": 0.022109986946236497,
+  "beta_is_entailed_by_single_dating": true,
+  "note": "COW IGO records one date per membership, so a zero residual is entailed rather than measured -- focal isolation needs a second coded date to have anything to detect. The residual that IS measured is recurrence; see V12 and D-34.",
+  "recurrence_cross_check": {
+    "accession_events": 7860,
+    "events_whose_state_was_a_member_before": 606,
+    "share": 0.0771
+  }
+}

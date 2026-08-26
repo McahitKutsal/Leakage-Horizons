@@ -1,0 +1,98 @@
+{
+  "invocation": "scripts/build_graph.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "window": [
+    1946,
+    2014
+  ],
+  "relations": {
+    "allies": {
+      "n_edges": 56340,
+      "years": [
+        1946,
+        2014
+      ],
+      "source": "ATOP v5.1 defence pacts, rebuilt by CLIQUEBAIT (FINDINGS section 4)",
+      "missing_years": []
+    },
+    "trades": {
+      "n_edges": 494781,
+      "years": [
+        1948,
+        2014
+      ],
+      "source": "IMF IMTS/DOTS, rebuilt by CLIQUEBAIT; begins 1948",
+      "missing_years": [
+        1946,
+        1947
+      ]
+    },
+    "votes_with": {
+      "n_edges": 173744,
+      "years": [
+        1946,
+        2014
+      ],
+      "source": "UNGA ideal points, k-NN k=30, reused unchanged",
+      "missing_years": [
+        1964
+      ]
+    },
+    "conflicts_with": {
+      "n_edges": 3193,
+      "years": [
+        1946,
+        2014
+      ],
+      "source": "COW MID 5.0, reused; the source genuinely ends 2014",
+      "missing_years": []
+    },
+    "igo_comembership": {
+      "n_edges": 790866,
+      "years": [
+        1946,
+        2014
+      ],
+      "source": "built from LEDGER membership, COW IGO v3 full members only",
+      "missing_years": []
+    }
+  },
+  "regimes": [
+    {
+      "regime": 0,
+      "start": 1946,
+      "end": 1947,
+      "n_years": 2,
+      "n_relations": 4,
+      "relations": "allies,conflicts_with,igo_comembership,votes_with"
+    },
+    {
+      "regime": 1,
+      "start": 1948,
+      "end": 1963,
+      "n_years": 16,
+      "n_relations": 5,
+      "relations": "allies,conflicts_with,igo_comembership,trades,votes_with"
+    },
+    {
+      "regime": 2,
+      "start": 1964,
+      "end": 1964,
+      "n_years": 1,
+      "n_relations": 4,
+      "relations": "allies,conflicts_with,igo_comembership,trades"
+    },
+    {
+      "regime": 3,
+      "start": 1965,
+      "end": 2014,
+      "n_years": 50,
+      "n_relations": 5,
+      "relations": "allies,conflicts_with,igo_comembership,trades,votes_with"
+    }
+  ]
+}

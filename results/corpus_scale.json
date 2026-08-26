@@ -1,0 +1,120 @@
+{
+  "invocation": "scripts/audit_corpus_scale.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "atop": {
+    "source": "ATOP 5.1 primary release",
+    "window_start": 1946,
+    "treaties_total": 789,
+    "treaties_formed_in_window": 564,
+    "multilateral_by_bilat_flag": 52,
+    "multilateral_by_member_count_ge3": 70,
+    "terminations_in_window": 220,
+    "terminations_multilateral": 26,
+    "accessions_in_window": 390,
+    "accessions_multilateral": 335,
+    "member_exits_in_window": 756,
+    "termination_causes_coded": {
+      "0.0": 1148,
+      "1.0": 517,
+      "4.0": 272,
+      "3.0": 190,
+      "2.0": 123,
+      "6.0": 101,
+      "8.0": 85,
+      "7.0": 61,
+      "5.0": 11,
+      "nan": 2
+    },
+    "endyr_ineffect_disagreements": 0
+  },
+  "cow_igo": {
+    "source": "COW IGO v3, igo_year_formatv3",
+    "era_start": 1965,
+    "years_covered": [
+      1816,
+      2014
+    ],
+    "series_is_annual": true,
+    "n_year_gaps": 0,
+    "entities_total": 534,
+    "entities_alive_in_era": 470,
+    "entities_founded_in_era": 304,
+    "death_candidates_in_era": 135,
+    "accessions_in_era": 6115,
+    "exits_in_era": 901,
+    "imputed_years_pre_era": 1388,
+    "imputed_years_in_era": 0,
+    "date_accuracy_by_entity": {
+      "Not applicable - created 1965 or later": 303,
+      "Completely accurate": 106,
+      "Within 5 years": 96,
+      "Completely accurate, except a few minor uncertainties": 27,
+      "nan": 2
+    },
+    "unverified": "death_candidates_in_era is last-observed-year, not COW's coded dead/dormant status; the unit-level file has not been checked"
+  },
+  "cow_igo_causes": {
+    "causes_1946plus": {
+      "total": 157,
+      "dissolution": 103,
+      "replaced": 32,
+      "absorption_integrated": 22
+    },
+    "causes_1965plus": {
+      "total": 134,
+      "dissolution": 84,
+      "replaced": 30,
+      "absorption_integrated": 20
+    },
+    "deaddate_matches_last_observed_year": 197,
+    "deaddate_coded_total": 198,
+    "vanish_without_termination_flag_1965_2013": 2,
+    "note": "dissolution is the cell dated by the ten-year plenary rule, so its dates consume up to ten years of data after the event (manifesto section 9.7)"
+  },
+  "desta": {
+    "source": "DESTA v02.03 list of treaties",
+    "entries_signed_in_window": 1332,
+    "by_entry_type": {
+      "base_treaty": 903,
+      "accession": 208,
+      "protocol or amendment": 77,
+      "withdrawal": 72,
+      "consolidated": 72
+    },
+    "codes_entity_termination": false,
+    "termination_note": "entry_type has base_treaty / accession / withdrawal / protocol or amendment / consolidated. Withdrawal is a MEMBER exit, not an agreement termination, so DESTA supplies no T2 entity events",
+    "gap_n": 1050,
+    "gap_mean": 1.341,
+    "gap_median": 1.0,
+    "gap_max": 17.0,
+    "gap_ge_1yr_share": 0.7629,
+    "gap_ge_2yr_share": 0.299,
+    "gap_ge_3yr_share": 0.1133,
+    "signed_never_entered_force": 282
+  },
+  "horizon_window": {
+    "graph_all_relations": [
+      1948,
+      2014
+    ],
+    "event_supply_ends": 2014,
+    "origins_per_horizon": {
+      "0": 67,
+      "1": 66,
+      "2": 65,
+      "3": 64,
+      "4": 63,
+      "5": 62,
+      "6": 61,
+      "7": 60,
+      "8": 59,
+      "9": 58,
+      "10": 57
+    },
+    "note": "origins are ample at every horizon; the curve points share events, which is a dependence problem and not a power problem"
+  }
+}

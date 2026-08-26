@@ -1,0 +1,61 @@
+{
+  "invocation": "scripts/run_u2_capacity.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "regime": [
+    1948,
+    1963
+  ],
+  "regime_name": "replication",
+  "horizons": [
+    1,
+    10
+  ],
+  "negatives": "never_event",
+  "matched_negatives": true,
+  "capacities": [
+    {
+      "n_estimators": 30,
+      "max_depth": 2,
+      "n_pos_at_first": 1061,
+      "n_pos_at_last": 508,
+      "auc_first": 0.7421,
+      "auc_last": 0.5261,
+      "decay": 0.216,
+      "auc_first_linear": 0.7594,
+      "auc_last_linear": 0.4997,
+      "decay_linear": 0.2597
+    },
+    {
+      "n_estimators": 100,
+      "max_depth": 2,
+      "n_pos_at_first": 1061,
+      "n_pos_at_last": 508,
+      "auc_first": 0.7923,
+      "auc_last": 0.5327,
+      "decay": 0.2596,
+      "auc_first_linear": 0.7594,
+      "auc_last_linear": 0.4997,
+      "decay_linear": 0.2597
+    },
+    {
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos_at_first": 1061,
+      "n_pos_at_last": 508,
+      "auc_first": 0.786,
+      "auc_last": 0.5174,
+      "decay": 0.2686,
+      "auc_first_linear": 0.7594,
+      "auc_last_linear": 0.4997,
+      "decay_linear": 0.2597
+    }
+  ],
+  "decay_lowest_capacity": 0.216,
+  "decay_highest_capacity": 0.2686,
+  "decay_ratio": 1.2435185185185185,
+  "decay_linear_mean": 0.2597
+}

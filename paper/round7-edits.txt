@@ -1,0 +1,26 @@
+# Round seven: a claim the repository does not support, found by checking the availability section
+# against what was actually published.
+#
+# The section said "Every source is public and is obtained by a fetch script in the repository which
+# records the release it retrieved". There is no fetch script. Not in the published tree, not
+# untracked, not anywhere in the 32 commits of history, and not in vendor/. No file in penumbra/ or
+# scripts/ imports an HTTP client or contains a data URL; the only http:// strings in the code are
+# XML namespaces in build_paper.py.
+#
+# LEDGER.md is more specific than that: atopdata.org "refuses the TLS handshake from this network, as
+# CLIQUEBAIT also found", so at least one source demonstrably was not obtained programmatically at
+# all.
+#
+# The false clause is removed rather than the script written, because writing it needs network access
+# to six sources and one of them is unreachable from here. What the clause was doing — recording which
+# release each source came at — the next sentence already does, by naming all six with their releases.
+#
+# This is the claim-to-artefact class Section 9 is about, in the paragraph a reviewer checks first,
+# and it survived six rounds of reading because every check compared the paper to a results file and
+# none compared it to the repository.
+
+### there is no fetch script in the repository, and one source could not be reached from this network
+--- find
+Every source is public and is obtained by a fetch script in the repository which records the release it retrieved, and none of them required an institutional affiliation of the authors.
+--- replace
+Every source is public and none of them required an institutional affiliation of the authors.

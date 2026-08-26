@@ -1,0 +1,230 @@
+{
+  "regime_name": "replication",
+  "regime": [
+    1948,
+    1963
+  ],
+  "levels": {
+    "igo_comembership": [
+      1,
+      17,
+      25,
+      33,
+      42
+    ],
+    "allies": [
+      1
+    ],
+    "trades": [
+      1
+    ],
+    "votes_with": [
+      1
+    ],
+    "conflicts_with": [
+      1
+    ]
+  },
+  "max_neg_per_pos": 4,
+  "probe": "gradient boosting, 300 trees, depth 3, cross-fitted with GroupKFold on family",
+  "curves": [
+    {
+      "horizon": 1,
+      "negative_stratum": "never_event",
+      "n_pos": 1061,
+      "n_neg": 4244,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.8443619689070382,
+      "auc_shortcut_linear": 0.8898797970367436,
+      "nonlinear_gain": -0.045517828129705395
+    },
+    {
+      "horizon": 2,
+      "negative_stratum": "never_event",
+      "n_pos": 995,
+      "n_neg": 3980,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.8076808666447817,
+      "auc_shortcut_linear": 0.8686848816949068,
+      "nonlinear_gain": -0.06100401505012509
+    },
+    {
+      "horizon": 3,
+      "negative_stratum": "never_event",
+      "n_pos": 880,
+      "n_neg": 3520,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7802655281508264,
+      "auc_shortcut_linear": 0.861974593233471,
+      "nonlinear_gain": -0.08170906508264464
+    },
+    {
+      "horizon": 4,
+      "negative_stratum": "never_event",
+      "n_pos": 839,
+      "n_neg": 3356,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7677695721536932,
+      "auc_shortcut_linear": 0.8572346896881894,
+      "nonlinear_gain": -0.08946511753449615
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "never_event",
+      "n_pos": 779,
+      "n_neg": 3116,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7994299577648841,
+      "auc_shortcut_linear": 0.8528067895873878,
+      "nonlinear_gain": -0.053376831822503634
+    },
+    {
+      "horizon": 6,
+      "negative_stratum": "never_event",
+      "n_pos": 738,
+      "n_neg": 2952,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.812442164055787,
+      "auc_shortcut_linear": 0.8528339153648989,
+      "nonlinear_gain": -0.04039175130911199
+    },
+    {
+      "horizon": 8,
+      "negative_stratum": "never_event",
+      "n_pos": 582,
+      "n_neg": 2328,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7204752246666903,
+      "auc_shortcut_linear": 0.8409590108761115,
+      "nonlinear_gain": -0.12048378620942113
+    },
+    {
+      "horizon": 10,
+      "negative_stratum": "never_event",
+      "n_pos": 508,
+      "n_neg": 2032,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7009516050282101,
+      "auc_shortcut_linear": 0.8488441820633641,
+      "nonlinear_gain": -0.14789257703515402
+    },
+    {
+      "horizon": 1,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 1061,
+      "n_neg": 4244,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.8394632195721676,
+      "auc_shortcut_linear": 0.8856641654548507,
+      "nonlinear_gain": -0.04620094588268309
+    },
+    {
+      "horizon": 2,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 995,
+      "n_neg": 3980,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7889231332542108,
+      "auc_shortcut_linear": 0.8575735461225726,
+      "nonlinear_gain": -0.06865041286836182
+    },
+    {
+      "horizon": 3,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 880,
+      "n_neg": 3520,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7892113248966943,
+      "auc_shortcut_linear": 0.8467670131714875,
+      "nonlinear_gain": -0.05755568827479318
+    },
+    {
+      "horizon": 4,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 839,
+      "n_neg": 3356,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7761082209509307,
+      "auc_shortcut_linear": 0.8479637629790843,
+      "nonlinear_gain": -0.07185554202815359
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 779,
+      "n_neg": 3116,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7908220604738307,
+      "auc_shortcut_linear": 0.8405455465270144,
+      "nonlinear_gain": -0.04972348605318366
+    },
+    {
+      "horizon": 6,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 738,
+      "n_neg": 2952,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7812959015430262,
+      "auc_shortcut_linear": 0.8432283289635065,
+      "nonlinear_gain": -0.06193242742048033
+    },
+    {
+      "horizon": 8,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 582,
+      "n_neg": 2328,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.7531566998500254,
+      "auc_shortcut_linear": 0.8362726733269565,
+      "nonlinear_gain": -0.08311597347693112
+    },
+    {
+      "horizon": 10,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 508,
+      "n_neg": 2032,
+      "n_clusters": 170,
+      "n_features": 20,
+      "auc_shortcut": 0.8236551785603571,
+      "auc_shortcut_linear": 0.8262698400396801,
+      "nonlinear_gain": -0.0026146614793229883
+    }
+  ],
+  "features": [
+    "phi_allies_k1",
+    "clique_allies_k1",
+    "phi_conflicts_with_k1",
+    "clique_conflicts_with_k1",
+    "phi_igo_comembership_k1",
+    "clique_igo_comembership_k1",
+    "phi_igo_comembership_k17",
+    "clique_igo_comembership_k17",
+    "phi_igo_comembership_k25",
+    "clique_igo_comembership_k25",
+    "phi_igo_comembership_k33",
+    "clique_igo_comembership_k33",
+    "phi_igo_comembership_k42",
+    "clique_igo_comembership_k42",
+    "phi_trades_k1",
+    "clique_trades_k1",
+    "phi_votes_with_k1",
+    "clique_votes_with_k1",
+    "size",
+    "log_size"
+  ]
+}

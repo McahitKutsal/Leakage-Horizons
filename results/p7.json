@@ -1,0 +1,1041 @@
+{
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "invocation": "scripts/run_p7.py",
+  "regime": [
+    1965,
+    2014
+  ],
+  "origins": [
+    1990,
+    2000,
+    2005
+  ],
+  "horizons": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "epochs": 12,
+  "width": 64,
+  "rungs": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "seeds": [
+    0,
+    1
+  ],
+  "lag": 3,
+  "train_neg_rate": 0.15,
+  "eval_on_full_risk_set": true,
+  "n_parameters": {
+    "4": 54849,
+    "5": 59649,
+    "6": 78849,
+    "7": 103937
+  },
+  "p7": {
+    "5": {
+      "by_horizon": {
+        "1": 0.0018545320960260403,
+        "3": -0.00046630778666264156,
+        "5": -0.0014283094901709574,
+        "10": -0.0020018098218302915
+      },
+      "rho": -1.0,
+      "p": 0.0,
+      "mean_contribution": -0.0005104737506594625
+    },
+    "6": {
+      "by_horizon": {
+        "1": 0.01542626648354506,
+        "3": 0.00823129297935347,
+        "5": 0.005756552890875104,
+        "10": 0.0067912055629945805
+      },
+      "rho": -0.7999999999999999,
+      "p": 0.20000000000000007,
+      "mean_contribution": 0.009051329479192053
+    },
+    "7": {
+      "by_horizon": {
+        "1": 0.022175479622421907,
+        "3": 0.020602441823237855,
+        "5": 0.02020708803906986,
+        "10": 0.021155051894641435
+      },
+      "rho": -0.39999999999999997,
+      "p": 0.6,
+      "mean_contribution": 0.021035015344842766
+    }
+  },
+  "rows": [
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8847472450298961,
+      "auc_within_coalition": 0.6456771204465304,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.898845535449655,
+      "auc_within_coalition": 0.6689493407581988,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.9009804513897933,
+      "auc_within_coalition": 0.6677231937262118,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.883465388221117,
+      "auc_within_coalition": 0.6566909401221666,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9157757390686866,
+      "auc_within_coalition": 0.6498802781709137,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8836343479525162,
+      "auc_within_coalition": 0.6460514325051089,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8636188546728985,
+      "auc_within_coalition": 0.6553525665481279,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8445951292192635,
+      "auc_within_coalition": 0.6457876583555655,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.7924295240000518,
+      "auc_within_coalition": 0.5973562462228104,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8236824166306788,
+      "auc_within_coalition": 0.6234504992665173,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8150847049662336,
+      "auc_within_coalition": 0.618660892836785,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.8216645880293374,
+      "auc_within_coalition": 0.6089770255972614,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8804024651977869,
+      "auc_within_coalition": 0.6532529790281957,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.8979841787341414,
+      "auc_within_coalition": 0.6768255570685894,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.895508451454307,
+      "auc_within_coalition": 0.6699327806037574,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.877933367296425,
+      "auc_within_coalition": 0.6614540499534644,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9059724210000226,
+      "auc_within_coalition": 0.6024712762532923,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8796244906290214,
+      "auc_within_coalition": 0.6213021647588662,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8623017647665899,
+      "auc_within_coalition": 0.629701653925487,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8448653980836003,
+      "auc_within_coalition": 0.6315961799290135,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.7960910413047577,
+      "auc_within_coalition": 0.6275104904748454,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8328864862412162,
+      "auc_within_coalition": 0.6440806373193552,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8231886850146923,
+      "auc_within_coalition": 0.6362190343984038,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.8289669189809927,
+      "auc_within_coalition": 0.6262245124287147,
+      "rung": 4,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8847295239595434,
+      "auc_within_coalition": 0.6411071377382449,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.8950869881104446,
+      "auc_within_coalition": 0.6666653857174855,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.8951676904909306,
+      "auc_within_coalition": 0.6601898547693223,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8733914561792379,
+      "auc_within_coalition": 0.6512600763131388,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9109551483999945,
+      "auc_within_coalition": 0.6146782685704494,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8875947607650465,
+      "auc_within_coalition": 0.6323192271800935,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8654823844106242,
+      "auc_within_coalition": 0.6383145652466018,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8478774523788534,
+      "auc_within_coalition": 0.6342093828505697,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.7914070337113258,
+      "auc_within_coalition": 0.6143848372599127,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8244670700997256,
+      "auc_within_coalition": 0.6320210241796618,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8177209274785278,
+      "auc_within_coalition": 0.624324531746754,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.825713374808996,
+      "auc_within_coalition": 0.6183707496153904,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8838610274282789,
+      "auc_within_coalition": 0.6652887303885809,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.893698640556682,
+      "auc_within_coalition": 0.6796797611936503,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.8930683392695962,
+      "auc_within_coalition": 0.6721741189960163,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.872912019623812,
+      "auc_within_coalition": 0.660774729548859,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9208446645839884,
+      "auc_within_coalition": 0.6441707611274585,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8917143828469776,
+      "auc_within_coalition": 0.6454820631411978,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8668412551496765,
+      "auc_within_coalition": 0.651945201749032,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.847643788840112,
+      "auc_within_coalition": 0.6451162003072324,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.7947482300942271,
+      "auc_within_coalition": 0.6160853863220512,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8212977665383767,
+      "auc_within_coalition": 0.6342888330900117,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8138324585241339,
+      "auc_within_coalition": 0.6267577771958912,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.8219418390687427,
+      "auc_within_coalition": 0.6208068200672799,
+      "rung": 5,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8865716948562953,
+      "auc_within_coalition": 0.6447104009239469,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.8992466800783719,
+      "auc_within_coalition": 0.675905199294003,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.8973264192741326,
+      "auc_within_coalition": 0.6644087134610299,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8840903558451766,
+      "auc_within_coalition": 0.6423646767319386,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9298034976099031,
+      "auc_within_coalition": 0.6226959045082355,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8894108442893872,
+      "auc_within_coalition": 0.6147338747177858,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8667161334680857,
+      "auc_within_coalition": 0.6270002735650806,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8476709348239029,
+      "auc_within_coalition": 0.6273490767161175,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.8216323395858729,
+      "auc_within_coalition": 0.5961557009424637,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.840920742437125,
+      "auc_within_coalition": 0.6218380977131782,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8251405061701329,
+      "auc_within_coalition": 0.6061530700082939,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.830253857267828,
+      "auc_within_coalition": 0.6024148631550156,
+      "rung": 6,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8811005605108919,
+      "auc_within_coalition": 0.6530202113709861,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.8929715495240769,
+      "auc_within_coalition": 0.6773530918301132,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.8897014347065385,
+      "auc_within_coalition": 0.6637593476919016,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8760430992411664,
+      "auc_within_coalition": 0.6491091787452254,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9149719256127669,
+      "auc_within_coalition": 0.6545071724576815,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.8884916286845104,
+      "auc_within_coalition": 0.6395831909509982,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8793142690318375,
+      "auc_within_coalition": 0.6546406943949354,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8619806054745359,
+      "auc_within_coalition": 0.6519207925283146,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.8338960163267422,
+      "auc_within_coalition": 0.6027326236720456,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8550037684998785,
+      "auc_within_coalition": 0.6212132635094901,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8370234669590383,
+      "auc_within_coalition": 0.6145696696288224,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.8421991705560936,
+      "auc_within_coalition": 0.6060713508367146,
+      "rung": 6,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8950686199224211,
+      "auc_within_coalition": 0.6516269747358219,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.9090847953753223,
+      "auc_within_coalition": 0.6915861143137835,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.9080815501770958,
+      "auc_within_coalition": 0.6832885215089239,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8949765101599109,
+      "auc_within_coalition": 0.6718679375336932,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9302564270267458,
+      "auc_within_coalition": 0.6771998044294647,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.899384264729489,
+      "auc_within_coalition": 0.6664554372047353,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8834222488338558,
+      "auc_within_coalition": 0.6859957823110124,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8645217939949743,
+      "auc_within_coalition": 0.6715618448638339,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.8262065151530417,
+      "auc_within_coalition": 0.5985831722585047,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8555900821841629,
+      "auc_within_coalition": 0.6335790686660433,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8390942448584994,
+      "auc_within_coalition": 0.6261005684865711,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.8455366368930908,
+      "auc_within_coalition": 0.6168622552464031,
+      "rung": 7,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8887298094656769,
+      "auc_within_coalition": 0.6376070199520537,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.9028103730010308,
+      "auc_within_coalition": 0.676018189493959,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.9024950512298276,
+      "auc_within_coalition": 0.6716581993442476,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.885736436282397,
+      "auc_within_coalition": 0.6607520562283603,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 58878,
+      "n_events": 186,
+      "auc": 0.9311682858355154,
+      "auc_within_coalition": 0.6136914620705815,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 58878,
+      "n_events": 416,
+      "auc": 0.9082470442667557,
+      "auc_within_coalition": 0.6218858047257514,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 58878,
+      "n_events": 740,
+      "auc": 0.8956290275793011,
+      "auc_within_coalition": 0.6499030100342326,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 58878,
+      "n_events": 1268,
+      "auc": 0.8775713666955605,
+      "auc_within_coalition": 0.6550235117984622,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57401,
+      "n_events": 97,
+      "auc": 0.8370416559323326,
+      "auc_within_coalition": 0.6156780806443813,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57401,
+      "n_events": 399,
+      "auc": 0.8651555470198953,
+      "auc_within_coalition": 0.6418564364996769,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57401,
+      "n_events": 594,
+      "auc": 0.8532033178203545,
+      "auc_within_coalition": 0.6433641396953906,
+      "rung": 7,
+      "seed": 1
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57401,
+      "n_events": 850,
+      "auc": 0.860078357172651,
+      "auc_within_coalition": 0.6360864762022442,
+      "rung": 7,
+      "seed": 1
+    }
+  ]
+}

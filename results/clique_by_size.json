@@ -1,0 +1,166 @@
+{
+  "invocation": "scripts/clique_by_size.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "bins": [
+    "(1, 3]",
+    "(3, 5]",
+    "(5, 10]",
+    "(10, 20]",
+    "(20, 80]",
+    "(80, 10000]"
+  ],
+  "regime": [
+    1965,
+    2014
+  ],
+  "declared": {
+    "corpus_a_relation": "igo_comembership",
+    "corpus_a_levels": [
+      1,
+      25
+    ],
+    "corpus_b_relation": "database",
+    "corpus_b_level": 1,
+    "why_levels_differ": "corpus A's target relation is weighted and saturated at k=1, corpus B's channels are binary; comparing at one level would put a discriminating statistic against a degenerate one"
+  },
+  "corpus_a": {
+    "k=1": {
+      "(1, 3]": {
+        "n_pos": 24,
+        "n_neg": 48,
+        "clique_rate_pos": 0.875,
+        "clique_rate_neg": 0.8125,
+        "clique_contrast": 0.0625
+      },
+      "(3, 5]": {
+        "n_pos": 47,
+        "n_neg": 94,
+        "clique_rate_pos": 1.0,
+        "clique_rate_neg": 0.8191,
+        "clique_contrast": 0.1809
+      },
+      "(5, 10]": {
+        "n_pos": 289,
+        "n_neg": 578,
+        "clique_rate_pos": 0.9965,
+        "clique_rate_neg": 0.7993,
+        "clique_contrast": 0.1972
+      },
+      "(10, 20]": {
+        "n_pos": 751,
+        "n_neg": 1502,
+        "clique_rate_pos": 0.9987,
+        "clique_rate_neg": 0.8076,
+        "clique_contrast": 0.1911
+      },
+      "(20, 80]": {
+        "n_pos": 2801,
+        "n_neg": 5602,
+        "clique_rate_pos": 0.995,
+        "clique_rate_neg": 0.7563,
+        "clique_contrast": 0.2387
+      },
+      "(80, 10000]": {
+        "n_pos": 2685,
+        "n_neg": 5370,
+        "clique_rate_pos": 1.0,
+        "clique_rate_neg": 0.5222,
+        "clique_contrast": 0.4778
+      }
+    },
+    "k=25": {
+      "(1, 3]": {
+        "n_pos": 24,
+        "n_neg": 48,
+        "clique_rate_pos": 0.625,
+        "clique_rate_neg": 0.0417,
+        "clique_contrast": 0.5833
+      },
+      "(3, 5]": {
+        "n_pos": 47,
+        "n_neg": 94,
+        "clique_rate_pos": 0.5957,
+        "clique_rate_neg": 0.234,
+        "clique_contrast": 0.3617
+      },
+      "(5, 10]": {
+        "n_pos": 289,
+        "n_neg": 578,
+        "clique_rate_pos": 0.5052,
+        "clique_rate_neg": 0.1661,
+        "clique_contrast": 0.3391
+      },
+      "(10, 20]": {
+        "n_pos": 751,
+        "n_neg": 1502,
+        "clique_rate_pos": 0.4407,
+        "clique_rate_neg": 0.1971,
+        "clique_contrast": 0.2437
+      },
+      "(20, 80]": {
+        "n_pos": 2801,
+        "n_neg": 5602,
+        "clique_rate_pos": 0.1192,
+        "clique_rate_neg": 0.0671,
+        "clique_contrast": 0.0521
+      },
+      "(80, 10000]": {
+        "n_pos": 2685,
+        "n_neg": 5370,
+        "clique_rate_pos": 0.0,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.0
+      }
+    }
+  },
+  "corpus_b": {
+    "k=1": {
+      "(1, 3]": {
+        "n_pos": 1399,
+        "n_neg": 1399,
+        "clique_rate_pos": 0.4124,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4124
+      },
+      "(3, 5]": {
+        "n_pos": 641,
+        "n_neg": 641,
+        "clique_rate_pos": 0.4665,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4665
+      },
+      "(5, 10]": {
+        "n_pos": 321,
+        "n_neg": 321,
+        "clique_rate_pos": 0.4455,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4455
+      },
+      "(10, 20]": {
+        "n_pos": 142,
+        "n_neg": 142,
+        "clique_rate_pos": 0.3662,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.3662
+      },
+      "(20, 80]": {
+        "n_pos": 34,
+        "n_neg": 34,
+        "clique_rate_pos": 0.1765,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.1765
+      },
+      "(80, 10000]": {
+        "n_pos": 3,
+        "n_neg": 3,
+        "clique_rate_pos": 0.0,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.0
+      }
+    }
+  }
+}

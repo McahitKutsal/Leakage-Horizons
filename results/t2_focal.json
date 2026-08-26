@@ -1,0 +1,54 @@
+{
+  "invocation": "scripts/run_t2_ladder.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "records": [
+    {
+      "phi_level": 1,
+      "focal_excluded": false,
+      "loglik": -915.9827,
+      "auc": 0.6479,
+      "beta_phi_dissolution": 40.9925,
+      "beta_phi_superseded": 35.2082,
+      "beta_log_size_dissolution": -0.737,
+      "beta_log_size_superseded": -0.3064,
+      "phi_coefficient_interpretable": false
+    },
+    {
+      "phi_level": 1,
+      "focal_excluded": true,
+      "loglik": -918.485,
+      "auc": 0.6423,
+      "beta_phi_dissolution": 35.3618,
+      "beta_phi_superseded": 1.0027,
+      "beta_log_size_dissolution": -0.7802,
+      "beta_log_size_superseded": -0.1009,
+      "phi_coefficient_interpretable": false
+    },
+    {
+      "phi_level": 25,
+      "focal_excluded": false,
+      "loglik": -925.5049,
+      "auc": 0.6098,
+      "beta_phi_dissolution": 0.2918,
+      "beta_phi_superseded": -0.0811,
+      "beta_log_size_dissolution": -0.3918,
+      "beta_log_size_superseded": -0.1204,
+      "phi_coefficient_interpretable": true
+    },
+    {
+      "phi_level": 25,
+      "focal_excluded": true,
+      "loglik": -925.7326,
+      "auc": 0.6092,
+      "beta_phi_dissolution": 0.2741,
+      "beta_phi_superseded": -0.0591,
+      "beta_log_size_dissolution": -0.3905,
+      "beta_log_size_superseded": -0.1176,
+      "phi_coefficient_interpretable": true
+    }
+  ]
+}

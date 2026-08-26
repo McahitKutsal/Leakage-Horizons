@@ -1,0 +1,30 @@
+{
+  "invocation": "scripts/profile_p7.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "device": "cuda",
+  "chunk": 20000,
+  "neg_rate": 0.15,
+  "n_rows": 2197744,
+  "n_years": 50,
+  "n_fit_years": 25,
+  "seconds": {
+    "build_snapshots": 1.0,
+    "prepare_risk_set": 3.7,
+    "year_tensors_all_once": 6.8,
+    "train_epoch_rung4": 5.8,
+    "eval_full_rung4": 3.9,
+    "train_epoch_rung7": 1.2
+  },
+  "budget_minutes": {
+    "epochs4_seeds1": 1.5,
+    "epochs4_seeds2": 3.0,
+    "epochs8_seeds1": 2.7,
+    "epochs8_seeds2": 5.5,
+    "epochs12_seeds1": 4.0,
+    "epochs12_seeds2": 8.0
+  }
+}

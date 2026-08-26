@@ -1,0 +1,320 @@
+{
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "invocation": "scripts/run_u2.py",
+  "regime_name": "primary",
+  "regime": [
+    1965,
+    2014
+  ],
+  "levels": {
+    "igo_comembership": [
+      1,
+      17,
+      25,
+      33,
+      42
+    ],
+    "allies": [
+      1
+    ],
+    "trades": [
+      1
+    ],
+    "votes_with": [
+      1
+    ],
+    "conflicts_with": [
+      1
+    ]
+  },
+  "max_neg_per_pos": 4,
+  "probe": "gradient boosting, 300 trees, depth 3, cross-fitted with GroupKFold on family",
+  "curves": [
+    {
+      "horizon": 1,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 6314,
+      "n_neg": 25253,
+      "n_clusters": 311,
+      "n_features": 20,
+      "auc_shortcut": 0.7639434002334136,
+      "auc_shortcut_linear": 0.7381231929703833,
+      "nonlinear_gain": 0.025820207263030248
+    },
+    {
+      "horizon": 2,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5945,
+      "n_neg": 23777,
+      "n_clusters": 302,
+      "n_features": 20,
+      "auc_shortcut": 0.7252969834337861,
+      "auc_shortcut_linear": 0.7071996129724136,
+      "nonlinear_gain": 0.018097370461372497
+    },
+    {
+      "horizon": 3,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5659,
+      "n_neg": 22626,
+      "n_clusters": 293,
+      "n_features": 20,
+      "auc_shortcut": 0.6970041260527702,
+      "auc_shortcut_linear": 0.6885096441412841,
+      "nonlinear_gain": 0.008494481911486051
+    },
+    {
+      "horizon": 4,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5429,
+      "n_neg": 21708,
+      "n_clusters": 288,
+      "n_features": 20,
+      "auc_shortcut": 0.6810566512789877,
+      "auc_shortcut_linear": 0.6685847978475374,
+      "nonlinear_gain": 0.012471853431450297
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5208,
+      "n_neg": 20827,
+      "n_clusters": 277,
+      "n_features": 20,
+      "auc_shortcut": 0.6691432582601886,
+      "auc_shortcut_linear": 0.6582470103169428,
+      "nonlinear_gain": 0.01089624794324584
+    },
+    {
+      "horizon": 6,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4978,
+      "n_neg": 19905,
+      "n_clusters": 262,
+      "n_features": 20,
+      "auc_shortcut": 0.657752922202075,
+      "auc_shortcut_linear": 0.6487174060717698,
+      "nonlinear_gain": 0.009035516130305288
+    },
+    {
+      "horizon": 7,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4734,
+      "n_neg": 18936,
+      "n_clusters": 257,
+      "n_features": 20,
+      "auc_shortcut": 0.6435080938367272,
+      "auc_shortcut_linear": 0.6435155065719336,
+      "nonlinear_gain": -7.412735206324683e-06
+    },
+    {
+      "horizon": 8,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4444,
+      "n_neg": 17776,
+      "n_clusters": 248,
+      "n_features": 20,
+      "auc_shortcut": 0.6425312289611049,
+      "auc_shortcut_linear": 0.6367206393231581,
+      "nonlinear_gain": 0.005810589637946784
+    },
+    {
+      "horizon": 9,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4223,
+      "n_neg": 16890,
+      "n_clusters": 239,
+      "n_features": 20,
+      "auc_shortcut": 0.6351617218684733,
+      "auc_shortcut_linear": 0.6269767941691213,
+      "nonlinear_gain": 0.008184927699351974
+    },
+    {
+      "horizon": 10,
+      "negative_stratum": "never_event",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4043,
+      "n_neg": 16172,
+      "n_clusters": 233,
+      "n_features": 20,
+      "auc_shortcut": 0.6319678011218627,
+      "auc_shortcut_linear": 0.6195350727882044,
+      "nonlinear_gain": 0.012432728333658272
+    },
+    {
+      "horizon": 1,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 6314,
+      "n_neg": 25256,
+      "n_clusters": 311,
+      "n_features": 20,
+      "auc_shortcut": 0.7301298059157095,
+      "auc_shortcut_linear": 0.7053601623022944,
+      "nonlinear_gain": 0.02476964361341516
+    },
+    {
+      "horizon": 2,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5945,
+      "n_neg": 23780,
+      "n_clusters": 302,
+      "n_features": 20,
+      "auc_shortcut": 0.6908931217687224,
+      "auc_shortcut_linear": 0.6693108046071325,
+      "nonlinear_gain": 0.02158231716158987
+    },
+    {
+      "horizon": 3,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5659,
+      "n_neg": 22635,
+      "n_clusters": 293,
+      "n_features": 20,
+      "auc_shortcut": 0.6582678635145598,
+      "auc_shortcut_linear": 0.6518607894757078,
+      "nonlinear_gain": 0.00640707403885199
+    },
+    {
+      "horizon": 4,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5429,
+      "n_neg": 21716,
+      "n_clusters": 288,
+      "n_features": 20,
+      "auc_shortcut": 0.6463428148518895,
+      "auc_shortcut_linear": 0.6350125267858588,
+      "nonlinear_gain": 0.011330288066030647
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 5208,
+      "n_neg": 20832,
+      "n_clusters": 277,
+      "n_features": 20,
+      "auc_shortcut": 0.6264210909498208,
+      "auc_shortcut_linear": 0.6135655631269157,
+      "nonlinear_gain": 0.01285552782290511
+    },
+    {
+      "horizon": 6,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4978,
+      "n_neg": 19912,
+      "n_clusters": 262,
+      "n_features": 20,
+      "auc_shortcut": 0.612325888186849,
+      "auc_shortcut_linear": 0.605188235023981,
+      "nonlinear_gain": 0.007137653162867963
+    },
+    {
+      "horizon": 7,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4734,
+      "n_neg": 18936,
+      "n_clusters": 257,
+      "n_features": 20,
+      "auc_shortcut": 0.6028132763571208,
+      "auc_shortcut_linear": 0.6014931736350171,
+      "nonlinear_gain": 0.0013201027221036998
+    },
+    {
+      "horizon": 8,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4444,
+      "n_neg": 17776,
+      "n_clusters": 248,
+      "n_features": 20,
+      "auc_shortcut": 0.6016688274362989,
+      "auc_shortcut_linear": 0.5974447882175706,
+      "nonlinear_gain": 0.0042240392187282705
+    },
+    {
+      "horizon": 9,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4223,
+      "n_neg": 16892,
+      "n_clusters": 239,
+      "n_features": 20,
+      "auc_shortcut": 0.597313929689074,
+      "auc_shortcut_linear": 0.5872461881079386,
+      "nonlinear_gain": 0.010067741581135436
+    },
+    {
+      "horizon": 10,
+      "negative_stratum": "not_at_this_horizon",
+      "n_estimators": 300,
+      "max_depth": 3,
+      "n_pos": 4043,
+      "n_neg": 16172,
+      "n_clusters": 233,
+      "n_features": 20,
+      "auc_shortcut": 0.5973216885216546,
+      "auc_shortcut_linear": 0.583720720165713,
+      "nonlinear_gain": 0.0136009683559416
+    }
+  ],
+  "features": [
+    "phi_igo_comembership_k1",
+    "clique_igo_comembership_k1",
+    "phi_igo_comembership_k17",
+    "clique_igo_comembership_k17",
+    "phi_igo_comembership_k25",
+    "clique_igo_comembership_k25",
+    "phi_igo_comembership_k33",
+    "clique_igo_comembership_k33",
+    "phi_igo_comembership_k42",
+    "clique_igo_comembership_k42",
+    "phi_allies_k1",
+    "clique_allies_k1",
+    "phi_trades_k1",
+    "clique_trades_k1",
+    "phi_votes_with_k1",
+    "clique_votes_with_k1",
+    "phi_conflicts_with_k1",
+    "clique_conflicts_with_k1",
+    "size",
+    "log_size"
+  ]
+}

@@ -1,0 +1,291 @@
+{
+  "invocation": "scripts/run_both_instruments.py --replicates 400",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "question": "can the two instruments both be measurements on the same events of corpus A, so that their disagreement falsifies the pooled reading rather than describing what one instrument cannot express",
+  "answer": "no, and not only because 94 percent of events are single dated. The one stratum where focal isolation measures lies entirely before the analysis window, so the pooled statistic is not computable on it without reintroducing the coverage break Section 5.4 excludes by design",
+  "regime": [
+    1965,
+    2014
+  ],
+  "horizons": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "threshold": 0.01,
+  "anchors": [
+    "trades",
+    "votes_with",
+    "conflicts_with"
+  ],
+  "negatives_per_positive": 2,
+  "stratum_windows": {
+    "declared_resolution": {
+      "n_accessions": 447,
+      "first_year": 1949,
+      "last_year": 1965,
+      "inside_the_window": 71,
+      "share_inside_the_window": 0.1588,
+      "lead_times_reachable_inside_the_window": 0
+    },
+    "exact": {
+      "n_accessions": 7615,
+      "first_year": 1946,
+      "last_year": 2014,
+      "inside_the_window": 6526,
+      "share_inside_the_window": 0.857,
+      "lead_times_reachable_inside_the_window": 49
+    }
+  },
+  "by_stratum": {
+    "declared_resolution": {
+      "n_events": 66,
+      "n_families": 22,
+      "share_of_rows_read_before_the_window": 0.8562,
+      "focal_curve": {
+        "0": 1.0,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0
+      },
+      "focal_estimate": 1,
+      "pooled_contrast": {
+        "0": 0.4919,
+        "1": 0.5064,
+        "2": 0.4394,
+        "3": 0.4195,
+        "4": 0.2985,
+        "5": 0.149,
+        "6": 0.2633,
+        "7": 0.2916,
+        "8": 0.1637
+      },
+      "residual": {
+        "0": 0.185,
+        "1": 0.1989,
+        "2": 0.0991,
+        "3": 0.1474,
+        "4": 0.1058,
+        "5": 0.0365,
+        "6": 0.1015,
+        "7": 0.1073,
+        "8": 0.0566
+      },
+      "residual_rule_estimate": null,
+      "unbanded_rule_estimate": null,
+      "contrast_by_relation": {
+        "igo_comembership": {
+          "0": 0.4919,
+          "1": 0.5064,
+          "2": 0.4394,
+          "3": 0.4195,
+          "4": 0.2985,
+          "5": 0.149,
+          "6": 0.2633,
+          "7": 0.2916,
+          "8": 0.1637
+        },
+        "allies": {
+          "0": 0.1414,
+          "1": 0.2299,
+          "2": 0.1832,
+          "3": 0.1853,
+          "4": 0.0911,
+          "5": 0.0641,
+          "6": 0.0786,
+          "7": 0.0787,
+          "8": 0.086
+        },
+        "trades": {
+          "0": 0.2832,
+          "1": 0.3075,
+          "2": 0.2514,
+          "3": 0.1902,
+          "4": 0.1927,
+          "5": 0.1125,
+          "6": 0.1618,
+          "7": 0.1843,
+          "8": 0.1011
+        },
+        "votes_with": {
+          "0": 0.3069,
+          "1": 0.0,
+          "2": 0.3403,
+          "3": 0.2721,
+          "4": 0.171,
+          "5": 0.069,
+          "6": 0.0845,
+          "7": 0.1182,
+          "8": 0.107
+        },
+        "conflicts_with": {
+          "0": 0.0146,
+          "1": 0.01,
+          "2": 0.0177,
+          "3": 0.0276,
+          "4": 0.0094,
+          "5": 0.0065,
+          "6": 0.0065,
+          "7": 0.0037,
+          "8": 0.006
+        }
+      }
+    },
+    "exact": {
+      "n_events": 6074,
+      "n_families": 317,
+      "share_of_rows_read_before_the_window": 0.0608,
+      "focal_curve": {
+        "0": 1.0,
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0,
+        "6": 0.0,
+        "7": 0.0,
+        "8": 0.0
+      },
+      "focal_estimate": 1,
+      "pooled_contrast": {
+        "0": 0.3023,
+        "1": 0.2954,
+        "2": 0.2358,
+        "3": 0.2076,
+        "4": 0.1812,
+        "5": 0.1559,
+        "6": 0.1404,
+        "7": 0.1258,
+        "8": 0.1169
+      },
+      "residual": {
+        "0": 0.0522,
+        "1": 0.0715,
+        "2": 0.0359,
+        "3": 0.027,
+        "4": 0.016,
+        "5": 0.0043,
+        "6": 0.004,
+        "7": -0.0001,
+        "8": 0.0014
+      },
+      "residual_rule_estimate": 5,
+      "unbanded_rule_estimate": null,
+      "contrast_by_relation": {
+        "igo_comembership": {
+          "0": 0.3023,
+          "1": 0.2954,
+          "2": 0.2358,
+          "3": 0.2076,
+          "4": 0.1812,
+          "5": 0.1559,
+          "6": 0.1404,
+          "7": 0.1258,
+          "8": 0.1169
+        },
+        "allies": {
+          "0": 0.1262,
+          "1": 0.1044,
+          "2": 0.0915,
+          "3": 0.0853,
+          "4": 0.0794,
+          "5": 0.0731,
+          "6": 0.066,
+          "7": 0.0627,
+          "8": 0.0582
+        },
+        "trades": {
+          "0": 0.2501,
+          "1": 0.2239,
+          "2": 0.1999,
+          "3": 0.1806,
+          "4": 0.1652,
+          "5": 0.1516,
+          "6": 0.1364,
+          "7": 0.1259,
+          "8": 0.1156
+        },
+        "votes_with": {
+          "0": 0.1853,
+          "1": 0.1614,
+          "2": 0.151,
+          "3": 0.138,
+          "4": 0.1307,
+          "5": 0.1216,
+          "6": 0.1122,
+          "7": 0.1066,
+          "8": 0.1041
+        },
+        "conflicts_with": {
+          "0": 0.0037,
+          "1": 0.0029,
+          "2": 0.003,
+          "3": 0.0026,
+          "4": 0.0029,
+          "5": 0.0025,
+          "6": 0.0031,
+          "7": 0.0026,
+          "8": 0.0029
+        }
+      }
+    }
+  },
+  "in_window_remnant_interval": {
+    "replicates": 400,
+    "focal_isolation": {
+      "median": 1.0,
+      "lo": 1.0,
+      "hi": 1.0,
+      "distribution": {
+        "1": 400
+      }
+    },
+    "residual_rule": {
+      "median": 5.0,
+      "lo": 2.0,
+      "hi": 9.0,
+      "distribution": {
+        "2": 80,
+        "3": 1,
+        "4": 44,
+        "5": 79,
+        "6": 6,
+        "7": 1,
+        "8": 59,
+        "9": 130
+      }
+    },
+    "unbanded_rule": {
+      "median": 9.0,
+      "lo": 5.0,
+      "hi": 9.0,
+      "distribution": {
+        "4": 1,
+        "5": 73,
+        "8": 26,
+        "9": 300
+      }
+    }
+  },
+  "what_carries_the_falsification_instead": [
+    "the anchor indistinguishability of Table 7, which needs no focal isolation",
+    "the crossing lead time's bootstrap interval over the whole examined range",
+    "the recurrence decomposition of the unconditioned four-period decay",
+    "the trade register of Section 5.3, where the width is printed and n is 759"
+  ]
+}

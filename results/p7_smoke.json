@@ -1,0 +1,280 @@
+{
+  "invocation": "python scripts/run_p7.py (smoke run, reduced settings; see its own fields)",
+  "invocation_reconstructed": true,
+  "invocation_note": "Recovered from the file's own recorded parameters, not from a log. Scripts now write their argv (D-35).",
+  "regime": [
+    1965,
+    2014
+  ],
+  "origins": [
+    1990,
+    2000,
+    2005
+  ],
+  "horizons": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "epochs": 3,
+  "n_parameters": {
+    "4": 54849,
+    "5": 59649
+  },
+  "p7": {
+    "5": {
+      "by_horizon": {
+        "1": 0.002311107964729997,
+        "3": -0.0023488642417095105,
+        "5": -0.0015404224580966759,
+        "10": -0.0011997643049196742
+      },
+      "rho": -0.19999999999999998,
+      "p": 0.8,
+      "mean_contribution": -0.0006944857599989659
+    }
+  },
+  "rows": [
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8259071383096724,
+      "auc_within_coalition": 0.5371881929655183,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.8440091906027136,
+      "auc_within_coalition": 0.5774752664487308,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.846573148260092,
+      "auc_within_coalition": 0.5702963330423593,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8314755191153395,
+      "auc_within_coalition": 0.5653399336997392,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 59257,
+      "n_events": 184,
+      "auc": 0.8905217862350121,
+      "auc_within_coalition": 0.6031160922118464,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 59257,
+      "n_events": 413,
+      "auc": 0.8473303360648412,
+      "auc_within_coalition": 0.587399309531277,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 59257,
+      "n_events": 734,
+      "auc": 0.8015745666681923,
+      "auc_within_coalition": 0.5889144983804226,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 59257,
+      "n_events": 1258,
+      "auc": 0.7818409086105892,
+      "auc_within_coalition": 0.5585210016442661,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57782,
+      "n_events": 98,
+      "auc": 0.7381172616747969,
+      "auc_within_coalition": 0.4765921266411456,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57782,
+      "n_events": 399,
+      "auc": 0.7649275629692533,
+      "auc_within_coalition": 0.5322795989903388,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57782,
+      "n_events": 590,
+      "auc": 0.7624173465057338,
+      "auc_within_coalition": 0.5186162948633714,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57782,
+      "n_events": 841,
+      "auc": 0.7732668863223069,
+      "auc_within_coalition": 0.5183985582019462,
+      "rung": 4,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 1,
+      "n": 45279,
+      "n_events": 135,
+      "auc": 0.8412511239752954,
+      "auc_within_coalition": 0.5260612253375682,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 3,
+      "n": 45279,
+      "n_events": 425,
+      "auc": 0.847143726443179,
+      "auc_within_coalition": 0.5650242270217185,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 5,
+      "n": 45279,
+      "n_events": 701,
+      "auc": 0.8528064002195515,
+      "auc_within_coalition": 0.5569288848054423,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 1990,
+      "horizon": 10,
+      "n": 45279,
+      "n_events": 1164,
+      "auc": 0.8400177819374774,
+      "auc_within_coalition": 0.5478049814348274,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 1,
+      "n": 59257,
+      "n_events": 184,
+      "auc": 0.883512496329155,
+      "auc_within_coalition": 0.587275595171298,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 3,
+      "n": 59257,
+      "n_events": 413,
+      "auc": 0.8506925110642609,
+      "auc_within_coalition": 0.5781564131559798,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 5,
+      "n": 59257,
+      "n_events": 734,
+      "auc": 0.800179041836459,
+      "auc_within_coalition": 0.578219000692983,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2000,
+      "horizon": 10,
+      "n": 59257,
+      "n_events": 1258,
+      "auc": 0.7801681233416364,
+      "auc_within_coalition": 0.5493089769797853,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 1,
+      "n": 57782,
+      "n_events": 98,
+      "auc": 0.736715889809221,
+      "auc_within_coalition": 0.4811803797241728,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 3,
+      "n": 57782,
+      "n_events": 399,
+      "auc": 0.7513842594042397,
+      "auc_within_coalition": 0.5257850090573902,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 5,
+      "n": 57782,
+      "n_events": 590,
+      "auc": 0.7529583520037175,
+      "auc_within_coalition": 0.513690856962223,
+      "rung": 5,
+      "seed": 0
+    },
+    {
+      "origin": 2005,
+      "horizon": 10,
+      "n": 57782,
+      "n_events": 841,
+      "auc": 0.7627981158543626,
+      "auc_within_coalition": 0.513641560026372,
+      "rung": 5,
+      "seed": 0
+    }
+  ]
+}

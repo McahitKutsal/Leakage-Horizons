@@ -1,0 +1,278 @@
+{
+  "SUPERSEDED": true,
+  "superseded_by": "results/u2_real_primary.json (scripts/run_u2.py --regime primary)",
+  "why": "The artefact of V1, which was WITHDRAWN as V0: negatives were drawn across coalition-years rather than within them, giving positive groups a mean size of 66 against 18, so the statistic measured group size. Kept because V1 is quoted in PENUMBRA-OUTCOMES as a retraction and a retracted verdict's evidence should not vanish. Not to be cited for any current claim.",
+  "as_measured_2026_08_03_pre_V0": {
+    "regime": [
+      1965,
+      2014
+    ],
+    "levels": {
+      "igo_comembership": [
+        1,
+        17,
+        25,
+        33,
+        42
+      ],
+      "allies": [
+        1
+      ],
+      "trades": [
+        1
+      ],
+      "votes_with": [
+        1
+      ],
+      "conflicts_with": [
+        1
+      ]
+    },
+    "max_neg_per_pos": 4,
+    "probe": "gradient boosting, 300 trees, depth 3, cross-fitted with GroupKFold on family",
+    "curves": [
+      {
+        "horizon": 1,
+        "negative_stratum": "never_event",
+        "n_pos": 6294,
+        "n_neg": 25176,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8904811777454058,
+        "auc_shortcut_linear": 0.8894698134791064,
+        "nonlinear_gain": 0.0010113642662994415
+      },
+      {
+        "horizon": 2,
+        "negative_stratum": "never_event",
+        "n_pos": 5942,
+        "n_neg": 23768,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.876155658349346,
+        "auc_shortcut_linear": 0.8819188788775056,
+        "nonlinear_gain": -0.005763220528159696
+      },
+      {
+        "horizon": 3,
+        "negative_stratum": "never_event",
+        "n_pos": 5639,
+        "n_neg": 22556,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8758772829546567,
+        "auc_shortcut_linear": 0.8797424005500164,
+        "nonlinear_gain": -0.0038651175953596795
+      },
+      {
+        "horizon": 4,
+        "negative_stratum": "never_event",
+        "n_pos": 5409,
+        "n_neg": 21636,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8702994948505297,
+        "auc_shortcut_linear": 0.8749460262558233,
+        "nonlinear_gain": -0.004646531405293586
+      },
+      {
+        "horizon": 5,
+        "negative_stratum": "never_event",
+        "n_pos": 5189,
+        "n_neg": 20756,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8675182690558221,
+        "auc_shortcut_linear": 0.8681818863829124,
+        "nonlinear_gain": -0.0006636173270903045
+      },
+      {
+        "horizon": 6,
+        "negative_stratum": "never_event",
+        "n_pos": 4960,
+        "n_neg": 19840,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8703499010226976,
+        "auc_shortcut_linear": 0.873280777469758,
+        "nonlinear_gain": -0.00293087644706036
+      },
+      {
+        "horizon": 7,
+        "negative_stratum": "never_event",
+        "n_pos": 4715,
+        "n_neg": 18860,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8679148416247868,
+        "auc_shortcut_linear": 0.8702788139205104,
+        "nonlinear_gain": -0.0023639722957236042
+      },
+      {
+        "horizon": 8,
+        "negative_stratum": "never_event",
+        "n_pos": 4425,
+        "n_neg": 17700,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8638313319927224,
+        "auc_shortcut_linear": 0.8673870343770947,
+        "nonlinear_gain": -0.0035557023843723057
+      },
+      {
+        "horizon": 9,
+        "negative_stratum": "never_event",
+        "n_pos": 4206,
+        "n_neg": 16824,
+        "n_clusters": 437,
+        "n_features": 20,
+        "auc_shortcut": 0.8686597803468495,
+        "auc_shortcut_linear": 0.8654797428395774,
+        "nonlinear_gain": 0.0031800375072721376
+      },
+      {
+        "horizon": 10,
+        "negative_stratum": "never_event",
+        "n_pos": 4024,
+        "n_neg": 16096,
+        "n_clusters": 437,
+        "n_features": 20,
+        "auc_shortcut": 0.8660635204058946,
+        "auc_shortcut_linear": 0.8605090382160319,
+        "nonlinear_gain": 0.005554482189862764
+      },
+      {
+        "horizon": 1,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 6294,
+        "n_neg": 25176,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8832110376378954,
+        "auc_shortcut_linear": 0.8778334462467168,
+        "nonlinear_gain": 0.00537759139117866
+      },
+      {
+        "horizon": 2,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 5942,
+        "n_neg": 23768,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8657414533976538,
+        "auc_shortcut_linear": 0.8692753585342707,
+        "nonlinear_gain": -0.0035339051366168883
+      },
+      {
+        "horizon": 3,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 5639,
+        "n_neg": 22556,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8610882552572507,
+        "auc_shortcut_linear": 0.8649498663781651,
+        "nonlinear_gain": -0.003861611120914321
+      },
+      {
+        "horizon": 4,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 5409,
+        "n_neg": 21636,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8608131169126755,
+        "auc_shortcut_linear": 0.8620231447686475,
+        "nonlinear_gain": -0.001210027855972018
+      },
+      {
+        "horizon": 5,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 5189,
+        "n_neg": 20756,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.853577198545584,
+        "auc_shortcut_linear": 0.8551938822733846,
+        "nonlinear_gain": -0.0016166837278005497
+      },
+      {
+        "horizon": 6,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 4960,
+        "n_neg": 19840,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.850371403689191,
+        "auc_shortcut_linear": 0.8574027807134496,
+        "nonlinear_gain": -0.0070313770242586004
+      },
+      {
+        "horizon": 7,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 4715,
+        "n_neg": 18860,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8513601083611001,
+        "auc_shortcut_linear": 0.8531956965934177,
+        "nonlinear_gain": -0.0018355882323175532
+      },
+      {
+        "horizon": 8,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 4425,
+        "n_neg": 17700,
+        "n_clusters": 438,
+        "n_features": 20,
+        "auc_shortcut": 0.8537979060933958,
+        "auc_shortcut_linear": 0.854632704522966,
+        "nonlinear_gain": -0.0008347984295702382
+      },
+      {
+        "horizon": 9,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 4206,
+        "n_neg": 16824,
+        "n_clusters": 437,
+        "n_features": 20,
+        "auc_shortcut": 0.8523992568639913,
+        "auc_shortcut_linear": 0.8520842349504558,
+        "nonlinear_gain": 0.0003150219135354959
+      },
+      {
+        "horizon": 10,
+        "negative_stratum": "not_at_this_horizon",
+        "n_pos": 4024,
+        "n_neg": 16096,
+        "n_clusters": 437,
+        "n_features": 20,
+        "auc_shortcut": 0.8560748533772513,
+        "auc_shortcut_linear": 0.850749110271275,
+        "nonlinear_gain": 0.005325743105976333
+      }
+    ],
+    "features": [
+      "phi_allies_k1",
+      "clique_allies_k1",
+      "phi_conflicts_with_k1",
+      "clique_conflicts_with_k1",
+      "phi_igo_comembership_k1",
+      "clique_igo_comembership_k1",
+      "phi_igo_comembership_k17",
+      "clique_igo_comembership_k17",
+      "phi_igo_comembership_k25",
+      "clique_igo_comembership_k25",
+      "phi_igo_comembership_k33",
+      "clique_igo_comembership_k33",
+      "phi_igo_comembership_k42",
+      "clique_igo_comembership_k42",
+      "phi_trades_k1",
+      "clique_trades_k1",
+      "phi_votes_with_k1",
+      "clique_votes_with_k1",
+      "size",
+      "log_size"
+    ]
+  }
+}
