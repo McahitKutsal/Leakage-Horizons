@@ -1,0 +1,76 @@
+{
+  "invocation": "scripts/build_declaration.py --doi 10.5281/zenodo.22110800",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "what_this_is": "the declaration Section 5.1's protocol rests on, released so that the ordering Section 6.6's prospective test depends on is checkable where it can be and marked where it cannot",
+  "reference_date": "2026-08-03 10:24:59 +0300",
+  "why_a_reference_date": "a commit made after the statistics were computed cannot establish that a declaration preceded them, so the test is not whether the file has commits but whether it has one at or before the moment the pre-registration was frozen",
+  "corpus_a": {
+    "file": "pre-registration.md",
+    "timestamped": true,
+    "first_commit": "2026-08-02 19:50:31 +0300",
+    "commits": [
+      {
+        "commit": "410121f4d9497ec953c9163b1257cf1e6e6a2aa5",
+        "date": "2026-08-02 19:50:31 +0300",
+        "subject": "Pre-registration: PENUMBRA manifesto as written, before any data or model"
+      },
+      {
+        "commit": "936927fb44bab75a82c81472e6f396a0ad81488c",
+        "date": "2026-08-02 19:58:55 +0300",
+        "subject": "Amend the pre-registration: bracket Delta*, decide \u00c2\u00a711, pin CLIQUEBAIT"
+      },
+      {
+        "commit": "2cb2579f70051a4d1d618c7e579437a3c41355b7",
+        "date": "2026-08-03 10:24:59 +0300",
+        "subject": "Freeze the pre-registration: correct \u00c2\u00a74 from the coding rules, add \u00c2\u00a79.7"
+      }
+    ],
+    "declares": [
+      "the target relation",
+      "the anchor set",
+      "the level ladder",
+      "the comparison strata",
+      "the resampling unit",
+      "the lead times",
+      "the predictions, including the two that were falsified"
+    ]
+  },
+  "corpus_b": {
+    "file": "corpus-b-channel-declaration.md",
+    "timestamped": false,
+    "first_commit": "2026-08-26 13:51:18 +0300",
+    "commits": [
+      {
+        "commit": "5d877f289bfa886dba1af6a1d7d2e9a8256723d8",
+        "date": "2026-08-26 13:51:18 +0300",
+        "subject": "Release the paper, the figures, and the scripts that check both"
+      }
+    ],
+    "declares": [
+      "the target channel",
+      "the two contaminated channels",
+      "the five anchor channels"
+    ],
+    "limitation": "the file carrying this declaration was not committed before it was run, and the pre-registration does not name the channels, so version control cannot corroborate that the reading preceded the statistic"
+  },
+  "files": {
+    "pre-registration.md": {
+      "sha256": "cfbef64bc717da1a288644865a05b0f9ec96fdd802e2eb65e3f424582bc88c29",
+      "bytes": 33841,
+      "source": "penumbra-manifesto.md at 2cb2579f70051a4d1d618c7e579437a3c41355b7",
+      "timestamped": true
+    },
+    "corpus-b-channel-declaration.md": {
+      "sha256": "3fc329c0cfb84367c768017b489078d15fc8386fe313ca65904323c72cae7210",
+      "bytes": 4543,
+      "source": "docstring of scripts/run_second_domain.py",
+      "timestamped": false
+    }
+  },
+  "head_commit": "7842132fb57902221bedc7eedace4e62eeac3ac6",
+  "deposit_identifier": "10.5281/zenodo.22110800"
+}

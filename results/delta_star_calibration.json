@@ -1,0 +1,1242 @@
+{
+  "invocation": "scripts/calibrate_delta_star.py --json results/delta_star_calibration.json",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "target": "delta_star_lo <= beta + 1 <= delta_star_hi",
+  "alpha": 1.0,
+  "betas": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "horizons": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "rstar": "r_star",
+  "anchors": [
+    "r_current",
+    "r_latent_1",
+    "r_latent_2",
+    "r_noise"
+  ],
+  "invariance": {
+    "density_range": 0.0,
+    "completeness_error": 0.00040000000000001146
+  },
+  "results": [
+    {
+      "beta": 0,
+      "target": 1,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 1,
+      "delta_star_hi": 1,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.019444444444444445,
+          "band_clique_contrast": 0.0549602560557568,
+          "auc_phi_alone": 0.6369444444444444,
+          "band_auc": 0.7022298879435147,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.012987012987012988,
+          "band_clique_contrast": 0.051145523698558404,
+          "auc_phi_alone": 0.6196238826108955,
+          "band_auc": 0.6683579837974204,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.014084507042253521,
+          "band_clique_contrast": 0.055400165749162976,
+          "auc_phi_alone": 0.6597649275937314,
+          "band_auc": 0.7154729889931962,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.016666666666666666,
+          "band_clique_contrast": 0.06536957997676413,
+          "auc_phi_alone": 0.6681250000000001,
+          "band_auc": 0.6989335855171278,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.017857142857142856,
+          "band_clique_contrast": 0.06994667006592231,
+          "auc_phi_alone": 0.6450892857142857,
+          "band_auc": 0.7140108063725047,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.0,
+          "band_clique_contrast": 0.05495548846517784,
+          "auc_phi_alone": 0.6583303666785333,
+          "band_auc": 0.7010021301924653,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.015306122448979591,
+          "band_clique_contrast": 0.059306014189697054,
+          "auc_phi_alone": 0.6514473136193252,
+          "band_auc": 0.7089659849083263,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.015957446808510637,
+          "band_clique_contrast": 0.06175013471082447,
+          "auc_phi_alone": 0.6135129017655048,
+          "band_auc": 0.7368989870223468,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 0,
+      "target": 1,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 1,
+      "delta_star_hi": 1,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.019444444444444445,
+          "band_clique_contrast": 0.0549602560557568,
+          "auc_phi_alone": 0.6390895061728395,
+          "band_auc": 0.703911986708947,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.012987012987012988,
+          "band_clique_contrast": 0.051145523698558404,
+          "auc_phi_alone": 0.6212261764209817,
+          "band_auc": 0.6667346071740439,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.014084507042253521,
+          "band_clique_contrast": 0.055400165749162976,
+          "auc_phi_alone": 0.65123487403293,
+          "band_auc": 0.704636845370899,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.0125,
+          "band_clique_contrast": 0.06120291331009746,
+          "auc_phi_alone": 0.6600347222222223,
+          "band_auc": 0.6907044188504611,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.013392857142857142,
+          "band_clique_contrast": 0.0654823843516366,
+          "auc_phi_alone": 0.6336894132653061,
+          "band_auc": 0.7052815334133209,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": -0.0047169811320754715,
+          "band_clique_contrast": 0.05495548846517784,
+          "auc_phi_alone": 0.6484069063723744,
+          "band_auc": 0.6862281892882288,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.015306122448979591,
+          "band_clique_contrast": 0.059306014189697054,
+          "auc_phi_alone": 0.6484277384423157,
+          "band_auc": 0.713911840801704,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.015957446808510637,
+          "band_clique_contrast": 0.06175013471082447,
+          "auc_phi_alone": 0.6167949298325034,
+          "band_auc": 0.7493480590006176,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 1,
+      "target": 2,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 2,
+      "delta_star_hi": 8,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9972222222222222,
+          "band_clique_contrast": 0.05218247827797902,
+          "auc_phi_alone": 0.998611111111111,
+          "band_auc": 0.6832792706595641,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.009868421052631578,
+          "band_clique_contrast": 0.04851918777835712,
+          "auc_phi_alone": 0.6400623268698061,
+          "band_auc": 0.7007186568235575,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.014285714285714285,
+          "band_clique_contrast": 0.05617905835260289,
+          "auc_phi_alone": 0.6056377551020408,
+          "band_auc": 0.707425392250461,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.004166666666666666,
+          "band_clique_contrast": 0.05286957997676413,
+          "auc_phi_alone": 0.6414236111111111,
+          "band_auc": 0.7088641410726834,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.02232142857142857,
+          "band_clique_contrast": 0.056553812923065175,
+          "auc_phi_alone": 0.6535395408163265,
+          "band_auc": 0.7116989441276067,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.009615384615384616,
+          "band_clique_contrast": 0.06559756474162018,
+          "auc_phi_alone": 0.624167899408284,
+          "band_auc": 0.6905846897375385,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.005102040816326529,
+          "band_clique_contrast": 0.059306014189697054,
+          "auc_phi_alone": 0.6183881715951687,
+          "band_auc": 0.7030830194772559,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": -0.015957446808510637,
+          "band_clique_contrast": 0.06706928364699469,
+          "auc_phi_alone": 0.6113060208239023,
+          "band_auc": 0.6983068638897075,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        }
+      ]
+    },
+    {
+      "beta": 1,
+      "target": 2,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 2,
+      "delta_star_hi": 4,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9972222222222222,
+          "band_clique_contrast": 0.05218247827797902,
+          "auc_phi_alone": 0.998611111111111,
+          "band_auc": 0.6831249496719098,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.009868421052631578,
+          "band_clique_contrast": 0.04851918777835712,
+          "auc_phi_alone": 0.6317520775623269,
+          "band_auc": 0.6936419601476571,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.014285714285714285,
+          "band_clique_contrast": 0.05617905835260289,
+          "auc_phi_alone": 0.6074744897959183,
+          "band_auc": 0.7155121269443385,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.0,
+          "band_clique_contrast": 0.05286957997676413,
+          "auc_phi_alone": 0.6449305555555556,
+          "band_auc": 0.7164335855171278,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.02232142857142857,
+          "band_clique_contrast": 0.056553812923065175,
+          "auc_phi_alone": 0.6611128826530612,
+          "band_auc": 0.7122171201480147,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.009615384615384616,
+          "band_clique_contrast": 0.06559756474162018,
+          "auc_phi_alone": 0.6194064349112426,
+          "band_auc": 0.6823561394416804,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.005102040816326529,
+          "band_clique_contrast": 0.059306014189697054,
+          "auc_phi_alone": 0.6165139525197834,
+          "band_auc": 0.7028747729133242,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": -0.02127659574468085,
+          "band_clique_contrast": 0.06175013471082447,
+          "auc_phi_alone": 0.598064735174287,
+          "band_auc": 0.696269743020536,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        }
+      ]
+    },
+    {
+      "beta": 2,
+      "target": 3,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 3,
+      "delta_star_hi": 8,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9944444444444445,
+          "band_clique_contrast": 0.06051581161131235,
+          "auc_phi_alone": 0.9972222222222222,
+          "band_auc": 0.6999150731287,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.993421052631579,
+          "band_clique_contrast": 0.07154550356783079,
+          "auc_phi_alone": 0.9967105263157895,
+          "band_auc": 0.7030991969897624,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.04285714285714286,
+          "band_clique_contrast": 0.08475048692403146,
+          "auc_phi_alone": 0.6151020408163266,
+          "band_auc": 0.6965325351076037,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.03333333333333333,
+          "band_clique_contrast": 0.06536957997676413,
+          "auc_phi_alone": 0.641875,
+          "band_auc": 0.7107044188504611,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.01818181818181818,
+          "band_clique_contrast": 0.07119287313307199,
+          "auc_phi_alone": 0.6626446280991733,
+          "band_auc": 0.7484550176978046,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.03431372549019608,
+          "band_clique_contrast": 0.09136167785063888,
+          "auc_phi_alone": 0.6952614379084967,
+          "band_auc": 0.7324575945154381,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.04081632653061224,
+          "band_clique_contrast": 0.10012234072030929,
+          "auc_phi_alone": 0.6396293211162015,
+          "band_auc": 0.7629539066076183,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.0425531914893617,
+          "band_clique_contrast": 0.125579921944867,
+          "auc_phi_alone": 0.6804549569941151,
+          "band_auc": 0.7733974025950042,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        }
+      ]
+    },
+    {
+      "beta": 2,
+      "target": 3,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 3,
+      "delta_star_hi": 8,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9944444444444445,
+          "band_clique_contrast": 0.057738033833534576,
+          "auc_phi_alone": 0.9972222222222222,
+          "band_auc": 0.7034798879435149,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.993421052631579,
+          "band_clique_contrast": 0.07154550356783079,
+          "auc_phi_alone": 0.9967105263157895,
+          "band_auc": 0.7048737814772971,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.04285714285714286,
+          "band_clique_contrast": 0.08475048692403146,
+          "auc_phi_alone": 0.6105102040816326,
+          "band_auc": 0.6905886575565834,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.029166666666666667,
+          "band_clique_contrast": 0.06536957997676413,
+          "auc_phi_alone": 0.6276388888888889,
+          "band_auc": 0.7121974744060167,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.01818181818181818,
+          "band_clique_contrast": 0.07119287313307199,
+          "auc_phi_alone": 0.6688842975206613,
+          "band_auc": 0.7524632821606145,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.03431372549019608,
+          "band_clique_contrast": 0.09136167785063888,
+          "auc_phi_alone": 0.6944444444444444,
+          "band_auc": 0.7304391400748385,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.04081632653061224,
+          "band_clique_contrast": 0.10012234072030929,
+          "auc_phi_alone": 0.6420241566014161,
+          "band_auc": 0.7666502831174059,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.0425531914893617,
+          "band_clique_contrast": 0.125579921944867,
+          "auc_phi_alone": 0.6785875961973744,
+          "band_auc": 0.775491110154986,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        }
+      ]
+    },
+    {
+      "beta": 3,
+      "target": 4,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 4,
+      "delta_star_hi": null,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9916666666666667,
+          "band_clique_contrast": 0.057738033833534576,
+          "auc_phi_alone": 0.9958333333333332,
+          "band_auc": 0.6988193941163543,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.9967105263157895,
+          "band_clique_contrast": 0.08799287198888343,
+          "auc_phi_alone": 0.9983552631578948,
+          "band_auc": 0.700004494773696,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.9964285714285714,
+          "band_clique_contrast": 0.0668933440668886,
+          "auc_phi_alone": 0.9982142857142857,
+          "band_auc": 0.691379473883114,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.04166666666666667,
+          "band_clique_contrast": 0.07370291331009746,
+          "auc_phi_alone": 0.6310763888888888,
+          "band_auc": 0.6790030299615722,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.06481481481481481,
+          "band_clique_contrast": 0.08637317450478363,
+          "auc_phi_alone": 0.6434327846364883,
+          "band_auc": 0.7234460318388268,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.049999999999999996,
+          "band_clique_contrast": 0.08815507911697226,
+          "auc_phi_alone": 0.6569499999999999,
+          "band_auc": 0.7351336513248338,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.05612244897959184,
+          "band_clique_contrast": 0.1154284631692889,
+          "auc_phi_alone": 0.6793523531861724,
+          "band_auc": 0.7499384963618874,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.044444444444444446,
+          "band_clique_contrast": 0.10884873325222794,
+          "auc_phi_alone": 0.6903703703703703,
+          "band_auc": 0.7342590540180849,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 3,
+      "target": 4,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 4,
+      "delta_star_hi": null,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9916666666666667,
+          "band_clique_contrast": 0.06329358938909013,
+          "auc_phi_alone": 0.9958333333333333,
+          "band_auc": 0.70099532004228,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.9901315789473685,
+          "band_clique_contrast": 0.08470339830467291,
+          "auc_phi_alone": 0.9950657894736843,
+          "band_auc": 0.6953083382640008,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.9928571428571429,
+          "band_clique_contrast": 0.0668933440668886,
+          "auc_phi_alone": 0.9964285714285714,
+          "band_auc": 0.6937009024545426,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.037500000000000006,
+          "band_clique_contrast": 0.06953624664343079,
+          "auc_phi_alone": 0.6269444444444445,
+          "band_auc": 0.6661210855171278,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.06481481481481481,
+          "band_clique_contrast": 0.08637317450478363,
+          "auc_phi_alone": 0.6464763374485598,
+          "band_auc": 0.7282471292325169,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.055,
+          "band_clique_contrast": 0.09315507911697227,
+          "auc_phi_alone": 0.6599999999999999,
+          "band_auc": 0.7396836513248338,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.05612244897959184,
+          "band_clique_contrast": 0.1154284631692889,
+          "auc_phi_alone": 0.6793523531861724,
+          "band_auc": 0.7499384963618874,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.044444444444444446,
+          "band_clique_contrast": 0.10884873325222794,
+          "auc_phi_alone": 0.6890123456790123,
+          "band_auc": 0.7300615231538873,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 4,
+      "target": 5,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 5,
+      "delta_star_hi": null,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9972222222222222,
+          "band_clique_contrast": 0.05218247827797902,
+          "auc_phi_alone": 0.9986111111111111,
+          "band_auc": 0.6933718632521568,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.9901315789473685,
+          "band_clique_contrast": 0.055098135146778165,
+          "auc_phi_alone": 0.9950657894736842,
+          "band_auc": 0.7177286983748041,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.9964285714285714,
+          "band_clique_contrast": 0.05260762978117432,
+          "auc_phi_alone": 0.9982142857142857,
+          "band_auc": 0.7194662085769916,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 1.0,
+          "band_clique_contrast": 0.08203624664343079,
+          "auc_phi_alone": 1.0,
+          "band_auc": 0.7115377521837944,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.05092592592592592,
+          "band_clique_contrast": 0.06785465598626511,
+          "auc_phi_alone": 0.6174125514403291,
+          "band_auc": 0.7303476093422563,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.035,
+          "band_clique_contrast": 0.07315507911697226,
+          "auc_phi_alone": 0.66255,
+          "band_auc": 0.737183651324834,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.02040816326530612,
+          "band_clique_contrast": 0.07971417745500317,
+          "auc_phi_alone": 0.6838817159516868,
+          "band_auc": 0.7213566554622621,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.017045454545454544,
+          "band_clique_contrast": 0.0828642256903885,
+          "auc_phi_alone": 0.6471461776859504,
+          "band_auc": 0.7280775291892279,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 4,
+      "target": 5,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 5,
+      "delta_star_hi": null,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9972222222222222,
+          "band_clique_contrast": 0.05218247827797902,
+          "auc_phi_alone": 0.9986111111111111,
+          "band_auc": 0.6983409990546259,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.9901315789473685,
+          "band_clique_contrast": 0.055098135146778165,
+          "auc_phi_alone": 0.9950657894736843,
+          "band_auc": 0.7136168562695409,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 0.9964285714285714,
+          "band_clique_contrast": 0.05260762978117432,
+          "auc_phi_alone": 0.9982142857142857,
+          "band_auc": 0.7144151881688283,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 1.0,
+          "band_clique_contrast": 0.08203624664343079,
+          "auc_phi_alone": 1.0,
+          "band_auc": 0.7050099744060166,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.05092592592592592,
+          "band_clique_contrast": 0.06785465598626511,
+          "auc_phi_alone": 0.6174125514403291,
+          "band_auc": 0.7303476093422563,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.03,
+          "band_clique_contrast": 0.07315507911697226,
+          "auc_phi_alone": 0.6616500000000001,
+          "band_auc": 0.7408336513248339,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.02040816326530612,
+          "band_clique_contrast": 0.07971417745500317,
+          "auc_phi_alone": 0.6820595585172844,
+          "band_auc": 0.7209401623343987,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.017045454545454544,
+          "band_clique_contrast": 0.0828642256903885,
+          "auc_phi_alone": 0.6471461776859504,
+          "band_auc": 0.7280775291892279,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 5,
+      "target": 6,
+      "stratum": "never_event",
+      "alpha": 1.0,
+      "delta_star_lo": 6,
+      "delta_star_hi": null,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9944444444444445,
+          "band_clique_contrast": 0.04940470050020124,
+          "auc_phi_alone": 0.9972222222222222,
+          "band_auc": 0.713094085474379,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.993421052631579,
+          "band_clique_contrast": 0.058387608830988695,
+          "auc_phi_alone": 0.9967105263157895,
+          "band_auc": 0.7485675141642777,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 1.0,
+          "band_clique_contrast": 0.05698016417178214,
+          "auc_phi_alone": 1.0,
+          "band_auc": 0.7246885270685638,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.9957627118644068,
+          "band_clique_contrast": 0.07916862683737944,
+          "auc_phi_alone": 0.9978813559322034,
+          "band_auc": 0.6724761529656851,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.9907407407407407,
+          "band_clique_contrast": 0.08637317450478363,
+          "auc_phi_alone": 0.9953703703703703,
+          "band_auc": 0.6852944543353976,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.055,
+          "band_clique_contrast": 0.09315507911697227,
+          "auc_phi_alone": 0.6697500000000001,
+          "band_auc": 0.7161336513248339,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.041666666666666664,
+          "band_clique_contrast": 0.10217007601556097,
+          "auc_phi_alone": 0.6903754340277778,
+          "band_auc": 0.7181759454523844,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.01744186046511628,
+          "band_clique_contrast": 0.08473861387898415,
+          "auc_phi_alone": 0.6680638182801514,
+          "band_auc": 0.7757174659284432,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        }
+      ]
+    },
+    {
+      "beta": 5,
+      "target": 6,
+      "stratum": "not_at_this_horizon",
+      "alpha": 1.0,
+      "delta_star_lo": 6,
+      "delta_star_hi": 7,
+      "brackets_beta": true,
+      "n_accessions": 90,
+      "detail": [
+        {
+          "horizon": 1,
+          "clique_contrast": 0.9944444444444445,
+          "band_clique_contrast": 0.05218247827797902,
+          "auc_phi_alone": 0.9972222222222222,
+          "band_auc": 0.7112885299188234,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 2,
+          "clique_contrast": 0.993421052631579,
+          "band_clique_contrast": 0.06496655619940975,
+          "auc_phi_alone": 0.9967105263157895,
+          "band_auc": 0.7527442800922555,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 3,
+          "clique_contrast": 1.0,
+          "band_clique_contrast": 0.05698016417178214,
+          "auc_phi_alone": 1.0,
+          "band_auc": 0.7246885270685638,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 4,
+          "clique_contrast": 0.9915254237288136,
+          "band_clique_contrast": 0.07916862683737944,
+          "auc_phi_alone": 0.9957627118644069,
+          "band_auc": 0.6736252480533034,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 5,
+          "clique_contrast": 0.9907407407407407,
+          "band_clique_contrast": 0.08637317450478363,
+          "auc_phi_alone": 0.9953703703703703,
+          "band_auc": 0.6852944543353976,
+          "rstar_is_top": true,
+          "in_band_auc": false,
+          "in_band_lo": false,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 6,
+          "clique_contrast": 0.055,
+          "band_clique_contrast": 0.09315507911697227,
+          "auc_phi_alone": 0.6712,
+          "band_auc": 0.7159836513248339,
+          "rstar_is_top": true,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": false
+        },
+        {
+          "horizon": 7,
+          "clique_contrast": 0.03645833333333333,
+          "band_clique_contrast": 0.10217007601556097,
+          "auc_phi_alone": 0.6884765625000001,
+          "band_auc": 0.7186642267023843,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        },
+        {
+          "horizon": 8,
+          "clique_contrast": 0.011627906976744186,
+          "band_clique_contrast": 0.09055256736735624,
+          "auc_phi_alone": 0.6627906976744186,
+          "band_auc": 0.778759650893289,
+          "rstar_is_top": false,
+          "in_band_auc": true,
+          "in_band_lo": true,
+          "in_band_hi": true
+        }
+      ]
+    }
+  ]
+}

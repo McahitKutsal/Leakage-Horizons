@@ -1,0 +1,70 @@
+{
+  "invocation": "scripts/build_ledger.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "window": [
+    1946,
+    2014
+  ],
+  "dropped_declared": {
+    "after_termination": 1,
+    "after_last_observation": 0,
+    "membership_rows_after_exit": 622,
+    "entities_under_min_members": 3,
+    "entities_under_min_members_named": [
+      "igo:2495 (Intl Chemistry Office)",
+      "igo:2940 (Intl Office Public Hygiene)",
+      "igo:4075 (Regional Cooperation Council)"
+    ]
+  },
+  "entities": {
+    "total": 562,
+    "by_type": {
+      "organisation": 490,
+      "alliance": 72
+    },
+    "left_truncated": 70,
+    "terminated": 185,
+    "censored": 377,
+    "families": 464,
+    "multi_entity_families": 43
+  },
+  "events": {
+    "total": 10328,
+    "by_type": {
+      "accession": 8062,
+      "exit": 1589,
+      "founding": 492,
+      "termination": 185
+    },
+    "by_dating_stratum": {
+      "exact": 9581,
+      "declared_resolution": 646,
+      "rule_assigned": 101
+    },
+    "termination_by_cause": {
+      "dissolution": 101,
+      "replaced": 32,
+      "uncoded": 30,
+      "absorbed": 22
+    },
+    "rule_assigned_share_of_terminations": 0.5459
+  },
+  "membership": {
+    "rows": 505400,
+    "by_status": {
+      "1": 502083,
+      "3": 2235,
+      "2": 1082
+    },
+    "distinct_states": 202
+  },
+  "riskset_exclusions": {
+    "organisation_years": 19335,
+    "total_missing_cells": 190750,
+    "total_not_system_cells": 0
+  }
+}

@@ -1,0 +1,168 @@
+{
+  "invocation": "scripts/run_p6.py --json results/p6.json",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "train_regime": "primary",
+  "shift_regime": "replication",
+  "regimes": {
+    "primary": [
+      1965,
+      2014
+    ],
+    "replication": [
+      1948,
+      1963
+    ]
+  },
+  "horizon": 3,
+  "spearman_rho": -0.666667070081045,
+  "p_value": 0.009217525272830325,
+  "reliance_spread": 0.1667118328109466,
+  "fragility_spread": 0.08370555110177569,
+  "verdict": "REVERSED: significantly associated in the OPPOSITE direction to P6, which is a substantive finding and not a null",
+  "models": [
+    {
+      "model": "node only",
+      "n_features": 22,
+      "n_density_features": 0,
+      "auc_train_regime": 0.871104503956956,
+      "auc_shift_regime": 0.8478706398526459,
+      "auc_densities_ablated": 0.871104503956956,
+      "shortcut_reliance": 0.0,
+      "shift_fragility": 0.023233864104310165
+    },
+    {
+      "model": "node + comembership k25",
+      "n_features": 23,
+      "n_density_features": 1,
+      "auc_train_regime": 0.870156249436172,
+      "auc_shift_regime": 0.8510315668750117,
+      "auc_densities_ablated": 0.8699552608433572,
+      "shortcut_reliance": 0.0002009885928148103,
+      "shift_fragility": 0.01912468256116029
+    },
+    {
+      "model": "node + comembership k1",
+      "n_features": 23,
+      "n_density_features": 1,
+      "auc_train_regime": 0.8711324039739065,
+      "auc_shift_regime": 0.8480499805381769,
+      "auc_densities_ablated": 0.8711039257797173,
+      "shortcut_reliance": 2.8478194189163197e-05,
+      "shift_fragility": 0.023082423435729527
+    },
+    {
+      "model": "node + comembership both",
+      "n_features": 24,
+      "n_density_features": 2,
+      "auc_train_regime": 0.8702232856011947,
+      "auc_shift_regime": 0.8513463110341202,
+      "auc_densities_ablated": 0.8699698694125966,
+      "shortcut_reliance": 0.0002534161885980879,
+      "shift_fragility": 0.01887697456707449
+    },
+    {
+      "model": "node + all phi",
+      "n_features": 28,
+      "n_density_features": 6,
+      "auc_train_regime": 0.8739399440970342,
+      "auc_shift_regime": 0.8540601744237283,
+      "auc_densities_ablated": 0.869664418948744,
+      "shortcut_reliance": 0.004275525148290216,
+      "shift_fragility": 0.019879769673305958
+    },
+    {
+      "model": "node + all phi + clique",
+      "n_features": 34,
+      "n_density_features": 12,
+      "auc_train_regime": 0.8832556405351054,
+      "auc_shift_regime": 0.8805027464911518,
+      "auc_densities_ablated": 0.8693422957479859,
+      "shortcut_reliance": 0.013913344787119475,
+      "shift_fragility": 0.0027528940439536242
+    },
+    {
+      "model": "node + clique",
+      "n_features": 28,
+      "n_density_features": 6,
+      "auc_train_regime": 0.877696585269633,
+      "auc_shift_regime": 0.865028932356111,
+      "auc_densities_ablated": 0.8701703177087509,
+      "shortcut_reliance": 0.007526267560882149,
+      "shift_fragility": 0.01266765291352201
+    },
+    {
+      "model": "duration only",
+      "n_features": 0,
+      "n_density_features": 0,
+      "auc_train_regime": 0.595528724001169,
+      "auc_shift_regime": 0.5677685201764323,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.0,
+      "shift_fragility": 0.02776020382473665
+    },
+    {
+      "model": "comembership k25 only",
+      "n_features": 1,
+      "n_density_features": 1,
+      "auc_train_regime": 0.6330443069889035,
+      "auc_shift_regime": 0.6826883892022177,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.0375155829877345,
+      "shift_fragility": -0.04964408221331429
+    },
+    {
+      "model": "comembership k1 only",
+      "n_features": 1,
+      "n_density_features": 1,
+      "auc_train_regime": 0.5995566776432009,
+      "auc_shift_regime": 0.5782104904680392,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.004027953642031901,
+      "shift_fragility": 0.02134618717516168
+    },
+    {
+      "model": "comembership both only",
+      "n_features": 2,
+      "n_density_features": 2,
+      "auc_train_regime": 0.6376059771195439,
+      "auc_shift_regime": 0.693551324396583,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.04207725311837496,
+      "shift_fragility": -0.05594534727703904
+    },
+    {
+      "model": "all phi only",
+      "n_features": 6,
+      "n_density_features": 6,
+      "auc_train_regime": 0.741182321955382,
+      "auc_shift_regime": 0.7826235843157142,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.14565359795421307,
+      "shift_fragility": -0.04144126236033219
+    },
+    {
+      "model": "all phi + clique only",
+      "n_features": 12,
+      "n_density_features": 12,
+      "auc_train_regime": 0.7622405568121156,
+      "auc_shift_regime": 0.8073671660333869,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.1667118328109466,
+      "shift_fragility": -0.04512660922127132
+    },
+    {
+      "model": "clique only",
+      "n_features": 6,
+      "n_density_features": 6,
+      "auc_train_regime": 0.6471700672362248,
+      "auc_shift_regime": 0.6232218261034312,
+      "auc_densities_ablated": 0.595528724001169,
+      "shortcut_reliance": 0.05164134323505587,
+      "shift_fragility": 0.02394824113279359
+    }
+  ]
+}

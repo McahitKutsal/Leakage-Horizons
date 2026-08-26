@@ -1,0 +1,100 @@
+{
+  "invocation": "python scripts/run_u2.py (smoke run, reduced settings; see its own fields)",
+  "invocation_reconstructed": true,
+  "invocation_note": "Recovered from the file's own recorded parameters, not from a log. Scripts now write their argv (D-35).",
+  "regime": [
+    1965,
+    2014
+  ],
+  "levels": {
+    "igo_comembership": [
+      1,
+      17,
+      25,
+      33,
+      42
+    ],
+    "allies": [
+      1
+    ],
+    "trades": [
+      1
+    ],
+    "votes_with": [
+      1
+    ],
+    "conflicts_with": [
+      1
+    ]
+  },
+  "max_neg_per_pos": 4,
+  "probe": "gradient boosting, 300 trees, depth 3, cross-fitted with GroupKFold on family",
+  "curves": [
+    {
+      "horizon": 1,
+      "negative_stratum": "never_event",
+      "n_pos": 6294,
+      "n_neg": 25176,
+      "n_clusters": 438,
+      "n_features": 20,
+      "auc_shortcut": 0.8904811777454058,
+      "auc_shortcut_linear": 0.8894698134791064,
+      "nonlinear_gain": 0.0010113642662994415
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "never_event",
+      "n_pos": 5189,
+      "n_neg": 20756,
+      "n_clusters": 438,
+      "n_features": 20,
+      "auc_shortcut": 0.8675182690558221,
+      "auc_shortcut_linear": 0.8681818863829124,
+      "nonlinear_gain": -0.0006636173270903045
+    },
+    {
+      "horizon": 1,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 6294,
+      "n_neg": 25176,
+      "n_clusters": 438,
+      "n_features": 20,
+      "auc_shortcut": 0.8832110376378954,
+      "auc_shortcut_linear": 0.8778334462467168,
+      "nonlinear_gain": 0.00537759139117866
+    },
+    {
+      "horizon": 5,
+      "negative_stratum": "not_at_this_horizon",
+      "n_pos": 5189,
+      "n_neg": 20756,
+      "n_clusters": 438,
+      "n_features": 20,
+      "auc_shortcut": 0.853577198545584,
+      "auc_shortcut_linear": 0.8551938822733846,
+      "nonlinear_gain": -0.0016166837278005497
+    }
+  ],
+  "features": [
+    "phi_allies_k1",
+    "clique_allies_k1",
+    "phi_conflicts_with_k1",
+    "clique_conflicts_with_k1",
+    "phi_igo_comembership_k1",
+    "clique_igo_comembership_k1",
+    "phi_igo_comembership_k17",
+    "clique_igo_comembership_k17",
+    "phi_igo_comembership_k25",
+    "clique_igo_comembership_k25",
+    "phi_igo_comembership_k33",
+    "clique_igo_comembership_k33",
+    "phi_igo_comembership_k42",
+    "clique_igo_comembership_k42",
+    "phi_trades_k1",
+    "clique_trades_k1",
+    "phi_votes_with_k1",
+    "clique_votes_with_k1",
+    "size",
+    "log_size"
+  ]
+}

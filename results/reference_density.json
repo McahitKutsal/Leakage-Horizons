@@ -1,0 +1,188 @@
+{
+  "invocation": "scripts/verify_reference_density.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "tolerance": 1e-12,
+  "why": "the two implementations compute a ratio of exact integer counts, so the target is equality and the tolerance covers only the division",
+  "reconciliations": [
+    {
+      "what": "level 1 means presence, not weight at least one",
+      "found": "the reference filtered weight >= level at every level, which empties the voting-agreement relation (weights strictly inside the unit interval) and halves trade flows (log volumes from -3.98 to 3.54); the disagreement on those two stars was exactly 1.0",
+      "verdict": "umbra was right and the prose was not explicit; the level ladder is defined for the integer-weighted target relation and the anchors are presence relations read at level 1. Section 4 now states it"
+    },
+    {
+      "what": "corpus B was never run through umbra",
+      "found": "umbra indexes nodes by integer and corpus B identifies proteins by string accession, so the second domain's statistics came from the pinned CLIQUEBAIT library alone",
+      "verdict": "relabelling the accessions 0, 1, 2, ... is a bijection that changes no dyad, so all three implementations now compute the corpus B table and agree exactly"
+    }
+  ],
+  "synthetic": {
+    "per_beta": {
+      "0": {
+        "target": 1,
+        "delta_star_lo_umbra": 1,
+        "delta_star_lo_reference": 1
+      },
+      "1": {
+        "target": 2,
+        "delta_star_lo_umbra": 2,
+        "delta_star_lo_reference": 2
+      },
+      "2": {
+        "target": 3,
+        "delta_star_lo_umbra": 3,
+        "delta_star_lo_reference": 3
+      },
+      "3": {
+        "target": 4,
+        "delta_star_lo_umbra": 4,
+        "delta_star_lo_reference": 4
+      },
+      "4": {
+        "target": 5,
+        "delta_star_lo_umbra": 5,
+        "delta_star_lo_reference": 5
+      },
+      "5": {
+        "target": 6,
+        "delta_star_lo_umbra": 6,
+        "delta_star_lo_reference": 6
+      }
+    },
+    "levels": [
+      1
+    ],
+    "phi": {
+      "n_values": 74425,
+      "worst_abs_diff": 0.0,
+      "nan_mismatches": 0,
+      "agree": true
+    },
+    "calibration_through_the_reference": {
+      "settings": 6,
+      "on_target": 6,
+      "identical_to_umbra": true
+    }
+  },
+  "corpus_a_table_3": {
+    "star": {
+      "n_values": 784585,
+      "worst_abs_diff": 0.0,
+      "nan_mismatches": 0,
+      "agree": true
+    },
+    "contrast_from_the_reference": {
+      "igo_comembership": {
+        "0": 0.3114,
+        "1": 0.3115,
+        "2": 0.2543,
+        "3": 0.227,
+        "4": 0.2038,
+        "5": 0.1781,
+        "6": 0.1659,
+        "7": 0.1549,
+        "8": 0.149
+      },
+      "allies": {
+        "0": 0.1179,
+        "1": 0.1094,
+        "2": 0.097,
+        "3": 0.0917,
+        "4": 0.085,
+        "5": 0.08,
+        "6": 0.0737,
+        "7": 0.0703,
+        "8": 0.067
+      },
+      "trades": {
+        "0": 0.2639,
+        "1": 0.2448,
+        "2": 0.2217,
+        "3": 0.2017,
+        "4": 0.189,
+        "5": 0.174,
+        "6": 0.1621,
+        "7": 0.1543,
+        "8": 0.1463
+      },
+      "votes_with": {
+        "0": 0.1779,
+        "1": 0.1549,
+        "2": 0.1498,
+        "3": 0.136,
+        "4": 0.1296,
+        "5": 0.1197,
+        "6": 0.112,
+        "7": 0.1078,
+        "8": 0.1081
+      },
+      "conflicts_with": {
+        "0": 0.0041,
+        "1": 0.0036,
+        "2": 0.0039,
+        "3": 0.004,
+        "4": 0.0038,
+        "5": 0.0033,
+        "6": 0.0042,
+        "7": 0.0035,
+        "8": 0.0044
+      }
+    },
+    "worst_deviation_from_the_published_table": 0.0
+  },
+  "corpus_a_table_4": {
+    "levels": {
+      "k=1": {
+        "(1, 3]": 0.0625,
+        "(3, 5]": 0.1809,
+        "(5, 10]": 0.1972,
+        "(10, 20]": 0.1911,
+        "(20, 80]": 0.2387,
+        "(80, 10000]": 0.4778
+      },
+      "k=25": {
+        "(1, 3]": 0.5833,
+        "(3, 5]": 0.3617,
+        "(5, 10]": 0.3391,
+        "(10, 20]": 0.2437,
+        "(20, 80]": 0.0521,
+        "(80, 10000]": 0.0
+      }
+    },
+    "phi": {
+      "n_values": 39582,
+      "worst_abs_diff": 0.0,
+      "nan_mismatches": 0,
+      "agree": true
+    },
+    "worst_deviation_from_the_published_table": 0.0
+  },
+  "corpus_b_table_4": {
+    "umbra_vs_reference": {
+      "n_values": 101600,
+      "worst_abs_diff": 0.0,
+      "nan_mismatches": 0,
+      "agree": true
+    },
+    "cliquebait_vs_reference": {
+      "n_values": 101600,
+      "worst_abs_diff": 0.0,
+      "nan_mismatches": 0,
+      "agree": true
+    },
+    "contrast_from_the_reference": {
+      "(1, 3]": 0.4124,
+      "(3, 5]": 0.4665,
+      "(5, 10]": 0.4455,
+      "(10, 20]": 0.3662,
+      "(20, 80]": 0.1765,
+      "(80, 10000]": 0.0
+    },
+    "worst_deviation_from_the_published_table": 0.0
+  },
+  "worst_disagreement_anywhere": 0.0,
+  "verdict": "the density code agrees with an independent implementation on every testbed"
+}

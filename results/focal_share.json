@@ -1,0 +1,52 @@
+{
+  "invocation": "scripts/quantify_focal_share.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "pta": {
+    "n_edge_years_signature": 204747,
+    "n_edge_years_force": 190781,
+    "back_dated_increment": 13966,
+    "focal_share_of_relation": 0.0682,
+    "increment_is_a_superset_not_a_shift": false,
+    "dyad_years_only_in_signature": 13967,
+    "dyad_years_only_in_force": 1
+  },
+  "corpus_a": {
+    "regime": [
+      1965,
+      2014
+    ],
+    "n_events": 6420,
+    "relation": "igo_comembership",
+    "n_states_in_relation": 201,
+    "target_relation_density_k1": 0.7144,
+    "star_local": {
+      "k=1": {
+        "dyads_read_as_present": 474034,
+        "dyads_present_only_through_the_focal_entity": 117,
+        "focal_share_of_what_the_statistic_reads": 0.0002
+      },
+      "k=25": {
+        "dyads_read_as_present": 230707,
+        "dyads_present_only_through_the_focal_entity": 15059,
+        "focal_share_of_what_the_statistic_reads": 0.0653
+      }
+    },
+    "relation_level": {
+      "k=1": {
+        "dyad_years_at_or_above_level": 717950,
+        "dyad_years_exactly_at_level": 2895,
+        "share_lost_if_one_organisation_removed": 0.004
+      },
+      "k=25": {
+        "dyad_years_at_or_above_level": 370969,
+        "dyad_years_exactly_at_level": 24492,
+        "share_lost_if_one_organisation_removed": 0.066
+      }
+    },
+    "induced_dyad_share_note": "the focal group's induced pairs as a share of all pairs measures group size, not the group's contribution to the relation, and is reported only to say why it is not used"
+  }
+}

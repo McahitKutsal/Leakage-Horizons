@@ -470,7 +470,8 @@ EDITS_FILES = [ROOT / "paper" / "round3-edits.txt",
                ROOT / "paper" / "round4-splits.txt",
                ROOT / "paper" / "round4-splits2.txt",
                ROOT / "paper" / "round5-edits.txt",
-               ROOT / "paper" / "round6-edits.txt"]
+               ROOT / "paper" / "round6-edits.txt",
+               ROOT / "paper" / "round7-edits.txt"]
 
 # Wording retired by a decision rather than by a measurement, which no other check would catch. The
 # manuscript was written for Knowledge-Based Systems and opened by calling the thing a knowledge-based

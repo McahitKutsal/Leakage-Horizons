@@ -1,0 +1,64 @@
+{
+  "invocation": "scripts/audit_filter_chain.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "regime": [
+    1965,
+    2014
+  ],
+  "groups": {
+    "entities_in_the_corpus": 562,
+    "overlapping_the_window_on_entity_dates": 528,
+    "predating_the_window": 183,
+    "estimated_in_the_termination_panel": 527,
+    "dropped_between_the_two": [
+      {
+        "entity_id": "igo:4110",
+        "name": "Scientific Council in SSA",
+        "founded": 1950,
+        "exit_year": 1965,
+        "last_active_membership_year": 1959,
+        "why": "no active membership row inside the analysis window"
+      }
+    ],
+    "reading": "528 is the population left truncation is a threat to, which is what Section 8 reports; 527 is the panel the likelihood is evaluated on, which is what Section 6.5 and Appendix A report"
+  },
+  "accessions": {
+    "accession_events_in_the_corpus": 8062,
+    "accession_events_in_the_window": 6597,
+    "outside_the_window": 1465,
+    "event_dyads_in_the_window": 6501,
+    "dyads_with_more_than_one_accession": 94,
+    "repeat_accessions_collapsed": 96,
+    "share_collapsed": 0.0146,
+    "reading": "6,597 is the event count and 6,501 is the dyad count; the hazard's unit is the dyad and a dyad exits the risk set when it accedes, so 96 repeat accessions of 94 dyads are collapsed onto the first"
+  },
+  "focal_isolation": {
+    "reading": "7,146 is the count at lead time 0 and 7,084 the count at lead time 1 on the same stratum: focal isolation is undefined where the focal group has no member set in the preceding year",
+    "declared_resolution": {
+      "all_accessions_at_lead_time_0": 447,
+      "first_entry_at_lead_time_0": 310,
+      "first_entry_at_lead_time_1": 310,
+      "lost_between_lead_time_0_and_1": 0,
+      "recurrent_removed_by_first_entry": 137
+    },
+    "exact": {
+      "all_accessions_at_lead_time_0": 7615,
+      "first_entry_at_lead_time_0": 7146,
+      "first_entry_at_lead_time_1": 7084,
+      "lost_between_lead_time_0_and_1": 62,
+      "recurrent_removed_by_first_entry": 469
+    }
+  },
+  "terminations": {
+    "coded_terminations_in_the_corpus": 185,
+    "in_the_window": 151,
+    "outside_the_window": 34,
+    "on_entities_absent_from_the_estimated_panel": 1,
+    "events_in_the_estimated_panel": 150,
+    "reading": "185 coded, 151 inside the window, and 150 in the panel: the one entity the group chain drops carries one of the 151"
+  }
+}

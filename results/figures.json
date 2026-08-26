@@ -1,0 +1,75 @@
+{
+  "invocation": "scripts/build_figures.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "figures": {
+    "1": {
+      "stem": "figure-1",
+      "paths": [
+        "figure-1.svg",
+        "figure-1.pdf",
+        "figure-1.png"
+      ]
+    },
+    "2": {
+      "stem": "figure-2",
+      "paths": [
+        "figure-2.svg",
+        "figure-2.pdf",
+        "figure-2.png"
+      ]
+    },
+    "3": {
+      "stem": "figure-3",
+      "paths": [
+        "figure-3.svg",
+        "figure-3.pdf",
+        "figure-3.png"
+      ]
+    },
+    "4": {
+      "stem": "figure-4",
+      "paths": [
+        "figure-4.svg",
+        "figure-4.pdf",
+        "figure-4.png"
+      ]
+    },
+    "5": {
+      "stem": "figure-5",
+      "paths": [
+        "figure-5.svg",
+        "figure-5.pdf",
+        "figure-5.png"
+      ]
+    },
+    "6": {
+      "stem": "figure-6",
+      "paths": [
+        "figure-6.svg",
+        "figure-6.pdf",
+        "figure-6.png"
+      ]
+    },
+    "7": {
+      "stem": "figure-7",
+      "paths": [
+        "figure-7.svg",
+        "figure-7.pdf",
+        "figure-7.png"
+      ]
+    },
+    "8": {
+      "stem": "figure-8",
+      "paths": [
+        "figure-8.svg",
+        "figure-8.pdf",
+        "figure-8.png"
+      ]
+    }
+  },
+  "note": "drawn from results/ by scripts/build_figures.py; the series in a figure and the series in an artefact are now one object"
+}

@@ -1,0 +1,244 @@
+{
+  "invocation": "scripts/run_t2_ladder.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "focal_False": {
+    "phi_level": 25,
+    "focal_excluded": false,
+    "collapse": true,
+    "loglik": -925.5049,
+    "coef": {
+      "intercept": {
+        "dissolution": -5.556873,
+        "superseded": -5.249431
+      },
+      "log_duration": {
+        "dissolution": 0.094572,
+        "superseded": -0.142973
+      },
+      "log_size": {
+        "dissolution": -0.391773,
+        "superseded": -0.120415
+      },
+      "phi_igo_comembership": {
+        "dissolution": 0.291826,
+        "superseded": -0.081149
+      },
+      "polity2_mean": {
+        "dissolution": -0.092533,
+        "superseded": 0.00063
+      },
+      "polity2_std": {
+        "dissolution": -0.109241,
+        "superseded": -0.06989
+      }
+    },
+    "reversing": [
+      "log_duration",
+      "phi_igo_comembership"
+    ],
+    "reversing_sign_only": [
+      "log_duration",
+      "phi_igo_comembership",
+      "polity2_mean"
+    ],
+    "reversal_floor": 0.01,
+    "auc_any": 0.6098,
+    "auc_cause": {
+      "dissolution": 0.6278,
+      "superseded": 0.5585
+    },
+    "row_counts": {
+      "n_rows": 16067,
+      "n_positive_rows": 150,
+      "undetermined_positive_rows": 0
+    },
+    "events": {
+      "0": 17,
+      "1": 83,
+      "2": 50
+    },
+    "rule_assigned": 83,
+    "events_per_parameter": {
+      "events_per_cause": {
+        "1": 83,
+        "2": 50
+      },
+      "parameters_per_cause": 6.0,
+      "events_per_parameter": {
+        "1": 13.83,
+        "2": 8.33
+      },
+      "supported_covariates_at_10_per_param": {
+        "1": 6,
+        "2": 3
+      }
+    },
+    "n_entities": 527,
+    "n_rows": 16067
+  },
+  "focal_True": {
+    "phi_level": 25,
+    "focal_excluded": true,
+    "collapse": true,
+    "loglik": -925.7326,
+    "coef": {
+      "intercept": {
+        "dissolution": -5.547873,
+        "superseded": -5.242143
+      },
+      "log_duration": {
+        "dissolution": 0.092865,
+        "superseded": -0.144739
+      },
+      "log_size": {
+        "dissolution": -0.390542,
+        "superseded": -0.117574
+      },
+      "phi_igo_comembership": {
+        "dissolution": 0.274052,
+        "superseded": -0.059119
+      },
+      "polity2_mean": {
+        "dissolution": -0.095056,
+        "superseded": -0.003307
+      },
+      "polity2_std": {
+        "dissolution": -0.110116,
+        "superseded": -0.065791
+      }
+    },
+    "reversing": [
+      "log_duration",
+      "phi_igo_comembership"
+    ],
+    "reversing_sign_only": [
+      "log_duration",
+      "phi_igo_comembership"
+    ],
+    "reversal_floor": 0.01,
+    "auc_any": 0.6092,
+    "auc_cause": {
+      "dissolution": 0.6247,
+      "superseded": 0.5574
+    },
+    "row_counts": {
+      "n_rows": 16067,
+      "n_positive_rows": 150,
+      "undetermined_positive_rows": 0
+    },
+    "events": {
+      "0": 17,
+      "1": 83,
+      "2": 50
+    },
+    "rule_assigned": 83,
+    "events_per_parameter": {
+      "events_per_cause": {
+        "1": 83,
+        "2": 50
+      },
+      "parameters_per_cause": 6.0,
+      "events_per_parameter": {
+        "1": 13.83,
+        "2": 8.33
+      },
+      "supported_covariates_at_10_per_param": {
+        "1": 6,
+        "2": 3
+      }
+    },
+    "n_entities": 527,
+    "n_rows": 16067
+  },
+  "three_cause": {
+    "phi_level": 25,
+    "focal_excluded": false,
+    "collapse": false,
+    "loglik": -958.6003,
+    "coef": {
+      "intercept": {
+        "dissolution": -5.55816,
+        "superseded": -5.928029,
+        "cause_3": -5.9385
+      },
+      "log_duration": {
+        "dissolution": 0.094786,
+        "superseded": -0.087449,
+        "cause_3": -0.227345
+      },
+      "log_size": {
+        "dissolution": -0.391475,
+        "superseded": -0.151839,
+        "cause_3": -0.073672
+      },
+      "phi_igo_comembership": {
+        "dissolution": 0.293579,
+        "superseded": -0.009557,
+        "cause_3": -0.163658
+      },
+      "polity2_mean": {
+        "dissolution": -0.092045,
+        "superseded": 0.085742,
+        "cause_3": -0.103584
+      },
+      "polity2_std": {
+        "dissolution": -0.108459,
+        "superseded": 0.017231,
+        "cause_3": -0.179746
+      }
+    },
+    "reversing": [
+      "log_duration",
+      "polity2_mean",
+      "polity2_std"
+    ],
+    "reversing_sign_only": [
+      "log_duration",
+      "phi_igo_comembership",
+      "polity2_mean",
+      "polity2_std"
+    ],
+    "reversal_floor": 0.01,
+    "auc_any": 0.6091,
+    "auc_cause": {
+      "dissolution": 0.6279,
+      "superseded": 0.5567
+    },
+    "row_counts": {
+      "n_rows": 16067,
+      "n_positive_rows": 150,
+      "undetermined_positive_rows": 0
+    },
+    "events": {
+      "0": 17,
+      "1": 83,
+      "2": 30,
+      "3": 20
+    },
+    "rule_assigned": 83,
+    "events_per_parameter": {
+      "events_per_cause": {
+        "1": 83,
+        "2": 30,
+        "3": 20
+      },
+      "parameters_per_cause": 6.0,
+      "events_per_parameter": {
+        "1": 13.83,
+        "2": 5.0,
+        "3": 3.33
+      },
+      "supported_covariates_at_10_per_param": {
+        "1": 6,
+        "2": 1,
+        "3": 0
+      }
+    },
+    "n_entities": 527,
+    "n_rows": 16067
+  }
+}

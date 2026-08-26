@@ -1,0 +1,189 @@
+{
+  "invocation": "scripts/corpus_b_negatives.py",
+  "corpus": {
+    "entities": 562,
+    "events": 10328,
+    "accessions": 8062
+  },
+  "threshold": 400,
+  "procedure": {
+    "negatives_per_positive": 3,
+    "hard_per_positive": 2,
+    "random_per_positive": 1,
+    "random_negative": "k proteins drawn uniformly without replacement from the universe of proteins carrying at least one channel edge, k being the positive's size",
+    "hard_negative": "the positive's members with b = min(2, k - 2) of them dropped and b proteins substituted from the same universe",
+    "existing_edges_excluded": false,
+    "collision_with_a_real_complex_checked": false,
+    "size_matching": "by construction: a random negative has the positive's size exactly",
+    "minimum_positive_size": 3,
+    "seed": 0
+  },
+  "target_relation": "database",
+  "n_proteins": 19486,
+  "n_undirected_edges_target": 218819,
+  "target_relation_density": 0.001153,
+  "exclusion_test": {
+    "mean_phi_random_negatives": 0.00132,
+    "relation_density": 0.001153,
+    "ratio": 1.146,
+    "verdict": "negatives carry the relation at its own density, so no edge exclusion was applied; the zero clique rate is a property of the clique statistic on groups of three or more, not of the sampler"
+  },
+  "worked_example": {
+    "bin": "(1, 3]",
+    "n_neg": 1399,
+    "dyads_a_clique_needs_at_three_members": 3,
+    "probability_per_group": 1.53e-09,
+    "expected_cliques": 2.14e-06,
+    "observed_cliques": 0
+  },
+  "by_stratum": {
+    "random": {
+      "(1, 3]": {
+        "n_pos": 1399,
+        "n_neg": 1399,
+        "positive_cliques": 577,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 2.14e-06,
+        "clique_rate_pos": 0.4124,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4124,
+        "mean_phi_pos": 0.5761,
+        "mean_phi_neg": 0.00095
+      },
+      "(3, 5]": {
+        "n_pos": 641,
+        "n_neg": 641,
+        "positive_cliques": 299,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 1e-15,
+        "clique_rate_pos": 0.4665,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4665,
+        "mean_phi_pos": 0.6795,
+        "mean_phi_neg": 0.00224
+      },
+      "(5, 10]": {
+        "n_pos": 321,
+        "n_neg": 321,
+        "positive_cliques": 143,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 7.49e-43,
+        "clique_rate_pos": 0.4455,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4455,
+        "mean_phi_pos": 0.7125,
+        "mean_phi_neg": 0.001
+      },
+      "(10, 20]": {
+        "n_pos": 142,
+        "n_neg": 142,
+        "positive_cliques": 52,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 5.44e-161,
+        "clique_rate_pos": 0.3662,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.3662,
+        "mean_phi_pos": 0.7346,
+        "mean_phi_neg": 0.00156
+      },
+      "(20, 80]": {
+        "n_pos": 34,
+        "n_neg": 34,
+        "positive_cliques": 6,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 0.0,
+        "clique_rate_pos": 0.1765,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.1765,
+        "mean_phi_pos": 0.596,
+        "mean_phi_neg": 0.00124
+      },
+      "(80, 10000]": {
+        "n_pos": 3,
+        "n_neg": 3,
+        "positive_cliques": 0,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 0.0,
+        "clique_rate_pos": 0.0,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.0,
+        "mean_phi_pos": 0.1735,
+        "mean_phi_neg": 0.00135
+      }
+    },
+    "hard": {
+      "(1, 3]": {
+        "n_pos": 1399,
+        "n_neg": 2798,
+        "positive_cliques": 577,
+        "negative_cliques": 9,
+        "expected_negative_cliques_under_independence": 0.00116,
+        "clique_rate_pos": 0.4124,
+        "clique_rate_neg": 0.0032,
+        "clique_contrast": 0.4092,
+        "mean_phi_pos": 0.5761,
+        "mean_phi_neg": 0.19836
+      },
+      "(3, 5]": {
+        "n_pos": 641,
+        "n_neg": 1282,
+        "positive_cliques": 299,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 2.01e-15,
+        "clique_rate_pos": 0.4665,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4665,
+        "mean_phi_pos": 0.6795,
+        "mean_phi_neg": 0.14875
+      },
+      "(5, 10]": {
+        "n_pos": 321,
+        "n_neg": 642,
+        "positive_cliques": 143,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 1.5e-42,
+        "clique_rate_pos": 0.4455,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.4455,
+        "mean_phi_pos": 0.7125,
+        "mean_phi_neg": 0.36166
+      },
+      "(10, 20]": {
+        "n_pos": 142,
+        "n_neg": 284,
+        "positive_cliques": 52,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 1.09e-160,
+        "clique_rate_pos": 0.3662,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.3662,
+        "mean_phi_pos": 0.7346,
+        "mean_phi_neg": 0.52619
+      },
+      "(20, 80]": {
+        "n_pos": 34,
+        "n_neg": 68,
+        "positive_cliques": 6,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 0.0,
+        "clique_rate_pos": 0.1765,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.1765,
+        "mean_phi_pos": 0.596,
+        "mean_phi_neg": 0.51434
+      },
+      "(80, 10000]": {
+        "n_pos": 3,
+        "n_neg": 6,
+        "positive_cliques": 0,
+        "negative_cliques": 0,
+        "expected_negative_cliques_under_independence": 0.0,
+        "clique_rate_pos": 0.0,
+        "clique_rate_neg": 0.0,
+        "clique_contrast": 0.0,
+        "mean_phi_pos": 0.1735,
+        "mean_phi_neg": 0.1671
+      }
+    }
+  }
+}
