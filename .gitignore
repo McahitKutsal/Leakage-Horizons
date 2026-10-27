@@ -33,21 +33,5 @@ penumbra-revizyon-notlari.md
 # places, and the numbers a reader needs are in the JSON beside them.
 results/*.log
 
-# Superseded manuscript drafts, 6.6 MB of binary between them. penumbra-revised.docx stays, because
-# scripts/build_jmlr.py reads it and without it the .tex cannot be regenerated; these two are what
-# it replaced.
-paper/penumbra.docx
-paper/penumbra-kbs.docx
-
-# Build output that duplicates files already here. build_jmlr.py rewrites the figure copies and
-# pack_jmlr.py rewrites the archive, so a fresh clone rebuilds both.
-paper/jmlr/penumbra-overleaf.zip
-paper/jmlr/figures/
-paper/jmlr/_raw.tex
-
-# The 600-dpi raster is a fallback for Word's SVG rendering. The manuscript uses the SVG, the LaTeX
-# uses the PDF, and penumbra/figures.py writes all three, so this one is regenerated and not needed.
-paper/Figures/*.png
-
 # Empty run markers that nothing reads.
 results/_*
