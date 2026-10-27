@@ -1,0 +1,31 @@
+## 8. Seven ways a leakage diagnostic misreports
+
+Each mechanism below names a way a density-based leakage diagnostic can return a wrong horizon, and the measurement that establishes it. They are not the same kind of claim, and Table 10 records which kind each is.
+
+**M1. A pooled contrast cannot separate a trace from a similarity.** A candidate denser to the members through back-dating and one denser through standing similarity enter the contrast identically; Section 7.2 measures the cost. For the design this means focal exclusion is not enough, since detecting back-dating requires focal *isolation* of the same edges. The reference band does not repair it, and its failure runs opposite to the usual intuition: shared anchor structure is what makes the band work, and independent structure is what breaks it. Corpus A exhibits shared structure together with a saturated target relation.
+
+**M2. Saturation decides what a clique statistic can see, so the level has to be stated.** Co-membership has density 0.9954, and of the dyads the pooled statistic reads as present the focal entity is solely responsible for 0.02 percent at $k = 1$ and 6.5 percent at $k = 25$. Thresholding does not fix it and is non-monotone in density. Without a stated level the size dependence *reverses*, rising from 0.0625 at two to three members to 0.4778 above eighty, because both classes are near-cliques. Since the clique statistic survives strong homophily at density 0.12, fails to fire at 0.50 and overshoots at 0.90, saturation is the condition under which homophily breaks it.
+
+**M3. The exact clique statistic is structurally zero on large groups.** A ninety-member group has 4,005 pairs and a clique requires all of them. On corpus A at $k = 25$ the contrast falls from 0.5833 in the smallest bin to 0.0521 for 21 to 80 members and **0.0000 above eighty**, where 41.1 percent of the corpus's events live. Corpus B reproduces the shape in a domain sharing no entities and no relations.
+
+**M4. Decay is not evidence of leakage, and a probe's capacity is not the explanation.** Predicting ten periods ahead is harder than predicting one with no leakage at all, so decay is the null. What separates leakage from difficulty is the exclusion contrast at each lead time, not the level of the curve. The natural worry is that a high-capacity probe overfits where the sample is smallest and so manufactures a decaying curve; we proposed that, tested it, and could not demonstrate it, since on the matched panel decay runs 0.2160 to 0.2686 across 30 to 300 trees while the **linear** probe decays 0.2597, between them. A decay present at every capacity including linear is not a capacity artefact. A related caution rests on fourteen models enumerated as a grid, where reliance and shift fragility correlate at Spearman $-0.667$ with $p = 0.0092$: the claim the mechanism needs is only that the two are not positively coupled in the way an audit treating reliance as a model attribute assumes.
+
+**M5. The trace confound grows with lead time, and it grows toward confirmation.** Prior membership spells put an entity on the record at long lead times for reasons that are not anticipation, and reaching further back is more likely to land inside an earlier spell. Presence among recurrent accessions runs 0.185 at one period to 0.330 at eight, against 0.0009 among first-time ones. The correction is to condition on first entry and report the recurrence rate beside any horizon. The phenomenon is known for link prediction (Poursafaei et al., 2022); what is specific to a diagnostic is that it manufactures a curve with the shape of a horizon.
+
+**M6. The trace of an event can live on a register the audit does not open.** Focal isolation reads a group's own record, and its freedom from homophily depends on that record holding the whole trace. Section 7.3 finds the dependence is on the corpus's dating conventions rather than on the operation: under one convention a curatorial wave adds nothing a focal reading misses, while under mixed conventions the administrative reach exceeds the focal record by up to nine periods. The remedy is procedural, and it is the term $\lambda$ of the decomposition.
+
+**M7. Power and sample size can fail together.** In corpus A the subpopulation where the clique statistic has power is also the one with 177 events, giving a standard error equal to the effect. Falsified as stated for curated group corpora in general and restated with a condition: corpus B has 1,399 positives at median size 3 with a contrast of 0.4124, so the trade-off holds only when group size correlates with entity type and the small-size type is rare.
+
+| | Mechanism | Type | Status after the scope test |
+|---|---|---|---|
+| M1 | Pooled contrast cannot separate trace from similarity | definitional, then measured | general; band repair reversed in 7.2 |
+| M2 | Saturation decides what the clique statistic sees | empirical, corpus-specific | corpus A specific in magnitude; interacts with M1 |
+| M3 | Clique statistic zero on large groups | combinatorial | general, whole curve traced in both domains |
+| M4 | Decay is not evidence; capacity is not the cause | empirical | general; the capacity variant was tested and not supported |
+| M5 | Recurrence confound grows with lead time | empirical | general |
+| M6 | Trace on a register the audit does not open | definitional, measured | general as a condition |
+| M7 | Power and sample size fail together | empirical, corpus-specific | falsified as stated, restated with a condition |
+
+**Table 10.** Generality of each mechanism, and the type of claim each makes.
+
+One further observation concerns what the recommended operation buys beyond a horizon. Focal isolation asks whether a member is on the group's record before it joined, which is a question with a known answer, and a diagnostic whose answer is known in advance finds defects that self-consistent validation cannot. At its first corpus-wide application it located a coding-convention defect in an alliance register: 149 of 373 events, 40.0 percent, were artefacts of a register coding a member once per treaty phase. The defect had survived a validation suite and two independent count audits.

@@ -45,6 +45,17 @@ paper/jmlr/penumbra-overleaf.zip
 paper/jmlr/figures/
 paper/jmlr/_raw.tex
 
+# Build output of paper/revision/. build_docx.py writes the two .docx and the two concatenated .md
+# from sections/ and supplement/; make_dag.py and rasterise_figures.py write the PNGs. Everything
+# here is reproducible from what is committed beside it, and committing it would put a binary diff
+# in every rebuild, which is the same reason the Overleaf archive and paper/jmlr/figures/ are out.
+paper/revision/manuscript.docx
+paper/revision/manuscript.md
+paper/revision/supplementary.docx
+paper/revision/supplementary.md
+paper/revision/figures/
+paper/revision/reference-audit.txt
+
 # The 600-dpi raster is a fallback for Word's SVG rendering. The manuscript uses the SVG, the LaTeX
 # uses the PDF, and penumbra/figures.py writes all three, so this one is regenerated and not needed.
 paper/Figures/*.png
